@@ -1,40 +1,72 @@
-from flask import Flask
+import json
+
+from flask import request
 from flask.ext import restful
+
+from app import app
 
 base_path = '/api/v1'
 
-def attach(app):
-    api = restful.Api(app)
-    routes = {
-        '/project/target': Target,
-        '/project/target/gists': TargetGists,
-        '/project/target/repos': TargetRepos,
-        '/project/engine/auth': EngineAuth,
-        '/project/engine': Engine,
-        '/project/engine/logs': EngineLogs,
-        '/project/engine/config': EngineConfig,
-        '/project': Project,
-    }
-    for path in routes:
-        api.add_resource(routes[path], '{}{}'.format(base_path, path))    
+api = restful.Api(app)
+   
 
 class Target(restful.Resource):
     def get(self):
-        return {"msg": "Hello world"}
+        if not request.cookies.get("target"):
+            return {"message": "no target"}, 404
+        else:
+            target = json.loads(request.cookies["target"])
+            return {"target": target}
 
     def put(self):
-        pass
+        target = {
+            "type": request.form.get("type", "gist"),
+            "id": request.form.get("id"),
+        }
+        resp = api.make_response({"target": target}, 200)
+        resp.set_cookie("target", json.dumps(target))
+        return resp
 
 class TargetGists(restful.Resource):
     def get(self):
-        pass
+        gists_mock = [
+            {
+                "url": "https://api.github.com/gists/0f09f5dd83141be2c96b",
+                "id": "1",
+                "description": "description of gist",
+            },
+            {
+                "url": "https://api.github.com/gists/0f09f5dd837643e2c123",
+                "id": "2",
+                "description": "description of another gist",
+            },]
+        return gists_mock
+
 
     def post(self):
-        pass
+        created_gist_mock = {
+                "description": request.form['description'],
+                "id": "3",
+                "url": "https://api.github.com/gists/fakenewgist",
+        }
+        return created_gist_mock
 
 class TargetRepos(restful.Resource):
     def get(self):
-        pass
+        repos_mock = [
+            {
+                "id": 1296269,
+                "name": "Hello-World",
+                "full_name": "octocat/Hello-World",
+                "description": "This your first repo!",
+            },
+            {
+                "id": 1296361,
+                "name": "Hello-World2",
+                "full_name": "octocat/Hello-World2",
+                "description": "This your second repo!",
+            },]
+        return repos_mock
 
 class EngineAuth(restful.Resource):
     def post(self):
@@ -65,3 +97,16 @@ class Project(restful.Resource):
     def put(self):
         pass
 
+
+routes = {
+    '/project/target': Target,
+    '/project/target/gists': TargetGists,
+    '/project/target/repos': TargetRepos,
+    '/project/engine/auth': EngineAuth,
+    '/project/engine': Engine,
+    '/project/engine/logs': EngineLogs,
+    '/project/engine/config': EngineConfig,
+    '/project': Project,
+}
+for path in routes:
+    api.add_resource(routes[path], '{}{}'.format(base_path, path)) 

@@ -4,11 +4,10 @@ from flask import request
 from flask import redirect
 from flask import render_template
 
-import api
-
 app = Flask('airscript.ui')
 app.config['DEBUG'] = True
-api.attach(app) # see api.py
+
+import api
 
 # Frontend user endpoints
 
