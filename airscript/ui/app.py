@@ -1,3 +1,4 @@
+import os
 
 from flask import Flask
 from flask import request
@@ -7,6 +8,7 @@ from flask import make_response
 import requests
 
 app = Flask('airscript.ui', static_url_path='')
+app.secret_key = os.environ.get('SECRET_KEY', 'localdev')
 app.config['DEBUG'] = True
 
 import api

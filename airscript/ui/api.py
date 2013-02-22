@@ -1,6 +1,7 @@
 import json
 
 from flask import request
+from flask import session
 from flask import make_response
 from flask.ext import restful
 
@@ -19,19 +20,17 @@ def output_json(data, code, headers=None):
 
 class Target(restful.Resource):
     def get(self):
-        if not request.cookies.get("target"):
+        if "target" not in session:
             return {"message": "no target"}, 404
         else:
-            target = json.loads(request.cookies["target"])
-            return {"target": target}
+            return {"target": session['target']}
 
     def put(self):
-        target = {
+        session['target'] = {
             "type": request.form.get("type", "gist"),
             "id": request.form.get("id"),
         }
-        resp = api.make_response({"target": target}, 200)
-        resp.set_cookie("target", json.dumps(target))
+        resp = api.make_response({"target": session['target']}, 200)
         return resp
 
 class TargetGists(restful.Resource):
@@ -110,28 +109,28 @@ class EngineConfig(restful.Resource):
 
 class Project(restful.Resource):
     def get(self):
-        project_mock = {
-            "type": "gist",
-            "id": "1",
-            "description": "description of gist",
-            "files": {
-                "ring.erl": {
-                    "size": 932,
-                    "filename": "ring.erl",
-                    "raw_url": "https://gist.github.com/raw/365370/8c4d2d43d178df44f4c03a7f2ac0ff512853564e/ring.erl"
+        if "target" not in session:
+            return {"message": "no target"}, 404 
+        if 'project' not in session:
+            session['project'] = {
+                "files": {
+                    "ring.erl": {
+                        "size": 932,
+                        "filename": "ring.erl",
+                        "raw_url": "https://gist.github.com/raw/365370/8c4d2d43d178df44f4c03a7f2ac0ff512853564e/ring.erl"
+                    },
+                    "ring2.erl": {
+                        "size": 9,
+                        "filename": "ring2.erl",
+                        "raw_url": "https://gist.github.com/raw/365370/8c4d2d43d178df44f4c03a7f2ac0ff512853564e/ring2.erl"
+                    },
                 },
-                "ring2.erl": {
-                    "size": 9,
-                    "filename": "ring2.erl",
-                    "raw_url": "https://gist.github.com/raw/365370/8c4d2d43d178df44f4c03a7f2ac0ff512853564e/ring2.erl"
+                "config": {
+                    "engine_name": "foobar",
+                    "engine_url": "http://foobar.herokuapps.com/"
                 },
-            },
-            "config": {
-                "engine_name": "foobar",
-                "engine_url": "http://foobar.herokuapps.com/"
-            },
-        }
-        return project_mock
+            }
+        return session['project']
 
     def put(self):
         pass
