@@ -1,0 +1,7 @@
+.gist_modal.modal.hide.fade(tabindex="-1")
+  .modal-header
+    %button.close(type='button' data-dismiss="modal")
+    %h3 Select Gist
+
+  .modal-body(data-bind='foreach: scriptsView.gists')
+    %a.btn.gist(href='#' data-dismiss="modal" data-bind='text: description, click: $parent.scriptsView.selectGist')

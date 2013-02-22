@@ -1,0 +1,6 @@
+source :rubygems
+
+gem "coffee-filter"
+gem "middleman", "~>3.0.9"
+gem "middleman-livereload"
+gem "stylus"
