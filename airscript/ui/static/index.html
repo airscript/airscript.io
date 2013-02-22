@@ -7,8 +7,6 @@
   <link type="text/css" rel="stylesheet" media="screen" href="/stylesheets/bootstrap-responsive.css" />
   <link type="text/css" rel="stylesheet" media="screen" href="/stylesheets/normalize.css" />
   <link type="text/css" rel="stylesheet" media="screen" href="/stylesheets/all.css" />
-  <script type="text/javascript" src="/javascripts/ace/ace.js"></script>
-  <script type="text/javascript" src="/javascripts/jquery-1.8.2.js"></script>
   <script type="text/javascript" src="/javascripts/all.js"></script>
   <body>
     <div class='github_modal modal hide fade' tabindex='-1'>
@@ -59,7 +57,7 @@
     <h3>Select Gist</h3>
   </div>
   <div class='modal-body' data-bind='foreach: scriptsView.gists'>
-    <a class='btn' data-bind='text: description, click: $parent.scriptsView.selectGist' data-dismiss='modal' href='#'></a>
+    <a class='btn gist' data-bind='text: description, click: $parent.scriptsView.selectGist' data-dismiss='modal' href='#'></a>
   </div>
 </div>
 <section class='content'>
