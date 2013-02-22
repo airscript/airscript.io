@@ -15,6 +15,6 @@ setup(
     ],
     url="http://github.com/airscript/airscript.io",
     packages=find_packages(),
-    install_requires=['Flask', 'flask-restful'],
+    install_requires=['Flask', 'flask-restful', 'requests'],
 )
 
