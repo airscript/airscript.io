@@ -40,9 +40,8 @@ def auth_callback():
     url = 'https://github.com/login/oauth/access_token'
     req = requests.post(url, data=payload, headers=headers)
     if req.status_code == 200:
-        data = req.json()
         resp = make_response(redirect('/'))
-        resp.set_cookie('auth', data['access_token'])
+        resp.set_cookie('auth', req.json['access_token'])
         return resp
     else:
         return "Request for access token failed", 403
