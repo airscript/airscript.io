@@ -11,6 +11,10 @@ section.content,
   font-weight: normal;
   font-style: normal;
 }
+.gist_modal .gist {
+  display: block;
+  margin: 1em 0;
+}
 .centered {
   text-align: center;
 }
