@@ -39,17 +39,24 @@ class TargetGists(restful.Resource):
         gists_mock = [
             {
                 "url": "https://api.github.com/gists/0f09f5dd83141be2c96b",
-                "id": "1",
                 "description": "description of gist",
-                "content": "var that = this;",
-                "name": "script 1",
+                "files": {
+                    "script.js": {
+                        "contents": "var that = this;"
+                    },
+                    "config": {
+                        "contents": "airscript1.herokuapp.com"
+                    }
+                }
             },
             {
                 "url": "https://api.github.com/gists/0f09f5dd837643e2c123",
-                "id": "2",
                 "description": "description of another gist",
-                "content": "var x = 5;",
-                "name": "script 2",
+                "files": {
+                    "script.js": {
+                        "contents": "var x = 5;"
+                    }
+                }
             },]
         return gists_mock
 
