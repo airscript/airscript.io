@@ -103,7 +103,28 @@ class EngineConfig(restful.Resource):
 
 class Project(restful.Resource):
     def get(self):
-        return {"msg": "Hello world"}
+        project_mock = {
+            "type": "gist",
+            "id": "1",
+            "description": "description of gist",
+            "files": {
+                "ring.erl": {
+                    "size": 932,
+                    "filename": "ring.erl",
+                    "raw_url": "https://gist.github.com/raw/365370/8c4d2d43d178df44f4c03a7f2ac0ff512853564e/ring.erl"
+                },
+                "ring2.erl": {
+                    "size": 9,
+                    "filename": "ring2.erl",
+                    "raw_url": "https://gist.github.com/raw/365370/8c4d2d43d178df44f4c03a7f2ac0ff512853564e/ring2.erl"
+                },
+            },
+            "config": {
+                "engine_name": "foobar",
+                "engine_url": "http://foobar.herokuapps.com/"
+            },
+        }
+        return project_mock
 
     def put(self):
         pass
