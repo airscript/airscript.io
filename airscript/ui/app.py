@@ -6,7 +6,7 @@ from flask import render_template
 from flask import make_response
 import requests
 
-app = Flask('airscript.ui')
+app = Flask('airscript.ui', static_url_path='')
 app.config['DEBUG'] = True
 
 import api
@@ -15,7 +15,7 @@ import api
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return redirect('/index.html')
 
 # OAuth dance endpoints
 
