@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+  <head></head>
+  <meta charset='utf-8' />
+  <title>Airscript.io</title>
+  <link type="text/css" rel="stylesheet" media="screen" href="/stylesheets/bootstrap.css" />
+  <link type="text/css" rel="stylesheet" media="screen" href="/stylesheets/bootstrap-responsive.css" />
+  <link type="text/css" rel="stylesheet" media="screen" href="/stylesheets/normalize.css" />
+  <link type="text/css" rel="stylesheet" media="screen" href="/stylesheets/all.css" />
+  <script type="text/javascript" src="/javascripts/all.js"></script>
+  <body>
+    <div class='gist_modal modal hide fade' tabindex='-1'>
+  <div class='modal-header'>
+    <button class='close' data-dismiss='modal' type='button'></button>
+    <h3>Select Gist</h3>
+  </div>
+  <div class='modal-body' data-bind='foreach: scriptsView.gists'>
+    <a class='btn gist' data-bind='text: description, click: $parent.scriptsView.selectGist' data-dismiss='modal' href='#'></a>
+  </div>
+</div>
+<section class='content'>
+  <div class='row-fluid'>
+    <div class='scripts'>
+      <h2 class='brand'>Airscript</h2>
+      <h4 data-bind='text: projectName'></h4>
+      <ul data-bind='foreach: scriptsView.scripts'>
+        <li data-bind='css: {active: active()}'>
+          <a data-bind='text: name, click: $parent.scriptsView.selectScript' href='#'></a>
+        </li>
+      </ul>
+      <a class='new_script not_implemented' data-bind='click: scriptsView.createNewScript' href='#'>Create New Script</a>
+      <input class='script-name' data-bind='value: scriptName' type='text' />
+      <div class='btn save-script' data-bind='click: saveScript'>Save</div>
+      <div class='btn-group script_controls'>
+        <div class='btn-toolbar not_implemented'>
+          <div class='btn'>Environment</div>
+        </div>
+        <div class='btn-toolbar'>
+          <div class='btn' data-target='.gist_modal' data-toggle='modal'>Set Target</div>
+        </div>
+        <div class='btn-toolbar'>
+          <div class='btn' data-bind='click: scriptsView.saveScripts'>Deploy</div>
+        </div>
+      </div>
+    </div>
+    <div class='edit main'>
+      <div class='airscript_background'></div>
+      <div class='editor_container'>
+        <div data-bind="ace: source, aceOptions: { mode: 'javascript', theme: 'monokai' }" id='editor'></div>
+        <textarea class='hidden' data-bind='value: source'></textarea>
+      </div>
+      <div class='console not_implemented'>
+        <ul class='nav nav-tabs'>
+          <li data-bind='css: {active: consoleView.logActive()}'>
+            <a data-bind='click: consoleView.logMode()'>Logs</a>
+          </li>
+          <li data-bind='css: {active: consoleView.referenceActive()}'>
+            <a data-bind='click: consoleView.referenceMode()'>Reference</a>
+          </li>
+        </ul>
+        <div class='output' data-bind='text: consoleView.logOutput(), visible: consoleView.logActive()'></div>
+        <div class='output' data-bind='text: consoleView.referenceOutput(), visible: consoleView.referenceActive()'></div>
+      </div>
+    </div>
+  </div>
+</section>
+<script type='text/javascript'>
+  //<![CDATA[
+    (function() {
+
+  Airscript.init();
+
+}).call(this);
+
+  //]]>
+</script>
+  </body>
+</html>
