@@ -1,50 +1,8 @@
-= partial :github_login
-= partial :heroku_login
-= partial :gist_selection
-
 %section.content
   .row-fluid
-    .scripts(data-bind='visible: editMode()')
-      %h2.brand Airscript
-      %h4(data-bind='text: projectName')
-      %ul(data-bind='foreach: scriptsView.scripts')
-        %li(data-bind='css: {active: active()}')
-          %a(href='#' data-bind='text: name, click: $parent.scriptsView.selectScript')
-      %a.new_script.not_implemented(href='#' data-bind='visible: editMode(), click: scriptsView.createNewScript') Create New Script
-
-      %input.script-name(type='text' data-bind='value: scriptName')
-      .btn.save-script(data-bind='click: saveScript') Save
-
-      .btn-group.script_controls(data-bind='visible: editMode()')
-        .btn-toolbar.not_implemented
-          .btn Environment
-        .btn-toolbar
-          .btn(data-toggle="modal" data-target=".gist_modal") Set Target
-        .btn-toolbar
-          .btn(data-bind='click: scriptsView.saveScripts') Deploy
-
-    .span12.main(data-bind='visible: !editMode()')
+    .span12.main
       .hero-unit
         %h1.callout Airscript
         %p Lorem ipsum anim quis reprehenderit officia dolore Excepteur velit eu qui sit qui in do et laborum aliqua ad ullamco ex irure sint nostrud consequat eu amet quis sed fugiat laborum elit veniam dolor pariatur commodo Excepteur sunt officia officia occaecat ea exercitation nulla culpa Excepteur quis eu minim aliqua labore dolor irure ex esse cillum ex non voluptate ullamco laboris voluptate sed ad dolore occaecat dolore tempor mollit in ea minim eiusmod laborum exercitation adipisicing velit commodo sit proident irure tempor do pariatur qui do voluptate eiusmod sint sunt reprehenderit occaecat pariatur consequat aliqua culpa sunt ut fugiat anim labore in voluptate sunt eu ut in reprehenderit id magna occaecat nisi commodo magna ea in magna sunt officia nostrud Duis sed eiusmod cillum ex qui laborum culpa in non ullamco elit exercitation Ut incididunt aliqua consequat pariatur sint fugiat est dolor do eu ad est ad nisi minim consectetur tempor in et pariatur sit anim sed aute nostrud nisi tempor ea enim proident ea ut Ut sint fugiat consectetur veniam Duis aute ut sint Excepteur minim irure elit laboris dolore in officia anim sed dolor amet et mollit ut sint veniam aute elit dolore officia aliqua ullamco labore minim commodo sunt et est qui sit est occaecat occaecat amet ad sint occaecat labore fugiat id laborum dolore non fugiat sed labore aliquip sed incididunt esse enim ex minim nostrud in sint in quis Excepteur nulla adipisicing magna ut proident dolore esse deserunt sed quis dolor eiusmod minim eu.
         %p.centered
           %a.btn.btn-primary.btn-large(href='http://localhost:5000/auth/login') Get Started
-
-    .edit.main(data-bind='visible: editMode()')
-      .airscript_background
-      .editor_container
-        #editor(data-bind="ace: source, aceOptions: { mode: 'javascript', theme: 'monokai' }")
-
-        %textarea.hidden(data-bind="value: source")
-
-      .console.not_implemented
-        %ul.nav.nav-tabs
-          %li(data-bind='css: {active: consoleView.logActive()}')
-            %a(data-bind='click: consoleView.logMode()') Logs
-          %li(data-bind='css: {active: consoleView.referenceActive()}')
-            %a(data-bind='click: consoleView.referenceMode()') Reference
-        .output(data-bind='text: consoleView.logOutput(), visible: consoleView.logActive()')
-        .output(data-bind='text: consoleView.referenceOutput(), visible: consoleView.referenceActive()')
-
-:coffeescript
-  Airscript.init()

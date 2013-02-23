@@ -16,8 +16,6 @@
 
 #= require view_models/console
 #= require view_models/editor
-#= require view_models/github
-#= require view_models/heroku
 #= require view_models/scripts
 
 #= require main
