@@ -4,18 +4,20 @@
   .row-fluid
     .scripts
       %h2.brand Airscript
-      %h4(data-bind='text: projectName')
-      %ul(data-bind='foreach: scriptsView.scripts')
+      %label
+        %h5 Project Name
+        %input(type='text' data-bind='value: projectName')
+      %h5(data-bind='visible: scriptsView.scripts().length') Files
+      %ul.files(data-bind='foreach: scriptsView.scripts')
         %li(data-bind='css: {active: active()}')
-          %a(href='#' data-bind='text: name, click: $parent.scriptsView.selectScript')
+          %input(type='text' data-bind='value: name, click: $parent.scriptsView.selectScript')
       %a.new_script.not_implemented(href='#' data-bind='click: scriptsView.createNewScript') Create New Script
-
-      %input.script-name(type='text' data-bind='value: scriptName')
-      .btn.save-script(data-bind='click: saveScript') Save
 
       .btn-group.script_controls
         .btn-toolbar.not_implemented
           .btn Environment
+        .btn-toolbar
+          .btn.save-script(data-bind='click: saveScript') Save
         .btn-toolbar
           .btn(data-toggle="modal" data-target=".gist_modal") Set Target
         .btn-toolbar

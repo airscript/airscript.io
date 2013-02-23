@@ -1,16 +1,13 @@
 (function() {
 
   Airscript.init = function() {
-    var ViewModels, editor, github, heroku;
+    var ViewModels, editor;
     Airscript.eventBus = new ko.subscribable();
     ViewModels = Airscript.ViewModels;
-    github = new ViewModels.Github();
-    heroku = new ViewModels.Heroku();
     editor = new ViewModels.Editor();
     ko.applyBindings(editor, document.querySelector('section.content'));
     ko.applyBindings(editor, document.querySelector('.gist_modal'));
-    ko.applyBindings(github, document.querySelector('.github_modal'));
-    return ko.applyBindings(heroku, document.querySelector('.heroku_modal'));
+    return $('.gist_modal').modal('show');
   };
 
 }).call(this);

@@ -3,89 +3,15 @@
   <head></head>
   <meta charset='utf-8' />
   <title>Airscript.io</title>
-  <link href="/stylesheets/bootstrap.css" media="screen" rel="stylesheet" type="text/css" />
-  <link href="/stylesheets/bootstrap-responsive.css" media="screen" rel="stylesheet" type="text/css" />
-  <link href="/stylesheets/normalize.css" media="screen" rel="stylesheet" type="text/css" />
-  <link href="/stylesheets/all.css" media="screen" rel="stylesheet" type="text/css" />
-  <script src="/javascripts/all.js" type="text/javascript"></script>
+  <link type="text/css" rel="stylesheet" media="screen" href="/stylesheets/bootstrap.css" />
+  <link type="text/css" rel="stylesheet" media="screen" href="/stylesheets/bootstrap-responsive.css" />
+  <link type="text/css" rel="stylesheet" media="screen" href="/stylesheets/normalize.css" />
+  <link type="text/css" rel="stylesheet" media="screen" href="/stylesheets/all.css" />
+  <script type="text/javascript" src="/javascripts/all.js"></script>
   <body>
-    <div class='github_modal modal hide fade' tabindex='-1'>
-  <div class='modal-header'>
-    <button class='close' data-dismiss='modal' type='button'></button>
-    <h3>Log in with GitHub</h3>
-  </div>
-  <div class='modal-body'>
-    <label>
-      <input class='username' placeholder='GitHub user name' type='text' />
-    </label>
-    <label>
-      <input class='password' placeholder='GitHub password' type='password' />
-    </label>
-    <label>
-      <input class='project_name' placeholder='Project Name' type='text' />
-    </label>
-  </div>
-  <div class='modal-footer'>
-    <button class='btn' data-dismiss='modal'>Close</button>
-    <button class='btn btn-primary github_login' data-bind='click: createProject'>Login</button>
-  </div>
-</div>
-<div class='heroku_modal modal hide fade' tabindex='-1'>
-  <div class='modal-header'>
-    <button class='close' data-dismiss='modal' type='button'></button>
-    <h3>Log in with Heroku</h3>
-  </div>
-  <div class='modal-body'>
-    <label>
-      <input class='username' placeholder='Heroku user name' type='text' />
-    </label>
-    <label>
-      <input class='password' placeholder='Heroku password' type='password' />
-    </label>
-    <label>
-      <input class='project_name' placeholder='Project Name' type='text' />
-    </label>
-  </div>
-  <div class='modal-footer'>
-    <button class='btn' data-dismiss='modal'>Close</button>
-    <button class='btn btn-primary github_login' data-bind='click: createProject'>Login</button>
-  </div>
-</div>
-<div class='gist_modal modal hide fade' tabindex='-1'>
-  <div class='modal-header'>
-    <button class='close' data-dismiss='modal' type='button'></button>
-    <h3>Select Gist</h3>
-  </div>
-  <div class='modal-body' data-bind='foreach: scriptsView.gists'>
-    <a class='btn gist' data-bind='text: description, click: $parent.scriptsView.selectGist' data-dismiss='modal' href='#'></a>
-  </div>
-</div>
-<section class='content'>
+    <section class='content'>
   <div class='row-fluid'>
-    <div class='scripts' data-bind='visible: editMode()'>
-      <h2 class='brand'>Airscript</h2>
-      <h4 data-bind='text: projectName'></h4>
-      <ul data-bind='foreach: scriptsView.scripts'>
-        <li data-bind='css: {active: active()}'>
-          <a data-bind='text: name, click: $parent.scriptsView.selectScript' href='#'></a>
-        </li>
-      </ul>
-      <a class='new_script not_implemented' data-bind='visible: editMode(), click: scriptsView.createNewScript' href='#'>Create New Script</a>
-      <input class='script-name' data-bind='value: scriptName' type='text' />
-      <div class='btn save-script' data-bind='click: saveScript'>Save</div>
-      <div class='btn-group script_controls' data-bind='visible: editMode()'>
-        <div class='btn-toolbar not_implemented'>
-          <div class='btn'>Environment</div>
-        </div>
-        <div class='btn-toolbar'>
-          <div class='btn' data-target='.gist_modal' data-toggle='modal'>Set Target</div>
-        </div>
-        <div class='btn-toolbar'>
-          <div class='btn' data-bind='click: scriptsView.saveScripts'>Deploy</div>
-        </div>
-      </div>
-    </div>
-    <div class='span12 main' data-bind='visible: !editMode()'>
+    <div class='span12 main'>
       <div class='hero-unit'>
         <h1 class='callout'>Airscript</h1>
         <p>Lorem ipsum anim quis reprehenderit officia dolore Excepteur velit eu qui sit qui in do et laborum aliqua ad ullamco ex irure sint nostrud consequat eu amet quis sed fugiat laborum elit veniam dolor pariatur commodo Excepteur sunt officia officia occaecat ea exercitation nulla culpa Excepteur quis eu minim aliqua labore dolor irure ex esse cillum ex non voluptate ullamco laboris voluptate sed ad dolore occaecat dolore tempor mollit in ea minim eiusmod laborum exercitation adipisicing velit commodo sit proident irure tempor do pariatur qui do voluptate eiusmod sint sunt reprehenderit occaecat pariatur consequat aliqua culpa sunt ut fugiat anim labore in voluptate sunt eu ut in reprehenderit id magna occaecat nisi commodo magna ea in magna sunt officia nostrud Duis sed eiusmod cillum ex qui laborum culpa in non ullamco elit exercitation Ut incididunt aliqua consequat pariatur sint fugiat est dolor do eu ad est ad nisi minim consectetur tempor in et pariatur sit anim sed aute nostrud nisi tempor ea enim proident ea ut Ut sint fugiat consectetur veniam Duis aute ut sint Excepteur minim irure elit laboris dolore in officia anim sed dolor amet et mollit ut sint veniam aute elit dolore officia aliqua ullamco labore minim commodo sunt et est qui sit est occaecat occaecat amet ad sint occaecat labore fugiat id laborum dolore non fugiat sed labore aliquip sed incididunt esse enim ex minim nostrud in sint in quis Excepteur nulla adipisicing magna ut proident dolore esse deserunt sed quis dolor eiusmod minim eu.</p>
@@ -94,36 +20,7 @@
         </p>
       </div>
     </div>
-    <div class='edit main' data-bind='visible: editMode()'>
-      <div class='airscript_background'></div>
-      <div class='editor_container'>
-        <div data-bind="ace: source, aceOptions: { mode: 'javascript', theme: 'monokai' }" id='editor'></div>
-        <textarea class='hidden' data-bind='value: source'></textarea>
-      </div>
-      <div class='console not_implemented'>
-        <ul class='nav nav-tabs'>
-          <li data-bind='css: {active: consoleView.logActive()}'>
-            <a data-bind='click: consoleView.logMode()'>Logs</a>
-          </li>
-          <li data-bind='css: {active: consoleView.referenceActive()}'>
-            <a data-bind='click: consoleView.referenceMode()'>Reference</a>
-          </li>
-        </ul>
-        <div class='output' data-bind='text: consoleView.logOutput(), visible: consoleView.logActive()'></div>
-        <div class='output' data-bind='text: consoleView.referenceOutput(), visible: consoleView.referenceActive()'></div>
-      </div>
-    </div>
   </div>
 </section>
-<script type='text/javascript'>
-  //<![CDATA[
-    (function() {
-
-  Airscript.init();
-
-}).call(this);
-
-  //]]>
-</script>
   </body>
 </html>
