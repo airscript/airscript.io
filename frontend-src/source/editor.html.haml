@@ -4,9 +4,9 @@
   .row-fluid
     .scripts
       %h2.brand Airscript
-      %label
-        %h5 Project Name
-        %input(type='text' data-bind='value: projectName')
+      %label(data-bind='visible: scriptsView.gists().length')
+        %h5 Script Description
+        %input(type='text' data-bind='value: scriptsView.activeGist()')
       %h5(data-bind='visible: scriptsView.scripts().length') Files
       %ul.files(data-bind='foreach: scriptsView.scripts')
         %li(data-bind='css: {active: active()}')

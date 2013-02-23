@@ -7,14 +7,14 @@ Airscript.namespace "Airscript.ViewModels", (Models) ->
     self.gists = ko.observableArray()
     self.scripts = ko.observableArray()
 
+    self.activeGist = ko.observable('')
+
     $.getJSON 'http://localhost:5000/api/v1/project/target/gists', (data) ->
       for gist in data
         self.gists.push gist
 
     activateScript = (index) ->
       activeScript = self.scripts()[index]
-
-      activeScript.active(true)
 
       Airscript.eventBus.notifySubscribers {name: activeScript.name(), source: activeScript.source()}, 'editor:updateCode'
 
@@ -28,6 +28,8 @@ Airscript.namespace "Airscript.ViewModels", (Models) ->
 
     self.selectGist = (gist, e) ->
       self.scripts([])
+
+      self.activeGist(gist.description)
 
       for fileName, fileObj of gist.files
         self.scripts.push {

@@ -22,18 +22,23 @@
   <div class='row-fluid'>
     <div class='scripts'>
       <h2 class='brand'>Airscript</h2>
-      <h4 data-bind='text: projectName'></h4>
-      <ul data-bind='foreach: scriptsView.scripts'>
+      <label>
+        <h5>Project Name</h5>
+        <input data-bind='value: projectName' type='text' />
+      </label>
+      <h5 data-bind='visible: scriptsView.scripts().length'>Files</h5>
+      <ul class='files' data-bind='foreach: scriptsView.scripts'>
         <li data-bind='css: {active: active()}'>
-          <a data-bind='text: name, click: $parent.scriptsView.selectScript' href='#'></a>
+          <input data-bind='value: name, click: $parent.scriptsView.selectScript' type='text' />
         </li>
       </ul>
       <a class='new_script not_implemented' data-bind='click: scriptsView.createNewScript' href='#'>Create New Script</a>
-      <input class='script-name' data-bind='value: scriptName' type='text' />
-      <div class='btn save-script' data-bind='click: saveScript'>Save</div>
       <div class='btn-group script_controls'>
         <div class='btn-toolbar not_implemented'>
           <div class='btn'>Environment</div>
+        </div>
+        <div class='btn-toolbar'>
+          <div class='btn save-script' data-bind='click: saveScript'>Save</div>
         </div>
         <div class='btn-toolbar'>
           <div class='btn' data-target='.gist_modal' data-toggle='modal'>Set Target</div>
