@@ -7,7 +7,9 @@
     editor = new ViewModels.Editor();
     ko.applyBindings(editor, document.querySelector('section.content'));
     ko.applyBindings(editor, document.querySelector('.gist_modal'));
-    return $('.gist_modal').modal('show');
+    $('.gist_modal').modal('show');
+    Airscript.aceEditor.setTheme("ace/theme/github");
+    return Airscript.aceEditor.getSession().setMode("ace/mode/lua");
   };
 
 }).call(this);
