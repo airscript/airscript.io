@@ -22,9 +22,9 @@
   <div class='row-fluid'>
     <div class='scripts'>
       <h2 class='brand'>Airscript</h2>
-      <label>
-        <h5>Project Name</h5>
-        <input data-bind='value: projectName' type='text' />
+      <label data-bind='visible: scriptsView.gists().length'>
+        <h5>Script Description</h5>
+        <input data-bind='value: scriptsView.activeGist()' type='text' />
       </label>
       <h5 data-bind='visible: scriptsView.scripts().length'>Files</h5>
       <ul class='files' data-bind='foreach: scriptsView.scripts'>

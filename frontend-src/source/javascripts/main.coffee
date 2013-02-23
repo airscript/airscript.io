@@ -9,3 +9,6 @@ Airscript.init = ->
   ko.applyBindings editor, document.querySelector('.gist_modal')
 
   $('.gist_modal').modal('show')
+
+  Airscript.aceEditor.setTheme("ace/theme/github")
+  Airscript.aceEditor.getSession().setMode("ace/mode/lua")
