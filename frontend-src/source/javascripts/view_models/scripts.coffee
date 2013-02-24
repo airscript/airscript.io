@@ -93,7 +93,7 @@ Airscript.namespace "Airscript.ViewModels", (Models) ->
           id: gist.id
         type: 'PUT'
         success: ->
-          $.getJSON "/api/v1/projects", (data) ->
+          $.getJSON "/api/v1/project", (data) ->
             gist.files = data.files
 
             self.scripts([])

@@ -31106,7 +31106,7 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
           },
           type: 'PUT',
           success: function() {
-            return $.getJSON("/api/v1/projects", function(data) {
+            return $.getJSON("/api/v1/project", function(data) {
               var fileName, fileObj, _ref, _results;
               gist.files = data.files;
               self.scripts([]);
