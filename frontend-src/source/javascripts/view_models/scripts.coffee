@@ -22,7 +22,7 @@ Airscript.namespace "Airscript.ViewModels", (Models) ->
         description: 'test gist'
         files: {
           'testing.rb': {
-            raw_url: 'https://gist.github.com/testing.rb'
+            raw_url: 'https://gist.github.com/mdiebolt/f0db8fa554857aadffc7/raw/a2922c91fe1cae360ec2d2ca6240cb21516618dc/access_to_sketch.rb'
           }
         }
       }, {
@@ -30,7 +30,7 @@ Airscript.namespace "Airscript.ViewModels", (Models) ->
         description: 'test gist 2'
         files: {
           'testing2.rb': {
-            raw_url: 'https://gist.github.com/testing2.rb'
+            raw_url: 'https://gist.github.com/mdiebolt/f0db8fa554857aadffc7/raw/a2922c91fe1cae360ec2d2ca6240cb21516618dc/access_to_sketch.rb'
           }
         }
       }]
@@ -54,18 +54,26 @@ Airscript.namespace "Airscript.ViewModels", (Models) ->
       self.scripts([])
 
       self.activeGist(gist)
-      self.activeGistDescription(gist.description || gist.id)
+
+      description = gist.description
+
+      unless description.length
+        description = gist.id
+
+      self.activeGistDescription(description)
 
       for fileName, fileObj of gist.files
-        self.scripts.push {
-          name: ko.observable(fileName)
-          source: ko.observable(fileObj.contents)
-          active: ko.observable(false)
-        }
+        $.getJSON fileObj.raw_url, (data) ->
+          self.scripts.push {
+            name: ko.observable(fileName)
+            source: ko.observable(data)
+            active: ko.observable(false)
+          }
 
-        self.index += 1
+          self.index += 1
 
-      activateScript(self.index)
+        activateScript(self.index)
+      
       $('.modal').modal('hide')
 
     self.selectScript = (script, e) ->
