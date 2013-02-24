@@ -9,7 +9,7 @@ Airscript.namespace "Airscript.ViewModels", (Models) ->
 
     self.activeGist = ko.observable('')
 
-    $.getJSON 'http://localhost:5000/api/v1/project/target/gists', (data) ->
+    $.getJSON '/api/v1/project/target/gists', (data) ->
       for gist in data
         self.gists.push gist
 
@@ -19,7 +19,7 @@ Airscript.namespace "Airscript.ViewModels", (Models) ->
       Airscript.eventBus.notifySubscribers {name: activeScript.name(), source: activeScript.source()}, 'editor:updateCode'
 
     self.saveScripts = ->
-      $.ajax 'http://localhost:5000/api/v1/project/target/gists'
+      $.ajax '/api/v1/project/target/gists'
         type: 'POST'
         data:
           description: 'testing'
