@@ -18,14 +18,14 @@
           .btn Environment
         .btn-toolbar
           .btn(data-toggle="modal" data-target=".gist_modal") Set Target
-        .btn-toolbar
+        .btn-toolbar.not_implemented
           .btn Deploy
 
     .edit.main
       .airscript_background
       .btn.btn-primary.save-script(data-bind='click: saveScript') Save
       .full_url
-        .clipboard(data-bind='attr: {"data-href": fullScriptUrl}')
+        %a.clipboard(href='#')
         .location(data-bind='text: fullScriptPath')
       .editor_container
         #editor(data-bind="ace: source, aceOptions: { mode: 'javascript', theme: 'monokai' }")

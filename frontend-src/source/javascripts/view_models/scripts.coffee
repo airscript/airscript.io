@@ -10,7 +10,7 @@ Airscript.namespace "Airscript.ViewModels", (Models) ->
     self.activeGistDescription = ko.observable('')
     self.activeGist = ko.observable()
 
-    gists = $.getJSON '/api/v1/project/target/gists', (data) ->
+    gists = $.getJSON '/api/v1/project', (data) ->
     gists.success (data) ->
       for gist in data
         gist.description = gist.id unless gist.description.length
