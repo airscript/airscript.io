@@ -70,7 +70,6 @@ Airscript.namespace "Airscript.ViewModels", (Models) ->
       gist = self.activeGist()
 
       data =
-        id: gist.id
         description: gist.description
         files: {}
 

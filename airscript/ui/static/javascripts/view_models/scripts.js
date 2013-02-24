@@ -78,7 +78,6 @@
         var data, file, gist, _i, _len, _ref;
         gist = self.activeGist();
         data = {
-          id: gist.id,
           description: gist.description,
           files: {}
         };
