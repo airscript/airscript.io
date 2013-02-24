@@ -24,7 +24,7 @@
       <h2 class='brand'>Airscript</h2>
       <label data-bind='visible: scriptsView.gists().length'>
         <h5>Script Description</h5>
-        <input data-bind='value: scriptsView.activeGist()' type='text' />
+        <textarea data-bind='value: scriptsView.activeGist()' type='text'></textarea>
       </label>
       <h5 data-bind='visible: scriptsView.scripts().length'>Files</h5>
       <ul class='files' data-bind='foreach: scriptsView.scripts'>
@@ -38,9 +38,6 @@
           <div class='btn'>Environment</div>
         </div>
         <div class='btn-toolbar'>
-          <div class='btn save-script' data-bind='click: saveScript'>Save</div>
-        </div>
-        <div class='btn-toolbar'>
           <div class='btn' data-target='.gist_modal' data-toggle='modal'>Set Target</div>
         </div>
         <div class='btn-toolbar'>
@@ -50,6 +47,7 @@
     </div>
     <div class='edit main'>
       <div class='airscript_background'></div>
+      <div class='btn btn-primary save-script' data-bind='click: saveScript'>Save</div>
       <div class='editor_container'>
         <div data-bind="ace: source, aceOptions: { mode: 'javascript', theme: 'monokai' }" id='editor'></div>
         <textarea class='hidden' data-bind='value: source'></textarea>

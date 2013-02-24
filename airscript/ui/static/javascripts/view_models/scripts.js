@@ -8,7 +8,7 @@
       self.gists = ko.observableArray();
       self.scripts = ko.observableArray();
       self.activeGist = ko.observable('');
-      $.getJSON('http://localhost:5000/api/v1/project/target/gists', function(data) {
+      $.getJSON('/api/v1/project/target/gists', function(data) {
         var gist, _i, _len, _results;
         _results = [];
         for (_i = 0, _len = data.length; _i < _len; _i++) {
@@ -26,7 +26,7 @@
         }, 'editor:updateCode');
       };
       self.saveScripts = function() {
-        return $.ajax('http://localhost:5000/api/v1/project/target/gists', {
+        return $.ajax('/api/v1/project/target/gists', {
           type: 'POST',
           data: {
             description: 'testing'
