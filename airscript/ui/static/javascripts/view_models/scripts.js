@@ -2,14 +2,44 @@
 
   Airscript.namespace("Airscript.ViewModels", function(Models) {
     return Models.Scripts = function() {
-      var activateScript, self;
+      var activateScript, gists, self;
       self = this;
       self.index = -1;
       self.gists = ko.observableArray();
       self.scripts = ko.observableArray();
-      self.activeGist = ko.observable('');
-      $.getJSON('/api/v1/project/target/gists', function(data) {
+      self.activeGistDescription = ko.observable('');
+      self.activeGist = ko.observable();
+      gists = $.getJSON('/api/v1/project/target/gists', function(data) {});
+      gists.success(function(data) {
         var gist, _i, _len, _results;
+        _results = [];
+        for (_i = 0, _len = data.length; _i < _len; _i++) {
+          gist = data[_i];
+          _results.push(self.gists.push(gist));
+        }
+        return _results;
+      });
+      gists.error(function() {
+        var data, gist, _i, _len, _results;
+        data = [
+          {
+            id: 'dsfasdf323r234',
+            description: 'test gist',
+            files: {
+              'testing.rb': {
+                raw_url: 'https://gist.github.com/testing.rb'
+              }
+            }
+          }, {
+            id: 'lkasjdf94',
+            description: 'test gist 2',
+            files: {
+              'testing2.rb': {
+                raw_url: 'https://gist.github.com/testing2.rb'
+              }
+            }
+          }
+        ];
         _results = [];
         for (_i = 0, _len = data.length; _i < _len; _i++) {
           gist = data[_i];
@@ -25,21 +55,18 @@
           source: activeScript.source()
         }, 'editor:updateCode');
       };
-      self.saveScripts = function() {
-        return $.ajax('/api/v1/project/target/gists', {
-          type: 'POST',
-          data: {
-            description: 'testing'
-          },
-          success: function(data) {
-            return console.log(data);
-          }
+      self.createNewFile = function() {
+        return self.scripts.push({
+          name: ko.observable('new script'),
+          source: ko.observable(''),
+          active: ko.observable(false)
         });
       };
       self.selectGist = function(gist, e) {
         var fileName, fileObj, _ref;
         self.scripts([]);
-        self.activeGist(gist.description);
+        self.activeGist(gist);
+        self.activeGistDescription(gist.description || gist.id);
         _ref = gist.files;
         for (fileName in _ref) {
           fileObj = _ref[fileName];
@@ -62,25 +89,6 @@
           script.active(false);
         }
         return activateScript(self.index);
-      };
-      self.createNewScript = function() {
-        var newScript, script, _i, _len, _ref;
-        _ref = self.scripts();
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          script = _ref[_i];
-          script.active(false);
-        }
-        newScript = {
-          name: ko.observable('New Script'),
-          source: ko.observable(''),
-          active: ko.observable(true)
-        };
-        self.scripts.push(newScript);
-        self.index += 1;
-        return Airscript.eventBus.notifySubscribers({
-          name: newScript.name(),
-          source: newScript.source()
-        }, 'editor:updateCode');
       };
       Airscript.eventBus.subscribe(function(newValue) {
         return self.createNewScript();

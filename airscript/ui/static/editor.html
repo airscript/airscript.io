@@ -24,7 +24,7 @@
       <h2 class='brand'>Airscript</h2>
       <label data-bind='visible: scriptsView.gists().length'>
         <h5>Script Description</h5>
-        <textarea data-bind='value: scriptsView.activeGist()' type='text'></textarea>
+        <textarea data-bind='value: scriptsView.activeGistDescription()' type='text'></textarea>
       </label>
       <h5 data-bind='visible: scriptsView.scripts().length'>Files</h5>
       <ul class='files' data-bind='foreach: scriptsView.scripts'>
@@ -32,7 +32,7 @@
           <input data-bind='value: name, click: $parent.scriptsView.selectScript' type='text' />
         </li>
       </ul>
-      <a class='new_script not_implemented' data-bind='click: scriptsView.createNewScript' href='#'>Create New Script</a>
+      <a class='new_file' data-bind='click: scriptsView.createNewFile' href='#'>Create New File</a>
       <div class='btn-group script_controls'>
         <div class='btn-toolbar not_implemented'>
           <div class='btn'>Environment</div>
@@ -41,7 +41,7 @@
           <div class='btn' data-target='.gist_modal' data-toggle='modal'>Set Target</div>
         </div>
         <div class='btn-toolbar'>
-          <div class='btn' data-bind='click: scriptsView.saveScripts'>Deploy</div>
+          <div class='btn'>Deploy</div>
         </div>
       </div>
     </div>
