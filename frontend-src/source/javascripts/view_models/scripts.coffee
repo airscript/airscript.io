@@ -58,6 +58,25 @@ Airscript.namespace "Airscript.ViewModels", (Models) ->
 
       activateScript(self.index)
 
+    self.saveGists = ->
+      gist = self.activeGist()
+
+      data =
+        description: gist.description
+        files: {}
+
+      for file in self.scripts()
+        data.files[file.name()] = {
+          content: file.source() || ""
+        }
+
+      $.ajax
+        url: '/api/v1/project/target/gists'
+        type: 'PUT'
+        data: data
+        success: ->
+          console.log 'woo'
+
     self.selectGist = (gist, e) ->
       self.scripts([])
       self.index = -1
@@ -91,6 +110,8 @@ Airscript.namespace "Airscript.ViewModels", (Models) ->
       script = self.scripts()[self.index]
 
       script.source(source)
+
+      self.saveGists()
     , @, "script:save"
 
     self

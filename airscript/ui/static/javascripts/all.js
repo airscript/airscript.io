@@ -31044,6 +31044,29 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
         self.index += 1;
         return activateScript(self.index);
       };
+      self.saveGists = function() {
+        var data, file, gist, _i, _len, _ref;
+        gist = self.activeGist();
+        data = {
+          description: gist.description,
+          files: {}
+        };
+        _ref = self.scripts();
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          file = _ref[_i];
+          data.files[file.name()] = {
+            content: file.source() || ""
+          };
+        }
+        return $.ajax({
+          url: '/api/v1/project/target/gists',
+          type: 'PUT',
+          data: data,
+          success: function() {
+            return console.log('woo');
+          }
+        });
+      };
       self.selectGist = function(gist, e) {
         var fileName, fileObj, _ref;
         self.scripts([]);
@@ -31075,7 +31098,8 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
         var name, script, source;
         name = _arg.name, source = _arg.source;
         script = self.scripts()[self.index];
-        return script.source(source);
+        script.source(source);
+        return self.saveGists();
       }, this, "script:save");
       return self;
     };
