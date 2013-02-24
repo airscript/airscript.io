@@ -98,7 +98,6 @@
         });
       };
       self.selectGist = function(gist, e) {
-        var fileName, fileObj, _ref;
         $.ajax({
           url: "/api/v1/project/target",
           data: {
@@ -107,25 +106,28 @@
           },
           type: 'PUT',
           success: function() {
-            return $.getJSON("/projects", function(data) {
-              return console.log(data);
+            return $.getJSON("/api/v1/projects", function(data) {
+              var fileName, fileObj, _ref, _results;
+              gist.files = data.files;
+              self.scripts([]);
+              self.index = -1;
+              self.activeGist(gist);
+              self.activeGistDescription(gist.description);
+              _ref = gist.files;
+              _results = [];
+              for (fileName in _ref) {
+                fileObj = _ref[fileName];
+                self.scripts.push({
+                  name: ko.observable(fileName),
+                  source: ko.observable(fileObj.content)
+                });
+                self.index += 1;
+                _results.push(activateScript(self.index));
+              }
+              return _results;
             });
           }
         });
-        self.scripts([]);
-        self.index = -1;
-        self.activeGist(gist);
-        self.activeGistDescription(gist.description);
-        _ref = gist.files;
-        for (fileName in _ref) {
-          fileObj = _ref[fileName];
-          self.scripts.push({
-            name: ko.observable(fileName),
-            source: ko.observable(fileObj.content)
-          });
-          self.index += 1;
-          activateScript(self.index);
-        }
         return $('.modal').modal('hide');
       };
       self.selectScript = function(script, e) {

@@ -93,25 +93,25 @@ Airscript.namespace "Airscript.ViewModels", (Models) ->
           id: gist.id
         type: 'PUT'
         success: ->
-          $.getJSON "/projects", (data) ->
-            console.log data
+          $.getJSON "/api/v1/projects", (data) ->
+            gist.files = data.files
 
-      self.scripts([])
-      self.index = -1
+            self.scripts([])
+            self.index = -1
 
-      self.activeGist(gist)
-      self.activeGistDescription(gist.description)
+            self.activeGist(gist)
+            self.activeGistDescription(gist.description)
 
-      for fileName, fileObj of gist.files
-        self.scripts.push {
-          name: ko.observable(fileName)
-          source: ko.observable(fileObj.content)
-        }
+            for fileName, fileObj of gist.files
+              self.scripts.push {
+                name: ko.observable(fileName)
+                source: ko.observable(fileObj.content)
+              }
 
-        self.index += 1
+              self.index += 1
 
-        activateScript(self.index)
-      
+              activateScript(self.index)
+            
       $('.modal').modal('hide')
 
     self.selectScript = (script, e) ->
