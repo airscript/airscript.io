@@ -126,8 +126,8 @@ class Project(restful.Resource):
         session['project'] = {
             "files": req.json['files'],
             "config": {
-                "engine_name": "foobar",
-                "engine_url": "http://foobar.herokuapps.com/"
+                "engine_name": "pure-reaches-3506",
+                "engine_url": "http://pure-reaches-3506.herokuapp.com/"
             },
         }
         return session['project']
