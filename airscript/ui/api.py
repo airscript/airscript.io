@@ -123,8 +123,12 @@ class Project(restful.Resource):
                 session['target']['id'])
         req = requests.get(url, params={
             'access_token': request.cookies['auth']}) 
+        files = req.json['files']
+        for filename in files:
+            url = files[filename]['raw_url']
+            files[filename]['content'] = requests.get(url).text
         session['project'] = {
-            "files": req.json['files'],
+            "files": files,
             "config": {
                 "engine_name": "pure-reaches-3506",
                 "engine_url": "http://pure-reaches-3506.herokuapp.com/"
