@@ -19,7 +19,7 @@ Airscript.namespace "Airscript.ViewModels", (Models) ->
     gists.error ->
       data = [{
         id: 'dsfasdf323r234'
-        description: 'test gist'
+        description: ''
         files: {
           'testing.rb': {
             raw_url: 'https://gist.github.com/mdiebolt/f0db8fa554857aadffc7/raw/a2922c91fe1cae360ec2d2ca6240cb21516618dc/access_to_sketch.rb'
@@ -36,6 +36,8 @@ Airscript.namespace "Airscript.ViewModels", (Models) ->
       }]
 
       for gist in data
+        gist.description = gist.id unless gist.description.length
+
         self.gists.push gist
 
     activateScript = (index) ->
@@ -61,13 +63,7 @@ Airscript.namespace "Airscript.ViewModels", (Models) ->
       self.index = -1
 
       self.activeGist(gist)
-
-      description = gist.description
-
-      unless description.length
-        description = gist.id
-
-      self.activeGistDescription(description)
+      self.activeGistDescription(gist.description)
 
       for fileName, fileObj of gist.files
         $.getJSON fileObj.raw_url, (data) ->

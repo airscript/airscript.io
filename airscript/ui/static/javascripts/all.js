@@ -31002,7 +31002,7 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
         data = [
           {
             id: 'dsfasdf323r234',
-            description: 'test gist',
+            description: '',
             files: {
               'testing.rb': {
                 raw_url: 'https://gist.github.com/mdiebolt/f0db8fa554857aadffc7/raw/a2922c91fe1cae360ec2d2ca6240cb21516618dc/access_to_sketch.rb'
@@ -31021,6 +31021,9 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
         _results = [];
         for (_i = 0, _len = data.length; _i < _len; _i++) {
           gist = data[_i];
+          if (!gist.description.length) {
+            gist.description = gist.id;
+          }
           _results.push(self.gists.push(gist));
         }
         return _results;
@@ -31042,15 +31045,11 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
         return activateScript(self.index);
       };
       self.selectGist = function(gist, e) {
-        var description, fileName, fileObj, _ref;
+        var fileName, fileObj, _ref;
         self.scripts([]);
         self.index = -1;
         self.activeGist(gist);
-        description = gist.description;
-        if (!description.length) {
-          description = gist.id;
-        }
-        self.activeGistDescription(description);
+        self.activeGistDescription(gist.description);
         _ref = gist.files;
         for (fileName in _ref) {
           fileObj = _ref[fileName];
