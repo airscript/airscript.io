@@ -31003,7 +31003,7 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
             description: 'test gist',
             files: {
               'testing.rb': {
-                raw_url: 'https://gist.github.com/testing.rb'
+                raw_url: 'https://gist.github.com/mdiebolt/f0db8fa554857aadffc7/raw/a2922c91fe1cae360ec2d2ca6240cb21516618dc/access_to_sketch.rb'
               }
             }
           }, {
@@ -31011,7 +31011,7 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
             description: 'test gist 2',
             files: {
               'testing2.rb': {
-                raw_url: 'https://gist.github.com/testing2.rb'
+                raw_url: 'https://gist.github.com/mdiebolt/f0db8fa554857aadffc7/raw/a2922c91fe1cae360ec2d2ca6240cb21516618dc/access_to_sketch.rb'
               }
             }
           }
@@ -31039,21 +31039,27 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
         });
       };
       self.selectGist = function(gist, e) {
-        var fileName, fileObj, _ref;
+        var description, fileName, fileObj, _ref;
         self.scripts([]);
         self.activeGist(gist);
-        self.activeGistDescription(gist.description || gist.id);
+        description = gist.description;
+        if (!description.length) {
+          description = gist.id;
+        }
+        self.activeGistDescription(description);
         _ref = gist.files;
         for (fileName in _ref) {
           fileObj = _ref[fileName];
-          self.scripts.push({
-            name: ko.observable(fileName),
-            source: ko.observable(fileObj.contents),
-            active: ko.observable(false)
+          $.getJSON(fileObj.raw_url, function(data) {
+            self.scripts.push({
+              name: ko.observable(fileName),
+              source: ko.observable(data),
+              active: ko.observable(false)
+            });
+            return self.index += 1;
           });
-          self.index += 1;
+          activateScript(self.index);
         }
-        activateScript(self.index);
         return $('.modal').modal('hide');
       };
       self.selectScript = function(script, e) {
