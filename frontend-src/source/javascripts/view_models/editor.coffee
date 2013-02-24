@@ -13,13 +13,13 @@ Airscript.namespace "Airscript.ViewModels", (Models) ->
     @projectName = ko.observable('pyConRussia.herokuapp.com')
 
     @source = ko.observable('')
-    @scriptName = ko.observable('New Script')
+    @scriptName = ko.observable('')
 
     @fullScriptUrl = ko.computed ->
-      "http://#{self.projectName()}/#{self.scriptsView.activeScriptName()}"
+      "http://#{self.projectName()}/#{self.scriptName()}"
 
     @fullScriptPath = ko.computed ->
-      "#{self.projectName()}/#{self.scriptsView.activeScriptName()}"
+      "#{self.projectName()}/#{self.scriptName()}"
 
     @saveScript = ->
       Airscript.eventBus.notifySubscribers {name: @scriptName(), source: @source()}, 'script:save'
