@@ -9,7 +9,7 @@
       self.scripts = ko.observableArray();
       self.activeGistDescription = ko.observable('');
       self.activeGist = ko.observable();
-      gists = $.getJSON('/api/v1/project/target/gists', function(data) {});
+      gists = $.getJSON('/api/v1/project', function(data) {});
       gists.success(function(data) {
         var gist, _i, _len, _results;
         _results = [];
