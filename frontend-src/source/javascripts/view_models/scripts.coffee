@@ -10,7 +10,7 @@ Airscript.namespace "Airscript.ViewModels", (Models) ->
     self.activeGistDescription = ko.observable('')
     self.activeGist = ko.observable()
 
-    gists = $.getJSON '/api/v1/project', (data) ->
+    gists = $.getJSON '/api/v1/project/target/gists', (data) ->
     gists.success (data) ->
       for gist in data
         gist.description = gist.id unless gist.description.length
@@ -86,6 +86,12 @@ Airscript.namespace "Airscript.ViewModels", (Models) ->
           console.log 'woo'
 
     self.selectGist = (gist, e) ->
+      $.ajax
+        url: "/api/v1/project/target/#{gist.id}"
+        type: 'PUT'
+        success: ->
+          console.log 'woo'
+
       self.scripts([])
       self.index = -1
 
