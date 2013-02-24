@@ -31009,7 +31009,7 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
       self.scripts = ko.observableArray();
       self.activeGistDescription = ko.observable('');
       self.activeGist = ko.observable();
-      gists = $.getJSON('/api/v1/project', function(data) {});
+      gists = $.getJSON('/api/v1/project/target/gists', function(data) {});
       gists.success(function(data) {
         var gist, _i, _len, _results;
         _results = [];
@@ -31099,6 +31099,13 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
       };
       self.selectGist = function(gist, e) {
         var fileName, fileObj, _ref;
+        $.ajax({
+          url: "/api/v1/project/target/" + gist.id,
+          type: 'PUT',
+          success: function() {
+            return console.log('woo');
+          }
+        });
         self.scripts([]);
         self.index = -1;
         self.activeGist(gist);
