@@ -7,9 +7,34 @@ Airscript.namespace "Airscript.ViewModels", (Models) ->
     self.gists = ko.observableArray()
     self.scripts = ko.observableArray()
 
-    self.activeGist = ko.observable('')
+    self.activeGistDescription = ko.observable('')
+    self.activeGist = ko.observable()
 
-    $.getJSON '/api/v1/project/target/gists', (data) ->
+    gists = $.getJSON '/api/v1/project/target/gists', (data) ->
+    gists.success (data) ->
+      for gist in data
+        self.gists.push gist
+
+    # mock data for dev
+    gists.error ->
+      data = [{
+        id: 'dsfasdf323r234'
+        description: 'test gist'
+        files: {
+          'testing.rb': {
+            raw_url: 'https://gist.github.com/testing.rb'
+          }
+        }
+      }, {
+        id: 'lkasjdf94'
+        description: 'test gist 2'
+        files: {
+          'testing2.rb': {
+            raw_url: 'https://gist.github.com/testing2.rb'
+          }
+        }
+      }]
+
       for gist in data
         self.gists.push gist
 
@@ -18,18 +43,18 @@ Airscript.namespace "Airscript.ViewModels", (Models) ->
 
       Airscript.eventBus.notifySubscribers {name: activeScript.name(), source: activeScript.source()}, 'editor:updateCode'
 
-    self.saveScripts = ->
-      $.ajax '/api/v1/project/target/gists'
-        type: 'POST'
-        data:
-          description: 'testing'
-        success: (data) ->
-          console.log data
+    self.createNewFile = ->
+      self.scripts.push {
+        name: ko.observable('new script')
+        source: ko.observable('')
+        active: ko.observable(false)
+      }
 
     self.selectGist = (gist, e) ->
       self.scripts([])
 
-      self.activeGist(gist.description)
+      self.activeGist(gist)
+      self.activeGistDescription(gist.description || gist.id)
 
       for fileName, fileObj of gist.files
         self.scripts.push {
@@ -50,21 +75,6 @@ Airscript.namespace "Airscript.ViewModels", (Models) ->
         script.active(false)
 
       activateScript(self.index)
-
-    self.createNewScript = ->
-      for script in self.scripts()
-        script.active(false)
-
-      newScript =
-        name: ko.observable('New Script')
-        source: ko.observable('')
-        active: ko.observable(true)
-
-      self.scripts.push newScript
-
-      self.index += 1
-
-      Airscript.eventBus.notifySubscribers {name: newScript.name(), source: newScript.source()}, 'editor:updateCode'
 
     Airscript.eventBus.subscribe (newValue) ->
       self.createNewScript()
