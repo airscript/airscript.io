@@ -31107,7 +31107,9 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
           },
           type: 'PUT',
           success: function() {
-            return console.log('woo');
+            return $.getJSON("/projects", function(data) {
+              return console.log(data);
+            });
           }
         });
         self.scripts([]);

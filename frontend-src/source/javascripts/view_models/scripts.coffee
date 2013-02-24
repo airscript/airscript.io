@@ -93,7 +93,8 @@ Airscript.namespace "Airscript.ViewModels", (Models) ->
           id: gist.id
         type: 'PUT'
         success: ->
-          console.log 'woo'
+          $.getJSON "/projects", (data) ->
+            console.log data
 
       self.scripts([])
       self.index = -1
