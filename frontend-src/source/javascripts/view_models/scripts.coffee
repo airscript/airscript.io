@@ -13,6 +13,8 @@ Airscript.namespace "Airscript.ViewModels", (Models) ->
     gists = $.getJSON '/api/v1/project/target/gists', (data) ->
     gists.success (data) ->
       for gist in data
+        gist.description = gist.id unless gist.description.length
+
         self.gists.push gist
 
     # mock data for dev
@@ -47,6 +49,12 @@ Airscript.namespace "Airscript.ViewModels", (Models) ->
         name: activeScript.name()
         source: activeScript.source()
       }, 'editor:updateCode'
+
+    self.activeScriptName = ko.computed ->
+      script = self.scripts()[self.index]
+
+      return script?.name() || ''
+    , self
 
     self.createNewFile = ->
       self.scripts.push {

@@ -30952,13 +30952,22 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
 
   Airscript.namespace("Airscript.ViewModels", function(Models) {
     return Models.Editor = function() {
+      var self;
+      self = this;
       this.aceEditor = ace.edit("editor");
       this.aceEditor.setShowPrintMargin(false);
       Airscript.aceEditor = this.aceEditor;
       this.scriptsView = new Models.Scripts();
       this.consoleView = new Models.Console();
+      this.projectName = ko.observable('pyConRussia.herokuapp.com');
       this.source = ko.observable('');
       this.scriptName = ko.observable('New Script');
+      this.fullScriptUrl = ko.computed(function() {
+        return "http://" + (self.projectName()) + "/" + (self.scriptsView.activeScriptName());
+      });
+      this.fullScriptPath = ko.computed(function() {
+        return "" + (self.projectName()) + "/" + (self.scriptsView.activeScriptName());
+      });
       this.saveScript = function() {
         return Airscript.eventBus.notifySubscribers({
           name: this.scriptName(),
@@ -30993,6 +31002,9 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
         _results = [];
         for (_i = 0, _len = data.length; _i < _len; _i++) {
           gist = data[_i];
+          if (!gist.description.length) {
+            gist.description = gist.id;
+          }
           _results.push(self.gists.push(gist));
         }
         return _results;
@@ -31036,6 +31048,11 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
           source: activeScript.source()
         }, 'editor:updateCode');
       };
+      self.activeScriptName = ko.computed(function() {
+        var script;
+        script = self.scripts()[self.index];
+        return (script != null ? script.name() : void 0) || '';
+      }, self);
       self.createNewFile = function() {
         self.scripts.push({
           name: ko.observable('new script'),

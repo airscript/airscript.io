@@ -15,6 +15,9 @@
         _results = [];
         for (_i = 0, _len = data.length; _i < _len; _i++) {
           gist = data[_i];
+          if (!gist.description.length) {
+            gist.description = gist.id;
+          }
           _results.push(self.gists.push(gist));
         }
         return _results;
@@ -58,6 +61,11 @@
           source: activeScript.source()
         }, 'editor:updateCode');
       };
+      self.activeScriptName = ko.computed(function() {
+        var script;
+        script = self.scripts()[self.index];
+        return (script != null ? script.name() : void 0) || '';
+      }, self);
       self.createNewFile = function() {
         self.scripts.push({
           name: ko.observable('new script'),
