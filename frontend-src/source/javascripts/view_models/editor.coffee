@@ -15,11 +15,8 @@ Airscript.namespace "Airscript.ViewModels", (Models) ->
     @source = ko.observable('')
     @scriptName = ko.observable('')
 
-    @fullScriptUrl = ko.computed ->
-      "http://#{self.projectName()}/#{self.scriptName()}"
-
     @fullScriptPath = ko.computed ->
-      "#{self.projectName()}/#{self.scriptName()}"
+      "#{self.projectName()}#{self.scriptName()}"
 
     @saveScript = ->
       Airscript.eventBus.notifySubscribers {name: @scriptName(), source: @source()}, 'script:save'

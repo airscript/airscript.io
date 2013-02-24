@@ -12,11 +12,8 @@
       this.projectName = ko.observable('');
       this.source = ko.observable('');
       this.scriptName = ko.observable('');
-      this.fullScriptUrl = ko.computed(function() {
-        return "http://" + (self.projectName()) + "/" + (self.scriptName());
-      });
       this.fullScriptPath = ko.computed(function() {
-        return "" + (self.projectName()) + "/" + (self.scriptName());
+        return "" + (self.projectName()) + (self.scriptName());
       });
       this.saveScript = function() {
         return Airscript.eventBus.notifySubscribers({
