@@ -30961,12 +30961,12 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
       this.consoleView = new Models.Console();
       this.projectName = ko.observable('pyConRussia.herokuapp.com');
       this.source = ko.observable('');
-      this.scriptName = ko.observable('New Script');
+      this.scriptName = ko.observable('');
       this.fullScriptUrl = ko.computed(function() {
-        return "http://" + (self.projectName()) + "/" + (self.scriptsView.activeScriptName());
+        return "http://" + (self.projectName()) + "/" + (self.scriptName());
       });
       this.fullScriptPath = ko.computed(function() {
-        return "" + (self.projectName()) + "/" + (self.scriptsView.activeScriptName());
+        return "" + (self.projectName()) + "/" + (self.scriptName());
       });
       this.saveScript = function() {
         return Airscript.eventBus.notifySubscribers({
