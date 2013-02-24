@@ -17,14 +17,13 @@
         .btn-toolbar.not_implemented
           .btn Environment
         .btn-toolbar
-          .btn.save-script(data-bind='click: saveScript') Save
-        .btn-toolbar
           .btn(data-toggle="modal" data-target=".gist_modal") Set Target
         .btn-toolbar
           .btn(data-bind='click: scriptsView.saveScripts') Deploy
 
     .edit.main
       .airscript_background
+      .btn.btn-primary.save-script(data-bind='click: saveScript') Save
       .editor_container
         #editor(data-bind="ace: source, aceOptions: { mode: 'javascript', theme: 'monokai' }")
 
