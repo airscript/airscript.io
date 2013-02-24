@@ -24,7 +24,7 @@ Airscript.namespace "Airscript.ViewModels", (Models) ->
         description: ''
         files: {
           'testing.rb': {
-            raw_url: 'https://gist.github.com/mdiebolt/f0db8fa554857aadffc7/raw/a2922c91fe1cae360ec2d2ca6240cb21516618dc/access_to_sketch.rb'
+            content: 'some stuff'
           }
         }
       }, {
@@ -32,7 +32,7 @@ Airscript.namespace "Airscript.ViewModels", (Models) ->
         description: 'test gist 2'
         files: {
           'testing2.rb': {
-            raw_url: 'https://gist.github.com/mdiebolt/f0db8fa554857aadffc7/raw/a2922c91fe1cae360ec2d2ca6240cb21516618dc/access_to_sketch.rb'
+            content: 'moar stuff'
           }
         }
       }]
@@ -79,7 +79,7 @@ Airscript.namespace "Airscript.ViewModels", (Models) ->
         }
 
       $.ajax
-        url: '/api/v1/project/target/gists'
+        url: '/api/v1/project'
         type: 'PUT'
         data: data
         success: ->
@@ -93,15 +93,14 @@ Airscript.namespace "Airscript.ViewModels", (Models) ->
       self.activeGistDescription(gist.description)
 
       for fileName, fileObj of gist.files
-        $.getJSON fileObj.raw_url, (data) ->
-          self.scripts.push {
-            name: ko.observable(fileName)
-            source: ko.observable(data)
-          }
+        self.scripts.push {
+          name: ko.observable(fileName)
+          source: ko.observable(fileObj.content)
+        }
 
-          self.index += 1
+        self.index += 1
 
-          activateScript(self.index)
+        activateScript(self.index)
       
       $('.modal').modal('hide')
 

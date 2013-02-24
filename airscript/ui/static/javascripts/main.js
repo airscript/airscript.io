@@ -12,4 +12,13 @@
     return Airscript.aceEditor.getSession().setMode("ace/mode/lua");
   };
 
+  $(function() {
+    return $('.clipboard').zclip({
+      path: '/flash/ZeroClipboard.swf',
+      copy: function() {
+        debugger;        return $('.full_url .location').text();
+      }
+    });
+  });
+
 }).call(this);

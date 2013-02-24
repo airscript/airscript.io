@@ -48,7 +48,10 @@
     <div class='edit main'>
       <div class='airscript_background'></div>
       <div class='btn btn-primary save-script' data-bind='click: saveScript'>Save</div>
-      <a class='full_url' data-bind='text: fullScriptPath, attr: {href: fullScriptUrl}' target='_blank'></a>
+      <div class='full_url'>
+        <div class='clipboard' data-bind='attr: {"data-href": fullScriptUrl}'></div>
+        <div class='location' data-bind='text: fullScriptPath'></div>
+      </div>
       <div class='editor_container'>
         <div data-bind="ace: source, aceOptions: { mode: 'javascript', theme: 'monokai' }" id='editor'></div>
         <textarea class='hidden' data-bind='value: source'></textarea>

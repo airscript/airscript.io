@@ -14,9 +14,18 @@ section.content,
 body {
   background-image: url("/img/lightpaperfibers.png");
 }
+.clipboard {
+  width: 25px;
+  height: 26px;
+  float: left;
+  background-color: #f00;
+  position: absolute;
+  left: -30px;
+  top: -1px;
+}
 .full_url {
   position: absolute;
-  top: 50px;
+  top: 10px;
   right: 10px;
   z-index: 11;
   background-color: rgba(0,0,0,0.05);
@@ -28,7 +37,7 @@ body {
   float: right;
 }
 .save-script {
-  top: 10px;
+  top: 40px;
   right: 10px;
   position: absolute;
   width: 100px;

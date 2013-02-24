@@ -12,3 +12,11 @@ Airscript.init = ->
 
   Airscript.aceEditor.setTheme("ace/theme/github")
   Airscript.aceEditor.getSession().setMode("ace/mode/lua")
+
+$ ->
+  $('.clipboard').zclip
+    path:'/flash/ZeroClipboard.swf'
+    copy: ->
+      debugger
+      $('.full_url .location').text()
+  

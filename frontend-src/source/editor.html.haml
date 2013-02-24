@@ -24,7 +24,9 @@
     .edit.main
       .airscript_background
       .btn.btn-primary.save-script(data-bind='click: saveScript') Save
-      %a.full_url(target='_blank' data-bind='text: fullScriptPath, attr: {href: fullScriptUrl}')
+      .full_url
+        .clipboard(data-bind='attr: {"data-href": fullScriptUrl}')
+        .location(data-bind='text: fullScriptPath')
       .editor_container
         #editor(data-bind="ace: source, aceOptions: { mode: 'javascript', theme: 'monokai' }")
 

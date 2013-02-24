@@ -1,5 +1,6 @@
 #= require ace/ace
 #= require jquery-1.8.2
+#= require jquery.zero_clipboard.min
 
 #= require underscore.min
 #= require underscore.string

@@ -30,7 +30,7 @@
             description: '',
             files: {
               'testing.rb': {
-                raw_url: 'https://gist.github.com/mdiebolt/f0db8fa554857aadffc7/raw/a2922c91fe1cae360ec2d2ca6240cb21516618dc/access_to_sketch.rb'
+                content: 'some stuff'
               }
             }
           }, {
@@ -38,7 +38,7 @@
             description: 'test gist 2',
             files: {
               'testing2.rb': {
-                raw_url: 'https://gist.github.com/mdiebolt/f0db8fa554857aadffc7/raw/a2922c91fe1cae360ec2d2ca6240cb21516618dc/access_to_sketch.rb'
+                content: 'moar stuff'
               }
             }
           }
@@ -89,7 +89,7 @@
           };
         }
         return $.ajax({
-          url: '/api/v1/project/target/gists',
+          url: '/api/v1/project',
           type: 'PUT',
           data: data,
           success: function() {
@@ -106,14 +106,12 @@
         _ref = gist.files;
         for (fileName in _ref) {
           fileObj = _ref[fileName];
-          $.getJSON(fileObj.raw_url, function(data) {
-            self.scripts.push({
-              name: ko.observable(fileName),
-              source: ko.observable(data)
-            });
-            self.index += 1;
-            return activateScript(self.index);
+          self.scripts.push({
+            name: ko.observable(fileName),
+            source: ko.observable(fileObj.content)
           });
+          self.index += 1;
+          activateScript(self.index);
         }
         return $('.modal').modal('hide');
       };
