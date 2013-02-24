@@ -56,15 +56,17 @@
         }, 'editor:updateCode');
       };
       self.createNewFile = function() {
-        return self.scripts.push({
+        self.scripts.push({
           name: ko.observable('new script'),
-          source: ko.observable(''),
-          active: ko.observable(false)
+          source: ko.observable('')
         });
+        self.index += 1;
+        return activateScript(self.index);
       };
       self.selectGist = function(gist, e) {
         var description, fileName, fileObj, _ref;
         self.scripts([]);
+        self.index = -1;
         self.activeGist(gist);
         description = gist.description;
         if (!description.length) {
@@ -77,23 +79,16 @@
           $.getJSON(fileObj.raw_url, function(data) {
             self.scripts.push({
               name: ko.observable(fileName),
-              source: ko.observable(data),
-              active: ko.observable(false)
+              source: ko.observable(data)
             });
-            return self.index += 1;
+            self.index += 1;
+            return activateScript(self.index);
           });
-          activateScript(self.index);
         }
         return $('.modal').modal('hide');
       };
       self.selectScript = function(script, e) {
-        var _i, _len, _ref;
         self.index = $(e.currentTarget).parent().index();
-        _ref = self.scripts();
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          script = _ref[_i];
-          script.active(false);
-        }
         return activateScript(self.index);
       };
       Airscript.eventBus.subscribe(function(newValue) {
@@ -103,7 +98,6 @@
         var name, script, source;
         name = _arg.name, source = _arg.source;
         script = self.scripts()[self.index];
-        script.name(name);
         return script.source(source);
       }, this, "script:save");
       return self;

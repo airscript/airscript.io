@@ -28,7 +28,7 @@
       </label>
       <h5 data-bind='visible: scriptsView.scripts().length'>Files</h5>
       <ul class='files' data-bind='foreach: scriptsView.scripts'>
-        <li data-bind='css: {active: active()}'>
+        <li>
           <input data-bind='value: name, click: $parent.scriptsView.selectScript' type='text' />
         </li>
       </ul>

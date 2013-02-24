@@ -15,9 +15,11 @@
           source: this.source()
         }, 'script:save');
       };
-      Airscript.eventBus.subscribe(function(script) {
-        this.source(script.source);
-        return this.scriptName(script.name);
+      Airscript.eventBus.subscribe(function(_arg) {
+        var name, source;
+        source = _arg.source, name = _arg.name;
+        this.source(source);
+        return this.scriptName(name);
       }, this, "editor:updateCode");
       return this;
     };
