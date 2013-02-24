@@ -9,7 +9,7 @@
       Airscript.aceEditor = this.aceEditor;
       this.scriptsView = new Models.Scripts();
       this.consoleView = new Models.Console();
-      this.projectName = ko.observable('pyConRussia.herokuapp.com');
+      this.projectName = ko.observable('');
       this.source = ko.observable('');
       this.scriptName = ko.observable('');
       this.fullScriptUrl = ko.computed(function() {
@@ -30,6 +30,9 @@
         this.source(source);
         return this.scriptName(name);
       }, this, "editor:updateCode");
+      Airscript.eventBus.subscribe(function(name) {
+        return this.projectName(name);
+      }, this, "editor:updateProjectName");
       return this;
     };
   });

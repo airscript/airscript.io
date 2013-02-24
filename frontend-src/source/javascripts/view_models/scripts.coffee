@@ -94,6 +94,8 @@ Airscript.namespace "Airscript.ViewModels", (Models) ->
         type: 'PUT'
         success: ->
           $.getJSON "/api/v1/project", (data) ->
+            Airscript.eventBus.notifySubscribers data.config.engine_url, 'editor:updateProjectName'
+
             gist.files = data.files
 
             self.scripts([])

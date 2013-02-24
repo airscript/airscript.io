@@ -30972,7 +30972,7 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
       Airscript.aceEditor = this.aceEditor;
       this.scriptsView = new Models.Scripts();
       this.consoleView = new Models.Console();
-      this.projectName = ko.observable('pyConRussia.herokuapp.com');
+      this.projectName = ko.observable('');
       this.source = ko.observable('');
       this.scriptName = ko.observable('');
       this.fullScriptUrl = ko.computed(function() {
@@ -30993,6 +30993,9 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
         this.source(source);
         return this.scriptName(name);
       }, this, "editor:updateCode");
+      Airscript.eventBus.subscribe(function(name) {
+        return this.projectName(name);
+      }, this, "editor:updateProjectName");
       return this;
     };
   });
@@ -31108,6 +31111,7 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
           success: function() {
             return $.getJSON("/api/v1/project", function(data) {
               var fileName, fileObj, _ref, _results;
+              Airscript.eventBus.notifySubscribers(data.config.engine_url, 'editor:updateProjectName');
               gist.files = data.files;
               self.scripts([]);
               self.index = -1;

@@ -108,6 +108,7 @@
           success: function() {
             return $.getJSON("/api/v1/project", function(data) {
               var fileName, fileObj, _ref, _results;
+              Airscript.eventBus.notifySubscribers(data.config.engine_url, 'editor:updateProjectName');
               gist.files = data.files;
               self.scripts([]);
               self.index = -1;

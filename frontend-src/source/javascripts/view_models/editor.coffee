@@ -10,7 +10,7 @@ Airscript.namespace "Airscript.ViewModels", (Models) ->
     @scriptsView = new Models.Scripts()
     @consoleView = new Models.Console()
 
-    @projectName = ko.observable('pyConRussia.herokuapp.com')
+    @projectName = ko.observable('')
 
     @source = ko.observable('')
     @scriptName = ko.observable('')
@@ -28,5 +28,9 @@ Airscript.namespace "Airscript.ViewModels", (Models) ->
       @source(source)
       @scriptName(name)
     , @, "editor:updateCode"
+
+    Airscript.eventBus.subscribe (name) ->
+      @projectName(name)
+    , @, "editor:updateProjectName"
 
     this
