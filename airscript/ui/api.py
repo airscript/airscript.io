@@ -58,6 +58,9 @@ class TargetGists(restful.Resource):
                     }
                 }
             },]
+        # mock will hang out shortly for reference.
+        # currently we return github response as-is
+
         url = 'https://api.github.com/users/{}/gists'.format(
                 request.cookies['user'])
         req = requests.get(url, params={
@@ -116,29 +119,26 @@ class Project(restful.Resource):
     def get(self):
         if "target" not in session:
             return {"message": "no target"}, 404 
-        if 'project' not in session:
-            session['project'] = {
-                "files": {
-                    "ring.erl": {
-                        "size": 932,
-                        "filename": "ring.erl",
-                        "raw_url": "https://gist.github.com/raw/365370/8c4d2d43d178df44f4c03a7f2ac0ff512853564e/ring.erl"
-                    },
-                    "ring2.erl": {
-                        "size": 9,
-                        "filename": "ring2.erl",
-                        "raw_url": "https://gist.github.com/raw/365370/8c4d2d43d178df44f4c03a7f2ac0ff512853564e/ring2.erl"
-                    },
-                },
-                "config": {
-                    "engine_name": "foobar",
-                    "engine_url": "http://foobar.herokuapps.com/"
-                },
-            }
+        url = 'https://api.github.com/gists/{}'.format(
+                session['target']['id'])
+        req = requests.get(url, params={
+            'access_token': request.cookies['auth']}) 
+        session['project'] = {
+            "files": req.json['files'],
+            "config": {
+                "engine_name": "foobar",
+                "engine_url": "http://foobar.herokuapps.com/"
+            },
+        }
         return session['project']
 
     def put(self):
-        pass
+        # see http://developer.github.com/v3/gists/#edit-a-gist
+        # for arguments and semantics
+        url = 'https://api.github.com/gists/{}'.format(
+                session['target']['id'])
+        req = requests.patch(url, data=request.data)
+        return req.json, req.status_code
 
 
 routes = {
