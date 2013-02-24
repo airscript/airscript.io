@@ -87,7 +87,10 @@ Airscript.namespace "Airscript.ViewModels", (Models) ->
 
     self.selectGist = (gist, e) ->
       $.ajax
-        url: "/api/v1/project/target/#{gist.id}"
+        url: "/api/v1/project/target"
+        data:
+          type: 'gist'
+          id: gist.id
         type: 'PUT'
         success: ->
           console.log 'woo'
