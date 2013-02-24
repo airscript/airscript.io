@@ -13,11 +13,9 @@
   };
 
   $(function() {
-    return $('.clipboard').zclip({
-      path: '/flash/ZeroClipboard.swf',
-      copy: function() {
-        debugger;        return $('.full_url .location').text();
-      }
+    var clip;
+    return clip = new ZeroClipboard($('.clipboard').get(0), {
+      moviePath: '/flash/ZeroClipboard.swf'
     });
   });
 

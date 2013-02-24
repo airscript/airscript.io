@@ -25,7 +25,7 @@
       .airscript_background
       .btn.btn-primary.save-script(data-bind='click: saveScript') Save
       .full_url
-        %a.clipboard(href='#')
+        .clipboard(data-bind='attr: {"data-clipboard-text": fullScriptPath}')
         .location(data-bind='text: fullScriptPath')
       .editor_container
         #editor(data-bind="ace: source, aceOptions: { mode: 'javascript', theme: 'monokai' }")

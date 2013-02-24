@@ -49,7 +49,7 @@
       <div class='airscript_background'></div>
       <div class='btn btn-primary save-script' data-bind='click: saveScript'>Save</div>
       <div class='full_url'>
-        <a class='clipboard' href='#'></a>
+        <div class='clipboard' data-bind='attr: {"data-clipboard-text": fullScriptPath}'></div>
         <div class='location' data-bind='text: fullScriptPath'></div>
       </div>
       <div class='editor_container'>

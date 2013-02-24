@@ -14,9 +14,5 @@ Airscript.init = ->
   Airscript.aceEditor.getSession().setMode("ace/mode/lua")
 
 $ ->
-  $('.clipboard').zclip
-    path:'/flash/ZeroClipboard.swf'
-    copy: ->
-      debugger
-      $('.full_url .location').text()
-  
+  clip = new ZeroClipboard $('.clipboard').get(0),
+    moviePath:'/flash/ZeroClipboard.swf'
