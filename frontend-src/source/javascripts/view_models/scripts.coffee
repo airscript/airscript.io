@@ -41,17 +41,24 @@ Airscript.namespace "Airscript.ViewModels", (Models) ->
     activateScript = (index) ->
       activeScript = self.scripts()[index]
 
-      Airscript.eventBus.notifySubscribers {name: activeScript.name(), source: activeScript.source()}, 'editor:updateCode'
+      Airscript.eventBus.notifySubscribers {
+        name: activeScript.name()
+        source: activeScript.source()
+      }, 'editor:updateCode'
 
     self.createNewFile = ->
       self.scripts.push {
         name: ko.observable('new script')
         source: ko.observable('')
-        active: ko.observable(false)
       }
+
+      self.index += 1
+
+      activateScript(self.index)
 
     self.selectGist = (gist, e) ->
       self.scripts([])
+      self.index = -1
 
       self.activeGist(gist)
 
@@ -67,20 +74,16 @@ Airscript.namespace "Airscript.ViewModels", (Models) ->
           self.scripts.push {
             name: ko.observable(fileName)
             source: ko.observable(data)
-            active: ko.observable(false)
           }
 
           self.index += 1
 
-        activateScript(self.index)
+          activateScript(self.index)
       
       $('.modal').modal('hide')
 
     self.selectScript = (script, e) ->
       self.index = $(e.currentTarget).parent().index()
-
-      for script in self.scripts()
-        script.active(false)
 
       activateScript(self.index)
 
@@ -91,7 +94,6 @@ Airscript.namespace "Airscript.ViewModels", (Models) ->
     Airscript.eventBus.subscribe ({name, source}) ->
       script = self.scripts()[self.index]
 
-      script.name(name)
       script.source(source)
     , @, "script:save"
 

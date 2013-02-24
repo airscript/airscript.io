@@ -9,7 +9,7 @@
         %textarea(type='text' data-bind='value: scriptsView.activeGistDescription()')
       %h5(data-bind='visible: scriptsView.scripts().length') Files
       %ul.files(data-bind='foreach: scriptsView.scripts')
-        %li(data-bind='css: {active: active()}')
+        %li
           %input(type='text' data-bind='value: name, click: $parent.scriptsView.selectScript')
       %a.new_file(href='#' data-bind='click: scriptsView.createNewFile') Create New File
 

@@ -14,9 +14,9 @@ Airscript.namespace "Airscript.ViewModels", (Models) ->
     @saveScript = ->
       Airscript.eventBus.notifySubscribers {name: @scriptName(), source: @source()}, 'script:save'
 
-    Airscript.eventBus.subscribe (script) ->
-      @source(script.source)
-      @scriptName(script.name)
+    Airscript.eventBus.subscribe ({source, name}) ->
+      @source(source)
+      @scriptName(name)
     , @, "editor:updateCode"
 
     this
