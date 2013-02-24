@@ -4,6 +4,7 @@ from flask import request
 from flask import session
 from flask import make_response
 from flask.ext import restful
+import requests
 
 from app import app
 
@@ -57,7 +58,11 @@ class TargetGists(restful.Resource):
                     }
                 }
             },]
-        return gists_mock
+        url = 'https://api.github.com/users/{}/gists'.format(
+                request.cookies['user'])
+        req = requests.get(url, params={
+            'access_token': request.cookies['auth']})
+        return req.json
 
 
     def post(self):
