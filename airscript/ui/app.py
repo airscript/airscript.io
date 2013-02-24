@@ -17,7 +17,10 @@ import api
 
 @app.route('/')
 def index():
-    return redirect('/editor.html')
+    if request.cookies.get('auth'):
+        return redirect('/editor.html')
+    else:
+        return redirect('/index.html')
 
 # OAuth dance endpoints
 
