@@ -85,6 +85,7 @@
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           file = _ref[_i];
           data.files[file.name()] = {
+            fileName: file.name(),
             content: file.source() || ""
           };
         }

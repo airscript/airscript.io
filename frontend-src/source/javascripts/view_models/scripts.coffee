@@ -75,6 +75,7 @@ Airscript.namespace "Airscript.ViewModels", (Models) ->
 
       for file in self.scripts()
         data.files[file.name()] = {
+          fileName: file.name()
           content: file.source() || ""
         }
 
