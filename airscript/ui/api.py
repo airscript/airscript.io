@@ -36,37 +36,11 @@ class Target(restful.Resource):
 
 class TargetGists(restful.Resource):
     def get(self):
-        gists_mock = [
-            {
-                "url": "https://api.github.com/gists/0f09f5dd83141be2c96b",
-                "description": "description of gist",
-                "files": {
-                    "script.js": {
-                        "contents": "var that = this;"
-                    },
-                    "config": {
-                        "contents": "airscript1.herokuapp.com"
-                    }
-                }
-            },
-            {
-                "url": "https://api.github.com/gists/0f09f5dd837643e2c123",
-                "description": "description of another gist",
-                "files": {
-                    "script.js": {
-                        "contents": "var x = 5;"
-                    }
-                }
-            },]
-        # mock will hang out shortly for reference.
-        # currently we return github response as-is
-
         url = 'https://api.github.com/users/{}/gists'.format(
                 request.cookies['user'])
         req = requests.get(url, params={
             'access_token': request.cookies['auth']})
         return req.json
-
 
     def post(self):
         created_gist_mock = {
@@ -139,6 +113,8 @@ class Project(restful.Resource):
     def put(self):
         # see http://developer.github.com/v3/gists/#edit-a-gist
         # for arguments and semantics
+        print session['target']['id']
+
         url = 'https://api.github.com/gists/{}'.format(
                 session['target']['id'])
         req = requests.patch(url,
