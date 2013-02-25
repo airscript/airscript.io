@@ -31425,6 +31425,7 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
         var data, file, gist, _i, _len, _ref;
         gist = self.activeGist();
         data = {
+          "public": gist["public"],
           description: gist.description,
           files: {}
         };
@@ -31435,7 +31436,6 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
             content: file.source() || ""
           };
         }
-        debugger;
         return $.ajax({
           url: '/api/v1/project',
           type: 'PUT',
