@@ -88,6 +88,7 @@
             content: file.source() || ""
           };
         }
+        debugger;
         return $.ajax({
           url: '/api/v1/project',
           type: 'PUT',

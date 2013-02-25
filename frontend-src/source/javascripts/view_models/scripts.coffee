@@ -78,6 +78,8 @@ Airscript.namespace "Airscript.ViewModels", (Models) ->
           content: file.source() || ""
         }
 
+      debugger
+
       $.ajax
         url: '/api/v1/project'
         type: 'PUT'
