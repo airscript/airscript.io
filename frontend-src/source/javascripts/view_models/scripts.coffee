@@ -70,6 +70,7 @@ Airscript.namespace "Airscript.ViewModels", (Models) ->
       gist = self.activeGist()
 
       data =
+        public: gist.public
         description: gist.description
         files: {}
 
@@ -77,8 +78,6 @@ Airscript.namespace "Airscript.ViewModels", (Models) ->
         data.files[file.name()] = {
           content: file.source() || ""
         }
-
-      debugger
 
       $.ajax
         url: '/api/v1/project'
