@@ -78,7 +78,6 @@
         var data, file, gist, _i, _len, _ref;
         gist = self.activeGist();
         data = {
-          "public": gist["public"],
           description: gist.description,
           files: {}
         };
@@ -92,7 +91,7 @@
         return $.ajax({
           url: '/api/v1/project',
           type: 'PUT',
-          data: data,
+          data: JSON.stringify(data),
           success: function() {
             return console.log('woo');
           }

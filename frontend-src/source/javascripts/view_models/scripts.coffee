@@ -70,7 +70,6 @@ Airscript.namespace "Airscript.ViewModels", (Models) ->
       gist = self.activeGist()
 
       data =
-        public: gist.public
         description: gist.description
         files: {}
 
@@ -82,7 +81,7 @@ Airscript.namespace "Airscript.ViewModels", (Models) ->
       $.ajax
         url: '/api/v1/project'
         type: 'PUT'
-        data: data
+        data: JSON.stringify(data)
         success: ->
           console.log 'woo'
 
