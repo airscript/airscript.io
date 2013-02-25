@@ -92,7 +92,7 @@
         return $.ajax({
           url: '/api/v1/project',
           type: 'PUT',
-          data: JSON.stringify(data),
+          data: data,
           success: function() {
             return console.log('woo');
           }

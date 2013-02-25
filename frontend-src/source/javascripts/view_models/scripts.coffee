@@ -82,7 +82,7 @@ Airscript.namespace "Airscript.ViewModels", (Models) ->
       $.ajax
         url: '/api/v1/project'
         type: 'PUT'
-        data: JSON.stringify(data)
+        data: data
         success: ->
           console.log 'woo'
 
