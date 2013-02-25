@@ -113,12 +113,10 @@ class Project(restful.Resource):
     def put(self):
         # see http://developer.github.com/v3/gists/#edit-a-gist
         # for arguments and semantics
-        print session['target']['id']
-
         url = 'https://api.github.com/gists/{}'.format(
                 session['target']['id'])
         req = requests.patch(url,
-            params={'access_token': request.cookies['auth'],
+            params={'access_token': request.cookies['auth']},
             data=request.data)
         return req.json, req.status_code
 
