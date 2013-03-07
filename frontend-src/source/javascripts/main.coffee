@@ -5,14 +5,10 @@ Airscript.init = ->
 
   editor = new ViewModels.Editor()
 
-  ko.applyBindings editor, document.querySelector('section.content')
-  ko.applyBindings editor, document.querySelector('.gist_modal')
+  ko.applyBindings editor, document.querySelector('body')
 
   $('.gist_modal').modal('show')
 
-  Airscript.aceEditor.setTheme("ace/theme/github")
-  Airscript.aceEditor.getSession().setMode("ace/mode/lua")
-
 $ ->
-  clip = new ZeroClipboard $('.clipboard').get(0),
+  new ZeroClipboard document.querySelector('.clipboard'),
     moviePath:'/flash/ZeroClipboard.swf'

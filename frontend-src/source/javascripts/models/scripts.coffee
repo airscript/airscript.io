@@ -6,7 +6,7 @@ Airscript.namespace "Airscript.Models", (Models) ->
 
     index = ko.observable(-1)
 
-    {
+    self =
       active: ko.computed ->
         collection()[index]
 
@@ -28,4 +28,3 @@ Airscript.namespace "Airscript.Models", (Models) ->
 
       select: (index) ->
         index(index)
-    }

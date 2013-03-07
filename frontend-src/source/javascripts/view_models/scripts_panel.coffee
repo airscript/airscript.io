@@ -9,7 +9,10 @@ Airscript.namespace "Airscript.ViewModels", (ViewModels) ->
       ;
     , @, "script:save"
 
-    {
+    self =
+      activeGistDescription: ->
+        gists.active()?.description() || ''
+
       createNewFile: ->
         gists.active().addScript('new script', '')
 
@@ -18,8 +21,13 @@ Airscript.namespace "Airscript.ViewModels", (ViewModels) ->
 
         gists.active().editScript(index)
 
+      hasGists: ->
+        gists.hasGists()
+
+      scriptsCount: ->
+        gists.scriptsCount()
+
       selectScript: (script, e) ->
         index = $(e.currentTarget).parent().index()
 
         gists.active().selectScript(index)
-    }

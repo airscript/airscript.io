@@ -1,17 +1,20 @@
 #= require ./scripts
+#= require ./gist
 
 Airscript.namespace "Airscript.Models", (Models) ->
   Models.Gists = ->
     collection = ko.observableArray()
-    scripts = Models.Scripts()
 
     index = ko.observable(-1)
 
-    {
+    self =
       active: ko.computed ->
         collection()[index]
 
       collection: collection
+
+      hasGists: ->
+        collection.length > 0
 
       fetch: ->
         gistsDeferred = $.getJSON '/api/v1/project/target/gists', (data) ->
@@ -59,15 +62,14 @@ Airscript.namespace "Airscript.Models", (Models) ->
 
               gist.files = data.files
 
-              scripts.empty()
+              collection.push(gist)
 
-              self.activeGist(gist)
-              self.activeGistDescription(gist.description)
-
-              for fileName, fileObj of gist.files
-                scripts.add(fileName, fileObj.content)
+              self.activateById(gist.id)
 
         $('.modal').modal('hide')
+
+      scriptsCount: ->
+        self.active()?.scripts.collection.length || 0
 
       update: ->
         gist = self.activeGist()
@@ -76,7 +78,7 @@ Airscript.namespace "Airscript.Models", (Models) ->
           description: gist.description
           files: {}
 
-        for file in self.scripts()
+        for file in scripts()
           data.files[file.name()] = {
             fileName: file.name()
             content: file.source() || ""
@@ -90,11 +92,10 @@ Airscript.namespace "Airscript.Models", (Models) ->
             console.log 'woo'
 
       addScript: (name, content) ->
-        scripts.add(name, content)
+        self.active().add(name, content)
 
       editScript: (index) ->
-        scripts.edit(index)
+        self.active().edit(index)
 
       selectScript: (index) ->
-        scripts.select(index)
-    }
+        self.active().select(index)

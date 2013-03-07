@@ -5,7 +5,7 @@ Airscript.namespace "Airscript.ViewModels", (ViewModels) ->
 
     Airscript.aceEditor = aceEditor
 
-    scriptsPanel = new View.ScriptsPanel()
+    scriptsPanel = ViewModels.ScriptsPanel()
 
     projectName = ko.observable('')
 
@@ -21,13 +21,16 @@ Airscript.namespace "Airscript.ViewModels", (ViewModels) ->
       @projectName(name)
     , @, "editor:updateProjectName"
 
-    {
+    self =
       fullScriptPath: ko.computed ->
         "#{projectName()}#{scriptName()}"
 
       saveScript: ->
-        Airscript.eventBus.notifySubscribers {
+        Airscript.eventBus.notifySubscribers
           name: scriptName()
           source: source()
-        }, 'script:save'
-    }
+        , 'script:save'
+
+      scriptsPanel: scriptsPanel
+
+      source: source
