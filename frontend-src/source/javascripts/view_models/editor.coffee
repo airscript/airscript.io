@@ -1,25 +1,16 @@
-Airscript.namespace "Airscript.ViewModels", (Models) ->
-  Models.Editor = ->
-    self = @
+Airscript.namespace "Airscript.ViewModels", (ViewModels) ->
+  ViewModels.Editor = ->
+    aceEditor = ace.edit("editor")
+    aceEditor.setShowPrintMargin(false)
 
-    @aceEditor = ace.edit("editor")
-    @aceEditor.setShowPrintMargin(false)
+    Airscript.aceEditor = aceEditor
 
-    Airscript.aceEditor = @aceEditor
+    scriptsPanel = new View.ScriptsPanel()
 
-    @scriptsView = new Models.Scripts()
-    @consoleView = new Models.Console()
+    projectName = ko.observable('')
 
-    @projectName = ko.observable('')
-
-    @source = ko.observable('')
-    @scriptName = ko.observable('')
-
-    @fullScriptPath = ko.computed ->
-      "#{self.projectName()}#{self.scriptName()}"
-
-    @saveScript = ->
-      Airscript.eventBus.notifySubscribers {name: @scriptName(), source: @source()}, 'script:save'
+    source = ko.observable('')
+    scriptName = ko.observable('')
 
     Airscript.eventBus.subscribe ({source, name}) ->
       @source(source)
@@ -30,4 +21,13 @@ Airscript.namespace "Airscript.ViewModels", (Models) ->
       @projectName(name)
     , @, "editor:updateProjectName"
 
-    this
+    {
+      fullScriptPath: ko.computed ->
+        "#{projectName()}#{scriptName()}"
+
+      saveScript: ->
+        Airscript.eventBus.notifySubscribers {
+          name: scriptName()
+          source: source()
+        }, 'script:save'
+    }

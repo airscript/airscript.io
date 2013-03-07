@@ -10,7 +10,8 @@
       %h5(data-bind='visible: scriptsView.scripts().length') Files
       %ul.files(data-bind='foreach: scriptsView.scripts')
         %li
-          %input(type='text' data-bind='value: name, click: $parent.scriptsView.selectScript')
+          %a(href='#' data-bind='text: name, click: $parent.scriptsView.editScript, visible: !$parent.scriptsView.editingActiveScript()')
+          %input(type='text' data-bind='value: name, click: $parent.scriptsView.selectScript, visible: $parent.scriptsView.editingActiveScript()')
       %a.new_file(href='#' data-bind='click: scriptsView.createNewFile') Create New File
 
       .btn-group.script_controls
@@ -33,7 +34,7 @@
             %rect{:height => "2.375", :width => "29.125", :x => "14.375", :y => "37.75"}
             %rect{:height => "2.375", :width => "38.125", :x => "14.375", :y => "50"}
             %rect{:height => "2.375", :width => "38.125", :x => "14.375", :y => "56.125"}
-            %rect{:height => "2.375", :width => "29.125", :x => "14.375", :y => "62.25"}          
+            %rect{:height => "2.375", :width => "29.125", :x => "14.375", :y => "62.25"}
         .location(data-bind='text: fullScriptPath')
       .editor_container
         #editor(data-bind="ace: source, aceOptions: { mode: 'javascript', theme: 'monokai' }")

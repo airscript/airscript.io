@@ -15,7 +15,6 @@
 
 #= require namespace
 
-#= require view_models/console
 #= require view_models/editor
 #= require view_models/scripts
 
