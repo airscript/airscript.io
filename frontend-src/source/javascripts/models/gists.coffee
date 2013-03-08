@@ -93,6 +93,9 @@ Airscript.namespace "Airscript.Models", (Models) ->
           success: ->
             console.log 'woo'
 
+      select: (idx) ->
+        index(idx)
+
       addScript: (name, content) ->
         self.active().add(name, content)
 

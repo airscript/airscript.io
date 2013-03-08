@@ -33,6 +33,11 @@ Airscript.namespace "Airscript.ViewModels", (ViewModels) ->
       scriptsCount: ->
         gists.scriptsCount()
 
+      selectGist: (gist, e) ->
+        index = $(e.currentTarget).index()
+
+        gists.select(index)
+
       selectScript: (script, e) ->
         index = $(e.currentTarget).parent().index()
 

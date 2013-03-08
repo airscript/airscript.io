@@ -10,8 +10,9 @@
       %h5(data-bind='visible: scriptsPanel.scriptsCount()') Files
       %ul.files(data-bind='foreach: scriptsPanel.activeScripts()')
         %li
-          %a(href='#' data-bind='text: name, click: $parent.scriptsPanel.editScript')
-          %input(type='text' data-bind='value: name, click: $parent.scriptsPanel.selectScript')
+          %span(data-bind='text: name, visible: !editing()')
+          %a(href='#' data-bind='click: $parent.scriptsPanel.editScript, visible: !editing()') Edit
+          %input(type='text' data-bind='value: name, click: $parent.scriptsPanel.selectScript, visible: editing()')
       %a.new_file(href='#' data-bind='click: scriptsPanel.createNewFile') Create New File
 
       .btn-group.script_controls

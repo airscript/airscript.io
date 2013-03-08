@@ -5,4 +5,4 @@ Airscript.namespace "Airscript.Models", (Models) ->
       source: ko.observable scriptSource
       editing: ko.observable false
 
-  Models.EMPTY_Script = Models.Script('', '')
+  Models.EMPTY_SCRIPT = Models.Script('', '')

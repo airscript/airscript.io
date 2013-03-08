@@ -3,5 +3,5 @@
     %button.close(type='button' data-dismiss="modal")
     %h3 Select Gist
 
-  .modal-body(data-bind='foreach: scriptsPanel.gistsCollection')
+  .modal-body(data-bind='foreach: scriptsPanel.gistsList()')
     %a.btn.gist(href='#' data-dismiss="modal" data-bind='text: description, click: $parent.scriptsPanel.selectGist')
