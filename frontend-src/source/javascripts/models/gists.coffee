@@ -9,7 +9,11 @@ Airscript.namespace "Airscript.Models", (Models) ->
 
     self =
       active: ko.computed ->
-        collection()[index]
+        collection()[index()] || Models.EMPTY_GIST
+
+      add: (id, description, files)->
+        collection.push Models.Gist(id, description, files)
+        index(collection.length - 1)
 
       collection: collection
 
@@ -22,7 +26,7 @@ Airscript.namespace "Airscript.Models", (Models) ->
           for gist in data
             gist.description = gist.id unless gist.description.length
 
-            self.gists.push gist
+            self.add(gist.id, gist.description, gist.files)
 
         # mock data for dev
         gistsDeferred.error ->
@@ -47,7 +51,7 @@ Airscript.namespace "Airscript.Models", (Models) ->
           for gist in data
             gist.description = gist.id unless gist.description.length
 
-            collection.push gist
+            self.add(gist.id, gist.description, gist.files)
 
       target: (gist, e) ->
         $.ajax
@@ -62,9 +66,7 @@ Airscript.namespace "Airscript.Models", (Models) ->
 
               gist.files = data.files
 
-              collection.push(gist)
-
-              self.activateById(gist.id)
+              self.add(gist.id, gist.description, gist.files)
 
         $('.modal').modal('hide')
 
@@ -94,8 +96,8 @@ Airscript.namespace "Airscript.Models", (Models) ->
       addScript: (name, content) ->
         self.active().add(name, content)
 
-      editScript: (index) ->
-        self.active().edit(index)
+      editScript: (idx) ->
+        self.active().edit(idx)
 
-      selectScript: (index) ->
-        self.active().select(index)
+      selectScript: (idx) ->
+        self.active().scripts.select(idx)

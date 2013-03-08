@@ -8,7 +8,7 @@ Airscript.namespace "Airscript.Models", (Models) ->
 
     self =
       active: ko.computed ->
-        collection()[index]
+        collection()[index()] || Models.EMPTY_SCRIPT
 
       add: (name, contents) ->
         collection.push Models.Script(name, contents)
@@ -20,11 +20,11 @@ Airscript.namespace "Airscript.Models", (Models) ->
         collection([])
         index(-1)
 
-      edit: (index) ->
+      edit: (idx) ->
         for script in collection
           script.editing(false)
 
-        collection()[index].editing(true)
+        self.active().editing(true)
 
-      select: (index) ->
-        index(index)
+      select: (idx) ->
+        index(idx)
