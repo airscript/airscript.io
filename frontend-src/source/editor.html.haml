@@ -11,7 +11,10 @@
       %ul.files(data-bind='foreach: scriptsPanel.activeScripts()')
         %li.script
           %span.script_name(data-bind='click: $parent.scriptsPanel.selectScript, text: name, visible: !editing()')
-          %a.edit_script(href='#' data-bind='click: $parent.scriptsPanel.editScript, visible: !editing()') Edit
+          .modify_script
+            %a.edit_script(href='#' data-bind='click: $parent.scriptsPanel.editScript, visible: !editing()') Edit
+            %span(data-bind='visible: !editing()')= "| "
+            %a.delete_script(href='#' data-bind='click: $parent.scriptsPanel.deleteScript, visible: !editing()') Delete
           %input.edit_script_input(type='text' data-bind='value: name, click: $parent.scriptsPanel.selectScript, visible: editing()')
       %a.new_file(href='#' data-bind='click: scriptsPanel.createNewFile') Create New File
 

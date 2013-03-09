@@ -7,7 +7,7 @@ Airscript.namespace "Airscript.ViewModels", (ViewModels) ->
 
     scriptsPanel = ViewModels.ScriptsPanel()
 
-    projectName = ko.observable('testing')
+    projectName = ko.observable('condor.herokuapp.com/')
 
     source = ko.observable('')
     scriptName = ko.observable('')

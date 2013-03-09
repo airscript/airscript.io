@@ -16,15 +16,18 @@ Airscript.namespace "Airscript.Models", (Models) ->
 
       collection: collection
 
+      delete: (script) ->
+        collection.remove(script)
+
       empty: ->
         collection([])
         index(-1)
 
-      edit: (idx) ->
-        for script in collection
-          script.editing(false)
+      edit: (script) ->
+        for s in collection
+          s.editing(false)
 
-        self.active().editing(true)
+        script.editing(true)
 
       select: (idx) ->
         index(idx)
@@ -35,3 +38,11 @@ Airscript.namespace "Airscript.Models", (Models) ->
           src: active.source()
           name: active.name()
         , "editor:updateCode"
+
+    Airscript.eventBus.subscribe ({name, source}) ->
+      active = self.active()
+
+      active.source(source)
+    , null, "script:save"
+
+    return self

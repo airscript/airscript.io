@@ -14,6 +14,7 @@
 #= require knockout-ace
 
 #= require namespace
+#= require event_bus
 
 #= require view_models/editor
 #= require view_models/scripts_panel

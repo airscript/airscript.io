@@ -5,10 +5,6 @@ Airscript.namespace "Airscript.ViewModels", (ViewModels) ->
     gists = Airscript.Models.Gists()
     gists.fetch()
 
-    Airscript.eventBus.subscribe ({name, source}) ->
-      ;
-    , null, "script:save"
-
     self =
       activeGistDescription: ->
         gists.active()?.description() || ''
@@ -17,9 +13,10 @@ Airscript.namespace "Airscript.ViewModels", (ViewModels) ->
         gists.active().scripts.add('new script', '')
 
       editScript: (script, e) ->
-        index = $(e.currentTarget).parent().index()
+        gists.active().scripts.edit(script)
 
-        gists.active().scripts.edit(index)
+      deleteScript: (script, e) ->
+        gists.active().scripts.delete(script)
 
       hasGists: ->
         gists.hasGists()

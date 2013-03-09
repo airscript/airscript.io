@@ -96,6 +96,11 @@ Airscript.namespace "Airscript.Models", (Models) ->
       select: (idx) ->
         index(idx)
 
+        Airscript.eventBus.notifySubscribers
+          src: ''
+          name: ''
+        , "editor:updateCode"
+
       addScript: (name, content) ->
         self.active().add(name, content)
 

@@ -1,6 +1,4 @@
 Airscript.init = ->
-  Airscript.eventBus = new ko.subscribable()
-
   {ViewModels} = Airscript
 
   editor = new ViewModels.Editor()
