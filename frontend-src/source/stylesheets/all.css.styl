@@ -1,7 +1,7 @@
 html, body, section.content, .main
   height 100%
 
-@font-face 
+@font-face
   font-family: 'DynalightRegular'
   src: url('/fonts/Dynalight-Regular-webfont.eot')
   src: url('/fonts/Dynalight-Regular-webfont.eot?#iefix') format('embedded-opentype'),
@@ -96,6 +96,7 @@ h5, h6
 
 body
   background-color #efefef
+  padding 0
 
 .row-fluid
   height 100%
@@ -106,6 +107,7 @@ body
 
   input, textarea
     width 90%
+    max-width 90%
 
   ul
     list-style none
@@ -141,6 +143,18 @@ body
   left: 30%
   margin: auto
   opacity: 0.4
+
+.files .script
+  cursor pointer
+
+  &.active
+    background-color rgba(255, 255, 255, 0.3)
+
+.script_name
+  color white
+
+.edit_script
+  float right
 
 .scripts
   box-sizing border-box

@@ -42,3 +42,8 @@ Airscript.namespace "Airscript.ViewModels", (ViewModels) ->
         index = $(e.currentTarget).parent().index()
 
         gists.selectScript(index)
+
+        Airscript.eventBus.notifySubscribers
+          source: @source(source)
+          name: @scriptName(name)
+        , @, "editor:updateCode"

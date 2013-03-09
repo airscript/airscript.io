@@ -71,7 +71,7 @@ Airscript.namespace "Airscript.Models", (Models) ->
         $('.modal').modal('hide')
 
       scriptsCount: ->
-        self.active()?.scripts.collection.length || 0
+        self.active()?.scripts.collection().length || 0
 
       update: ->
         gist = self.activeGist()

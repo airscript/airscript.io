@@ -9,9 +9,9 @@
         %textarea(type='text' data-bind='value: scriptsPanel.activeGistDescription()')
       %h5(data-bind='visible: scriptsPanel.scriptsCount()') Files
       %ul.files(data-bind='foreach: scriptsPanel.activeScripts()')
-        %li
-          %span(data-bind='text: name, visible: !editing()')
-          %a(href='#' data-bind='click: $parent.scriptsPanel.editScript, visible: !editing()') Edit
+        %li.script
+          %span.script_name(data-bind='click: $parent.scriptsPanel.selectScript, text: name, visible: !editing()')
+          %a.edit_script(href='#' data-bind='click: $parent.scriptsPanel.editScript, visible: !editing()') Edit
           %input(type='text' data-bind='value: name, click: $parent.scriptsPanel.selectScript, visible: editing()')
       %a.new_file(href='#' data-bind='click: scriptsPanel.createNewFile') Create New File
 
