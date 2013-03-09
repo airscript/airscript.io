@@ -7,19 +7,10 @@ Airscript.namespace "Airscript.ViewModels", (ViewModels) ->
 
     scriptsPanel = ViewModels.ScriptsPanel()
 
-    projectName = ko.observable('')
+    projectName = ko.observable('testing')
 
     source = ko.observable('')
     scriptName = ko.observable('')
-
-    Airscript.eventBus.subscribe ({source, name}) ->
-      @source(source)
-      @scriptName(name)
-    , @, "editor:updateCode"
-
-    Airscript.eventBus.subscribe (name) ->
-      @projectName(name)
-    , @, "editor:updateProjectName"
 
     self =
       fullScriptPath: ko.computed ->
@@ -34,3 +25,14 @@ Airscript.namespace "Airscript.ViewModels", (ViewModels) ->
       scriptsPanel: scriptsPanel
 
       source: source
+
+    Airscript.eventBus.subscribe ({src, name}) ->
+      source(src)
+      scriptName(name)
+    , null, "editor:updateCode"
+
+    Airscript.eventBus.subscribe (name) ->
+      projectName(name)
+    , null, "editor:updateProjectName"
+
+    return self

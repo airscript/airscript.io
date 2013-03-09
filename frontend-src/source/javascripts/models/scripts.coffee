@@ -28,3 +28,10 @@ Airscript.namespace "Airscript.Models", (Models) ->
 
       select: (idx) ->
         index(idx)
+
+        active = self.active()
+
+        Airscript.eventBus.notifySubscribers
+          src: active.source()
+          name: active.name()
+        , "editor:updateCode"

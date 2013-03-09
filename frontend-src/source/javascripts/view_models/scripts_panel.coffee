@@ -7,7 +7,7 @@ Airscript.namespace "Airscript.ViewModels", (ViewModels) ->
 
     Airscript.eventBus.subscribe ({name, source}) ->
       ;
-    , @, "script:save"
+    , null, "script:save"
 
     self =
       activeGistDescription: ->
@@ -42,8 +42,3 @@ Airscript.namespace "Airscript.ViewModels", (ViewModels) ->
         index = $(e.currentTarget).parent().index()
 
         gists.selectScript(index)
-
-        Airscript.eventBus.notifySubscribers
-          source: @source(source)
-          name: @scriptName(name)
-        , @, "editor:updateCode"

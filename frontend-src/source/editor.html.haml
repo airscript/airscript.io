@@ -12,7 +12,7 @@
         %li.script
           %span.script_name(data-bind='click: $parent.scriptsPanel.selectScript, text: name, visible: !editing()')
           %a.edit_script(href='#' data-bind='click: $parent.scriptsPanel.editScript, visible: !editing()') Edit
-          %input(type='text' data-bind='value: name, click: $parent.scriptsPanel.selectScript, visible: editing()')
+          %input.edit_script_input(type='text' data-bind='value: name, click: $parent.scriptsPanel.selectScript, visible: editing()')
       %a.new_file(href='#' data-bind='click: scriptsPanel.createNewFile') Create New File
 
       .btn-group.script_controls

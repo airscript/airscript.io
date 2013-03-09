@@ -104,3 +104,4 @@ Airscript.namespace "Airscript.Models", (Models) ->
 
       selectScript: (idx) ->
         self.active().scripts.select(idx)
+
