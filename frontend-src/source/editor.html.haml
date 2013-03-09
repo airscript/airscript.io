@@ -5,16 +5,10 @@
     .scripts
       %h2.brand Airscript
       %label(data-bind='visible: scriptsPanel.hasGists')
-        %h5 Script Description
-        %textarea(type='text' data-bind='value: scriptsPanel.activeGistDescription()')
-      %h5(data-bind='visible: scriptsPanel.scriptsCount()') Files
+        %p.gist-description(type='text' data-bind='text: scriptsPanel.activeGistDescription()')
       %ul.files(data-bind='foreach: scriptsPanel.activeScripts()')
         %li.script
           %span.script_name(data-bind='click: $parent.scriptsPanel.selectScript, text: name, visible: !editing()')
-          .modify_script
-            %a.edit_script(href='#' data-bind='click: $parent.scriptsPanel.editScript, visible: !editing()') Edit
-            %span(data-bind='visible: !editing()')= "| "
-            %a.delete_script(href='#' data-bind='click: $parent.scriptsPanel.deleteScript, visible: !editing()') Delete
           %input.edit_script_input(type='text' data-bind='value: name, click: $parent.scriptsPanel.selectScript, visible: editing()')
       %a.new_file(href='#' data-bind='click: scriptsPanel.createNewFile') Create New File
 
@@ -24,12 +18,13 @@
 
     .edit.main
       .airscript_background
-      .btn.btn-primary.save-script(data-bind='click: saveScript') Save
-      .full_url
-        .clipboard(data-bind='attr: {"data-clipboard-text": fullScriptPath}')
-          = partial :clipboard_svg
-        .location(data-bind='text: fullScriptPath')
       .editor_container
+        .header
+          %h3(data-bind='text: scriptName()')
+          .full_url
+            .clipboard(data-bind='attr: {"data-clipboard-text": fullScriptPath}')
+            = partial :clipboard_svg
+            .location(data-bind='text: fullScriptPath')
         #editor(data-bind="ace: source, aceOptions: { mode: 'lua', theme: 'github' }")
 
         %textarea.hidden(data-bind="value: source")

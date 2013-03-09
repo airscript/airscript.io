@@ -32,7 +32,7 @@ Airscript.namespace "Airscript.Models", (Models) ->
         gistsDeferred.error ->
           data = [{
             id: 'dsfasdf323r234'
-            description: ''
+            description: 'All my Airscripts live in this gist.'
             files: {
               'testing.rb': {
                 content: 'some stuff'
@@ -40,7 +40,7 @@ Airscript.namespace "Airscript.Models", (Models) ->
             }
           }, {
             id: 'lkasjdf94'
-            description: 'test gist 2'
+            description: 'This is a script that calls your friends up and plays Rick Astley.'
             files: {
               'testing2.rb': {
                 content: 'moar stuff'

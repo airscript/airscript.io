@@ -26,6 +26,9 @@ Airscript.namespace "Airscript.ViewModels", (ViewModels) ->
 
       source: source
 
+      scriptName: ->
+        scriptName()
+
     Airscript.eventBus.subscribe ({src, name}) ->
       source(src)
       scriptName(name)
