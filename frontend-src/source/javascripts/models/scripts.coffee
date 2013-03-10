@@ -24,19 +24,14 @@ Airscript.namespace "Airscript.Models", (Models) ->
         index(-1)
 
       edit: (script) ->
-        for s in collection
+        for s in collection()
           s.editing(false)
 
         script.editing(true)
 
-      select: (idx) ->
-        index(idx)
-
-        active = self.active()
-
         Airscript.eventBus.notifySubscribers
-          src: active.source()
-          name: active.name()
+          src: script.source()
+          name: script.name()
         , "editor:updateCode"
 
     Airscript.eventBus.subscribe ({name, source}) ->
