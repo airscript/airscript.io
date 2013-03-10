@@ -7,8 +7,8 @@
       %label(data-bind='visible: scriptsPanel.hasGists')
         %p.gist-description(type='text' data-bind='text: scriptsPanel.activeGistDescription()')
       %ul.files(data-bind='foreach: scriptsPanel.activeScripts()')
-        %li.script(data-bind='css: activeClass')
-          %span.script_name(data-bind='click: $parent.scriptsPanel.editScript, text: name')
+        %li.script(data-bind='css: activeClass, click: $parent.scriptsPanel.editScript')
+          %span.script_name(data-bind='text: name')
       %a.new_file(href='#' data-bind='click: scriptsPanel.createNewFile') Create New File
 
       .btn-group.script_controls
@@ -20,9 +20,10 @@
       .editor_container
         .header
           %h3(data-bind='text: scriptName()')
+          .clipboard(data-bind='attr: {"data-clipboard-text": fullScriptPath}')
+          = partial :clipboard_svg
           .full_url
-            .clipboard(data-bind='attr: {"data-clipboard-text": fullScriptPath}')
-            = partial :clipboard_svg
+            %h4.run_description Run your script
             .location(data-bind='text: fullScriptPath')
         #editor(data-bind="ace: source, aceOptions: { mode: 'lua', theme: 'github' }")
 

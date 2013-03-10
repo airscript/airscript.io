@@ -35,6 +35,8 @@ Airscript.namespace "Airscript.ViewModels", (ViewModels) ->
 
         gists.select(index)
 
+        self.editScript(gists.active().scripts.collection()[0])
+
       selectScript: (script, e) ->
         index = $(e.currentTarget).parent().index()
 

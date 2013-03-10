@@ -96,6 +96,8 @@ Airscript.namespace "Airscript.Models", (Models) ->
       select: (idx) ->
         index(idx)
 
+        active = self.active()
+
         Airscript.eventBus.notifySubscribers
           src: ''
           name: ''
@@ -103,9 +105,6 @@ Airscript.namespace "Airscript.Models", (Models) ->
 
       addScript: (name, content) ->
         self.active().add(name, content)
-
-      editScript: (idx) ->
-        self.active().edit(idx)
 
       selectScript: (idx) ->
         self.active().scripts.select(idx)
