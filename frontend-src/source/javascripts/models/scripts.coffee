@@ -7,12 +7,11 @@ Airscript.namespace "Airscript.Models", (Models) ->
     index = ko.observable(-1)
 
     self =
-      active: ko.computed ->
+      active: ->
         collection()[index()] || Models.EMPTY_SCRIPT
 
       add: (name, contents) ->
         collection.push Models.Script(name, contents)
-        index(collection.length - 1)
 
       collection: collection
 
@@ -28,16 +27,4 @@ Airscript.namespace "Airscript.Models", (Models) ->
           s.editing(false)
 
         script.editing(true)
-
-        Airscript.eventBus.notifySubscribers
-          src: script.source()
-          name: script.name()
-        , "editor:updateCode"
-
-    Airscript.eventBus.subscribe ({name, source}) ->
-      active = self.active()
-
-      active.source(source)
-    , null, "script:save"
-
-    return self
+        index(collection.indexOf(script))

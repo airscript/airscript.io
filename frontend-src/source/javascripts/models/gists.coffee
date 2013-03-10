@@ -8,17 +8,17 @@ Airscript.namespace "Airscript.Models", (Models) ->
     index = ko.observable(-1)
 
     self =
-      active: ko.computed ->
+      active: ->
         collection()[index()] || Models.EMPTY_GIST
 
-      add: (id, description, files)->
+      add: (id, description, files) ->
         collection.push Models.Gist(id, description, files)
-        index(collection.length - 1)
+        index(collection().length - 1)
 
       collection: collection
 
       hasGists: ->
-        collection.length > 0
+        collection().length > 0
 
       fetch: ->
         gistsDeferred = $.getJSON '/api/v1/project/target/gists', (data) ->
@@ -70,9 +70,6 @@ Airscript.namespace "Airscript.Models", (Models) ->
 
         $('.modal').modal('hide')
 
-      scriptsCount: ->
-        self.active()?.scripts.collection().length || 0
-
       update: ->
         gist = self.activeGist()
 
@@ -98,14 +95,5 @@ Airscript.namespace "Airscript.Models", (Models) ->
 
         active = self.active()
 
-        Airscript.eventBus.notifySubscribers
-          src: ''
-          name: ''
-        , "editor:updateCode"
-
       addScript: (name, content) ->
         self.active().add(name, content)
-
-      selectScript: (idx) ->
-        self.active().scripts.select(idx)
-

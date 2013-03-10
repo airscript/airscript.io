@@ -5,9 +5,15 @@ Airscript.namespace "Airscript.ViewModels", (ViewModels) ->
     gists = Airscript.Models.Gists()
     gists.fetch()
 
+    firstScript = ->
+      gists.active().scripts.collection()[0]
+
     self =
       activeGistDescription: ->
         gists.active()?.description() || ''
+
+      activeScript: ->
+        gists.active()?.scripts.active()
 
       createNewFile: ->
         gists.active().scripts.add('new script', '')
@@ -21,23 +27,15 @@ Airscript.namespace "Airscript.ViewModels", (ViewModels) ->
       hasGists: ->
         gists.hasGists()
 
-      activeScripts: ->
+      files: ->
         gists.active().scripts.collection
 
       gistsList: ->
         gists.collection
-
-      scriptsCount: ->
-        gists.scriptsCount()
 
       selectGist: (gist, e) ->
         index = $(e.currentTarget).index()
 
         gists.select(index)
 
-        self.editScript(gists.active().scripts.collection()[0])
-
-      selectScript: (script, e) ->
-        index = $(e.currentTarget).parent().index()
-
-        gists.selectScript(index)
+        self.editScript(firstScript())

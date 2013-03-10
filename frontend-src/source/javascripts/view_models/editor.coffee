@@ -3,39 +3,22 @@ Airscript.namespace "Airscript.ViewModels", (ViewModels) ->
     aceEditor = ace.edit("editor")
     aceEditor.setShowPrintMargin(false)
 
-    Airscript.aceEditor = aceEditor
-
     scriptsPanel = ViewModels.ScriptsPanel()
 
-    projectName = ko.observable('condor.herokuapp.com/')
-
-    source = ko.observable('')
-    scriptName = ko.observable('')
-
-    self =
-      fullScriptPath: ko.computed ->
-        "#{projectName()}#{scriptName()}"
-
-      saveScript: ->
-        Airscript.eventBus.notifySubscribers
-          name: scriptName()
-          source: source()
-        , 'script:save'
-
-      scriptsPanel: scriptsPanel
-
-      source: source
-
-      scriptName: ->
-        scriptName()
-
-    Airscript.eventBus.subscribe ({src, name}) ->
-      source(src)
-      scriptName(name)
-    , null, "editor:updateCode"
+    projectName = ko.observable('http://condor.herokuapp.com/')
 
     Airscript.eventBus.subscribe (name) ->
       projectName(name)
     , null, "editor:updateProjectName"
 
-    return self
+    self =
+      fullScriptPath: ko.computed ->
+        "#{projectName()}#{scriptsPanel.activeScript().name()}"
+
+      scriptsPanel: scriptsPanel
+
+      scriptName: ->
+        scriptsPanel.activeScript().name()
+
+      scriptSource: ->
+        scriptsPanel.activeScript().source()
