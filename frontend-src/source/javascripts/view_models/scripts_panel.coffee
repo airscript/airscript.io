@@ -38,6 +38,9 @@ Airscript.namespace "Airscript.ViewModels", (ViewModels) ->
       hasGists: ->
         gists.hasGists()
 
+      hasScripts: ->
+        gists.active().scripts.collection().length > 0
+
       files: ->
         gists.active().scripts.collection
 

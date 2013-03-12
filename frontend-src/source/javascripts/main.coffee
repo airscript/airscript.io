@@ -1,3 +1,9 @@
+ko.bindingHandlers.selected =
+  update: (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) ->
+      selected = ko.utils.unwrapObservable(valueAccessor())
+
+      element.select() if (selected)
+
 Airscript.init = ->
   {ViewModels} = Airscript
 

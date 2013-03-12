@@ -20,7 +20,7 @@
       .editor_container
         .header
           .file
-            %input.edit_script(data-bind='visible: scriptEditing(), value: scriptName(), event: { keypress: scriptsPanel.stopEditing }')
+            %input.edit_script(data-bind='visible: scriptEditing(), selected: true, value: scriptName(), event: { keypress: scriptsPanel.stopEditing }')
             %h3(data-bind='text: scriptName(), visible: !scriptEditing()')
             = partial :edit_svg
             = partial :trash_svg
