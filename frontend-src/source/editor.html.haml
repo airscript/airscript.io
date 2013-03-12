@@ -7,7 +7,7 @@
       %label(data-bind='visible: scriptsPanel.hasGists')
         %p.gist-description(type='text' data-bind='text: scriptsPanel.activeGistDescription()')
       %ul.files(data-bind='foreach: scriptsPanel.files()')
-        %li.script(data-bind='css: activeClass, click: $parent.scriptsPanel.editScript')
+        %li.script(data-bind='css: activeClass, click: $parent.scriptsPanel.selectScript')
           %span.script_name(data-bind='text: name')
       %a.new_file(href='#' data-bind='click: scriptsPanel.createNewFile') Create New File
 
@@ -20,7 +20,8 @@
       .editor_container
         .header
           .file
-            %h3(data-bind='text: scriptName()')
+            %input.edit_script(data-bind='visible: scriptEditing(), value: scriptName(), event: { keypress: scriptsPanel.stopEditing }')
+            %h3(data-bind='text: scriptName(), visible: !scriptEditing()')
             = partial :edit_svg
             = partial :trash_svg
           .clipboard(data-bind='attr: {"data-clipboard-text": fullScriptPath}')

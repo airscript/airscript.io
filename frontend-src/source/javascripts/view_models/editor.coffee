@@ -22,3 +22,6 @@ Airscript.namespace "Airscript.ViewModels", (ViewModels) ->
 
       scriptSource: ->
         scriptsPanel.activeScript().source()
+
+      scriptEditing: ->
+        scriptsPanel.activeScript().editing()

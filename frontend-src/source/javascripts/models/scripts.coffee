@@ -16,7 +16,8 @@ Airscript.namespace "Airscript.Models", (Models) ->
       collection: collection
 
       delete: (script) ->
-        collection.remove(script)
+        if confirm "Are you sure you want to delete this script?"
+          collection.remove(script)
 
       empty: ->
         collection([])
@@ -27,4 +28,15 @@ Airscript.namespace "Airscript.Models", (Models) ->
           s.editing(false)
 
         script.editing(true)
+
+      stopEditing: (newName) ->
+        for s in collection()
+          s.editing(false)
+          s.name(newName)
+
+      select: (script) ->
+        for s in collection()
+          s.selected(false)
+
+        script.selected(true)
         index(collection.indexOf(script))

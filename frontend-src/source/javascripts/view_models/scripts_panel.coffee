@@ -15,11 +15,22 @@ Airscript.namespace "Airscript.ViewModels", (ViewModels) ->
       activeScript: ->
         gists.active()?.scripts.active()
 
+      stopEditing: (self, e) ->
+        if e.keyCode is 13
+          value = $(e.currentTarget).val()
+
+          gists.active().scripts.stopEditing(value)
+        else
+          true
+
       createNewFile: ->
         gists.active().scripts.add('new script', '')
 
+      selectScript: (script, e) ->
+        gists.active().scripts.select(script)
+
       editScript: (script, e) ->
-        gists.active().scripts.edit(script)
+        gists.active().scripts.edit(self.activeScript())
 
       deleteScript: (script, e) ->
         gists.active().scripts.delete(self.activeScript())
@@ -38,4 +49,4 @@ Airscript.namespace "Airscript.ViewModels", (ViewModels) ->
 
         gists.select(index)
 
-        self.editScript(firstScript())
+        self.selectScript(firstScript())
