@@ -22,7 +22,7 @@ Airscript.namespace "Airscript.ViewModels", (ViewModels) ->
         gists.active().scripts.edit(script)
 
       deleteScript: (script, e) ->
-        gists.active().scripts.delete(script)
+        gists.active().scripts.delete(self.activeScript())
 
       hasGists: ->
         gists.hasGists()

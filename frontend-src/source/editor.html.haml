@@ -19,7 +19,10 @@
       .airscript_background
       .editor_container
         .header
-          %h3(data-bind='text: scriptName()')
+          .file
+            %h3(data-bind='text: scriptName()')
+            = partial :edit_svg
+            = partial :trash_svg
           .clipboard(data-bind='attr: {"data-clipboard-text": fullScriptPath}')
           = partial :clipboard_svg
           .full_url
