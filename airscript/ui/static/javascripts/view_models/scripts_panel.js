@@ -147,39 +147,8 @@
         fetch: function() {
           var gistsDeferred;
           gistsDeferred = $.getJSON('/api/v1/project/target/gists', function(data) {});
-          gistsDeferred.success(function(data) {
+          return gistsDeferred.success(function(data) {
             var gist, _i, _len, _results;
-            _results = [];
-            for (_i = 0, _len = data.length; _i < _len; _i++) {
-              gist = data[_i];
-              if (!gist.description.length) {
-                gist.description = gist.id;
-              }
-              _results.push(self.add(gist.id, gist.description, gist.files));
-            }
-            return _results;
-          });
-          return gistsDeferred.error(function() {
-            var data, gist, _i, _len, _results;
-            data = [
-              {
-                id: 'dsfasdf323r234',
-                description: 'All my Airscripts live in this gist.',
-                files: {
-                  'testing.rb': {
-                    content: 'some stuff'
-                  }
-                }
-              }, {
-                id: 'lkasjdf94',
-                description: 'This is a script that calls your friends up and plays Rick Astley.',
-                files: {
-                  'testing2.rb': {
-                    content: 'moar stuff'
-                  }
-                }
-              }
-            ];
             _results = [];
             for (_i = 0, _len = data.length; _i < _len; _i++) {
               gist = data[_i];
@@ -304,9 +273,11 @@
           return gists.collection;
         },
         selectGist: function(gist, e) {
-          var index;
+          var activeGist, index;
           index = $(e.currentTarget).index();
           gists.select(index);
+          activeGist = gists.active();
+          gists.target(activeGist);
           return self.selectScript(firstScript());
         }
       };

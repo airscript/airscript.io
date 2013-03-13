@@ -28,31 +28,6 @@ Airscript.namespace "Airscript.Models", (Models) ->
 
             self.add(gist.id, gist.description, gist.files)
 
-        # mock data for dev
-        gistsDeferred.error ->
-          data = [{
-            id: 'dsfasdf323r234'
-            description: 'All my Airscripts live in this gist.'
-            files: {
-              'testing.rb': {
-                content: 'some stuff'
-              }
-            }
-          }, {
-            id: 'lkasjdf94'
-            description: 'This is a script that calls your friends up and plays Rick Astley.'
-            files: {
-              'testing2.rb': {
-                content: 'moar stuff'
-              }
-            }
-          }]
-
-          for gist in data
-            gist.description = gist.id unless gist.description.length
-
-            self.add(gist.id, gist.description, gist.files)
-
       target: (gist, e) ->
         $.ajax
           url: "/api/v1/project/target"

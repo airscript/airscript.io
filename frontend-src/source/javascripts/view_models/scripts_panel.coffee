@@ -55,4 +55,8 @@ Airscript.namespace "Airscript.ViewModels", (ViewModels) ->
 
         gists.select(index)
 
+        activeGist = gists.active()
+
+        gists.target(activeGist)
+
         self.selectScript(firstScript())
