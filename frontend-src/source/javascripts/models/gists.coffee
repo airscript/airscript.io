@@ -67,7 +67,7 @@ Airscript.namespace "Airscript.Models", (Models) ->
 
               gist.files = data.files
 
-              self.add(gist.id, gist.description, gist.files)
+              self.active().scripts.update(gist.files)
 
         $('.modal').modal('hide')
 

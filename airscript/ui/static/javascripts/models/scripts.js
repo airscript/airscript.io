@@ -67,6 +67,28 @@
           }
           return script.editing(true);
         },
+        update: function(files) {
+          var fileName, fileObj, item, _i, _len, _ref, _results;
+          _ref = collection();
+          _results = [];
+          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+            item = _ref[_i];
+            _results.push((function() {
+              var _results1;
+              _results1 = [];
+              for (fileName in files) {
+                fileObj = files[fileName];
+                if (item.name() === fileName) {
+                  _results1.push(item.source(fileObj.contents));
+                } else {
+                  _results1.push(void 0);
+                }
+              }
+              return _results1;
+            })());
+          }
+          return _results;
+        },
         stopEditing: function(newName) {
           var s, _i, _len, _ref, _results;
           _ref = collection();

@@ -33,6 +33,12 @@ Airscript.namespace "Airscript.Models", (Models) ->
 
         script.editing(true)
 
+      update: (files) ->
+        for item in collection()
+          for fileName, fileObj of files
+            if item.name() is fileName
+              item.source(fileObj.contents)
+
       stopEditing: (newName) ->
         for s in collection()
           if s.editing()
