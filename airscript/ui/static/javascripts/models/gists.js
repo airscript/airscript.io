@@ -242,7 +242,7 @@
           return active = self.active();
         },
         addScript: function(name, content) {
-          return self.active().add(name, content);
+          return self.active().scripts.add(name, content);
         }
       };
     };

@@ -99,4 +99,4 @@ Airscript.namespace "Airscript.Models", (Models) ->
         active = self.active()
 
       addScript: (name, content) ->
-        self.active().add(name, content)
+        self.active().scripts.add(name, content)
