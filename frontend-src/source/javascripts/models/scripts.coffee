@@ -37,7 +37,7 @@ Airscript.namespace "Airscript.Models", (Models) ->
         for item in collection()
           for fileName, fileObj of files
             if item.name() is fileName
-              item.source(fileObj.contents)
+              item.source(fileObj.content)
 
       stopEditing: (newName) ->
         for s in collection()

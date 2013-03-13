@@ -31400,7 +31400,7 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
               for (fileName in files) {
                 fileObj = files[fileName];
                 if (item.name() === fileName) {
-                  _results1.push(item.source(fileObj.contents));
+                  _results1.push(item.source(fileObj.content));
                 } else {
                   _results1.push(void 0);
                 }
