@@ -31532,12 +31532,12 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
         },
         update: function() {
           var data, file, gist, _i, _len, _ref;
-          gist = self.activeGist();
+          gist = self.active();
           data = {
-            description: gist.description,
+            description: gist.description(),
             files: {}
           };
-          _ref = scripts();
+          _ref = gist.scripts.collection();
           for (_i = 0, _len = _ref.length; _i < _len; _i++) {
             file = _ref[_i];
             data.files[file.name()] = {
@@ -31547,6 +31547,8 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
           }
           return $.ajax({
             url: '/api/v1/project',
+            contentType: 'application/json',
+            dataType: 'json',
             type: 'PUT',
             data: data,
             success: function() {
@@ -31615,6 +31617,9 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
         },
         files: function() {
           return gists.active().scripts.collection;
+        },
+        updateGist: function() {
+          return gists.update();
         },
         gistsList: function() {
           return gists.collection;

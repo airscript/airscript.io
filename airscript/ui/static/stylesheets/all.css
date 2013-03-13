@@ -91,12 +91,14 @@ body {
   padding: 1em;
   padding-top: 0;
 }
-.new_file {
-  padding: 1em;
-}
 .scripts {
   height: 100%;
   position: relative;
+}
+.scripts .btn {
+  margin-top: 1em;
+  width: 38%;
+  margin-left: 3px;
 }
 .scripts input {
   width: 90%;
@@ -105,9 +107,6 @@ body {
 .scripts ul {
   list-style: none;
   margin-left: 0;
-}
-.scripts a {
-  color: #efefef;
 }
 .console {
   position: absolute;

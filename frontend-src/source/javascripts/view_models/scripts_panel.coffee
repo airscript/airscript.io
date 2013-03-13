@@ -44,6 +44,9 @@ Airscript.namespace "Airscript.ViewModels", (ViewModels) ->
       files: ->
         gists.active().scripts.collection
 
+      updateGist: ->
+        gists.update()
+
       gistsList: ->
         gists.collection
 

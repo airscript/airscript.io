@@ -30,7 +30,8 @@
           <span class='script_name' data-bind='text: name'></span>
         </li>
       </ul>
-      <a class='new_file' data-bind='click: scriptsPanel.createNewFile' href='#'>Create New File</a>
+      <a class='new_file btn' data-bind='click: scriptsPanel.createNewFile' href='#'>Create New File</a>
+      <a class='save_all btn' data-bind='click: scriptsPanel.updateGist' href='#'>Save All</a>
       <div class='btn-group script_controls'>
         <div class='btn-toolbar'>
           <div class='btn' data-target='.gist_modal' data-toggle='modal'>Set Target</div>

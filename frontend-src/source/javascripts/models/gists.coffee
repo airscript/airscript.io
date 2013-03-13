@@ -71,13 +71,13 @@ Airscript.namespace "Airscript.Models", (Models) ->
         $('.modal').modal('hide')
 
       update: ->
-        gist = self.activeGist()
+        gist = self.active()
 
         data =
-          description: gist.description
+          description: gist.description()
           files: {}
 
-        for file in scripts()
+        for file in gist.scripts.collection()
           data.files[file.name()] = {
             fileName: file.name()
             content: file.source() || ""
@@ -85,6 +85,8 @@ Airscript.namespace "Airscript.Models", (Models) ->
 
         $.ajax
           url: '/api/v1/project'
+          contentType: 'application/json'
+          dataType: 'json'
           type: 'PUT'
           data: data
           success: ->

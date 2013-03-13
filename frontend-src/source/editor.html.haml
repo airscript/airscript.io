@@ -9,7 +9,8 @@
       %ul.files(data-bind='foreach: scriptsPanel.files()')
         %li.script(data-bind='css: activeClass, click: $parent.scriptsPanel.selectScript')
           %span.script_name(data-bind='text: name')
-      %a.new_file(href='#' data-bind='click: scriptsPanel.createNewFile') Create New File
+      %a.new_file.btn(href='#' data-bind='click: scriptsPanel.createNewFile') Create New File
+      %a.save_all.btn(href='#' data-bind='click: scriptsPanel.updateGist') Save All
 
       .btn-group.script_controls
         .btn-toolbar
