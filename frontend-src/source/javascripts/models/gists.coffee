@@ -89,7 +89,7 @@ Airscript.namespace "Airscript.Models", (Models) ->
           contentType: 'application/json'
           dataType: 'json'
           type: 'PUT'
-          data: data
+          data: JSON.stringify(data)
           success: ->
             console.log 'woo'
 

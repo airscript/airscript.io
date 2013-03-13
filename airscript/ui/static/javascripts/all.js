@@ -31573,7 +31573,7 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
             contentType: 'application/json',
             dataType: 'json',
             type: 'PUT',
-            data: data,
+            data: JSON.stringify(data),
             success: function() {
               return console.log('woo');
             }
