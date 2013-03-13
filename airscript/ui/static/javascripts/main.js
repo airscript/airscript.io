@@ -1,20 +1,25 @@
 (function() {
 
+  ko.bindingHandlers.selected = {
+    update: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+      var selected;
+      selected = ko.utils.unwrapObservable(valueAccessor());
+      if (selected) {
+        return element.select();
+      }
+    }
+  };
+
   Airscript.init = function() {
     var ViewModels, editor;
-    Airscript.eventBus = new ko.subscribable();
     ViewModels = Airscript.ViewModels;
     editor = new ViewModels.Editor();
-    ko.applyBindings(editor, document.querySelector('section.content'));
-    ko.applyBindings(editor, document.querySelector('.gist_modal'));
-    $('.gist_modal').modal('show');
-    Airscript.aceEditor.setTheme("ace/theme/github");
-    return Airscript.aceEditor.getSession().setMode("ace/mode/lua");
+    ko.applyBindings(editor, document.querySelector('body'));
+    return $('.gist_modal').modal('show');
   };
 
   $(function() {
-    var clip;
-    return clip = new ZeroClipboard($('.clipboard').get(0), {
+    return new ZeroClipboard(document.querySelector('.clipboard'), {
       moviePath: '/flash/ZeroClipboard.swf'
     });
   });

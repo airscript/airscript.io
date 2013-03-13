@@ -14,69 +14,79 @@
     <button class='close' data-dismiss='modal' type='button'></button>
     <h3>Select Gist</h3>
   </div>
-  <div class='modal-body' data-bind='foreach: scriptsView.gists'>
-    <a class='btn gist' data-bind='text: description, click: $parent.scriptsView.selectGist' data-dismiss='modal' href='#'></a>
+  <div class='modal-body' data-bind='foreach: scriptsPanel.gistsList()'>
+    <a class='btn gist' data-bind='text: description, click: $parent.scriptsPanel.selectGist' data-dismiss='modal' href='#'></a>
   </div>
 </div>
 <section class='content'>
   <div class='row-fluid'>
     <div class='scripts'>
       <h2 class='brand'>Airscript</h2>
-      <label data-bind='visible: scriptsView.gists().length'>
-        <h5>Script Description</h5>
-        <textarea data-bind='value: scriptsView.activeGistDescription()' type='text'></textarea>
+      <label data-bind='visible: scriptsPanel.hasGists'>
+        <p class='gist-description' data-bind='text: scriptsPanel.activeGistDescription()' type='text'></p>
       </label>
-      <h5 data-bind='visible: scriptsView.scripts().length'>Files</h5>
-      <ul class='files' data-bind='foreach: scriptsView.scripts'>
-        <li>
-          <input data-bind='value: name, click: $parent.scriptsView.selectScript' type='text' />
+      <ul class='files' data-bind='foreach: scriptsPanel.files()'>
+        <li class='script' data-bind='css: activeClass, click: $parent.scriptsPanel.selectScript'>
+          <span class='script_name' data-bind='text: name'></span>
         </li>
       </ul>
-      <a class='new_file' data-bind='click: scriptsView.createNewFile' href='#'>Create New File</a>
+      <a class='new_file' data-bind='click: scriptsPanel.createNewFile' href='#'>Create New File</a>
       <div class='btn-group script_controls'>
-        <div class='btn-toolbar not_implemented'>
-          <div class='btn'>Environment</div>
-        </div>
         <div class='btn-toolbar'>
           <div class='btn' data-target='.gist_modal' data-toggle='modal'>Set Target</div>
-        </div>
-        <div class='btn-toolbar not_implemented'>
-          <div class='btn'>Deploy</div>
         </div>
       </div>
     </div>
     <div class='edit main'>
       <div class='airscript_background'></div>
-      <div class='btn btn-primary save-script' data-bind='click: saveScript'>Save</div>
-      <div class='full_url'>
-        <div class='clipboard' data-bind='attr: {"data-clipboard-text": fullScriptPath}'>
-          <svg enable-background='new 0 0 24 24' height='24px' id='Layer_1' version='1.1' viewbox='0 0 71 100' width='24px' x='0px' xml:space='preserve' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns='http://www.w3.org/2000/svg' y='0px'>
-            <path d='M70,7.583H56.625V5.961c0-0.55-0.45-1-1-1H43.443V2c0-1.1-0.9-2-2-2H29.557c-1.1,0-2,0.9-2,2v2.961H15.375  c-0.55,0-1,0.45-1,1v1.623H1c-0.55,0-1,0.45-1,1V99c0,0.55,0.45,1,1,1h69c0.55,0,1-0.45,1-1V8.583C71,8.034,70.55,7.583,70,7.583z   M35.5,2.319c1.094,0,1.981,0.887,1.981,1.98c0,1.094-0.888,1.981-1.981,1.981c-1.094,0-1.981-0.887-1.981-1.981  C33.519,3.206,34.406,2.319,35.5,2.319z M63.495,92.395c0,0.55-0.45,1-1,1H8.505c-0.55,0-1-0.45-1-1V15.188c0-0.55,0.45-1,1-1h5.87  v1.669c0,0.55,0.45,1,1,1h40.25c0.55,0,1-0.45,1-1v-1.669h5.87c0.55,0,1,0.45,1,1V92.395z'></path>
-            <rect height='2.375' width='38.125' x='14.375' y='25.5'></rect>
-            <rect height='2.375' width='38.125' x='14.375' y='31.625'></rect>
-            <rect height='2.375' width='29.125' x='14.375' y='37.75'></rect>
-            <rect height='2.375' width='38.125' x='14.375' y='50'></rect>
-            <rect height='2.375' width='38.125' x='14.375' y='56.125'></rect>
-            <rect height='2.375' width='29.125' x='14.375' y='62.25'></rect>
-          </svg>
-        </div>
-        <div class='location' data-bind='text: fullScriptPath'></div>
-      </div>
       <div class='editor_container'>
-        <div data-bind="ace: source, aceOptions: { mode: 'javascript', theme: 'monokai' }" id='editor'></div>
-        <textarea class='hidden' data-bind='value: source'></textarea>
-      </div>
-      <div class='console not_implemented'>
-        <ul class='nav nav-tabs'>
-          <li data-bind='css: {active: consoleView.logActive()}'>
-            <a data-bind='click: consoleView.logMode()'>Logs</a>
-          </li>
-          <li data-bind='css: {active: consoleView.referenceActive()}'>
-            <a data-bind='click: consoleView.referenceMode()'>Reference</a>
-          </li>
-        </ul>
-        <div class='output' data-bind='text: consoleView.logOutput(), visible: consoleView.logActive()'></div>
-        <div class='output' data-bind='text: consoleView.referenceOutput(), visible: consoleView.referenceActive()'></div>
+        <div class='header'>
+          <div class='file'>
+            <input class='edit_script' data-bind='visible: scriptEditing(), selected: true, value: scriptName(), event: { keypress: scriptsPanel.stopEditing }' />
+            <h3 data-bind='text: scriptName(), visible: !scriptEditing()'></h3>
+            <svg class='edit_svg' data-bind='click: scriptsPanel.editScript, visible: scriptsPanel.hasScripts()' enable-background='new 0 0 100 100' height='24px' version='1.1' viewbox='0 0 100 100' width='24px' x='0px' xml:space='preserve' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns='http://www.w3.org/2000/svg' y='0px'>
+  <g id='Captions'></g>
+  <g display='none' id='Layer_7'></g>
+  <g display='none' id='Your_Icon'>
+    <path d='M49.998,14.018c-19.873,0-35.98,16.109-35.98,35.982s16.107,35.982,35.98,35.982S85.982,69.873,85.982,50   S69.871,14.018,49.998,14.018z M73.987,50c0,4.535-1.288,8.766-3.487,12.391L37.608,29.498c3.621-2.197,7.852-3.484,12.39-3.484   C63.226,26.014,73.987,36.771,73.987,50z M26.013,50c0-4.344,1.175-8.412,3.205-11.934l32.715,32.715   c-3.518,2.027-7.588,3.205-11.935,3.205C36.771,73.986,26.013,63.229,26.013,50z' display='inline'></path>
+  </g>
+  <g display='none' id='Layer_6'>
+    <polygon display='inline' points='64.233,14.998 60.503,14.998 56.765,14.998 56.765,52.798 60.503,53.73 60.503,85.937    67.967,85.937 67.967,14.998  '></polygon>
+    <polygon display='inline' points='44.385,34.027 41.642,34.027 41.642,14.063 38.336,14.063 38.336,34.027 35.152,34.027    35.152,14.063 32.033,14.063 32.033,32.033 32.033,36 32.033,42.065 36.234,44.479 36.234,85.937 43.703,85.937 43.703,44.479    47.897,42.065 47.897,36 47.897,32.033 47.897,14.063 44.385,14.063  '></polygon>
+  </g>
+  <g display='none' id='Layer_5'>
+    <polygon display='inline' points='55.994,14.018 20.015,14.018 20.015,85.982 79.985,85.982 79.985,38.049 55.994,38.049  '></polygon>
+    <polygon display='inline' points='61.996,14.018 61.996,32.055 79.985,32.055  '></polygon>
+  </g>
+  <g id='Layer_4'>
+    <polygon points='73.988,73.988 26.012,73.988 26.012,26.014 48,26.014 59.995,14.018 14.018,14.018 14.018,85.982 85.982,85.982    85.982,40.008 73.988,52  '></polygon>
+    <rect height='22.451' transform='matrix(-0.7071 0.7071 -0.7071 -0.7071 131.8579 23.0947)' width='47.799' x='37.246' y='27.63'></rect>
+    <polygon points='32.009,52.121 32.051,67.947 47.882,67.992 47.951,67.93 32.076,52.053  '></polygon>
+  </g>
+</svg>
+            <svg class='trash_svg' data-bind='click: scriptsPanel.deleteScript, visible: scriptsPanel.hasScripts()' enable-background='new -13.05 -6.119 100 95.545' height='70px' id='Layer_1' version='1.1' viewbox='-13.05 -6.119 100 95.545' width='70px' x='0px' xml:space='preserve' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns='http://www.w3.org/2000/svg' y='0px'>
+  <g>
+    <path d='M86.95-0.588c0,3.074-2.607,5.53-5.53,5.53h-0.767L64.061,89.426h-53.76L-6.135,4.942H-7.52c-3.071,0-5.53-2.457-5.53-5.53    c0-3.071,2.459-5.531,5.53-5.531H81.42C84.343-6.119,86.95-3.66,86.95-0.588z M8.151,4.942H2.312l0.921,4.916L8.151,4.942z     M4.462,16.309l2.15,10.446l3.226,3.226l9.528-9.522l-9.528-9.371L4.462,16.309z M11.989,54.556l7.378-7.372l-9.528-9.371    l-0.921,0.924L11.989,54.556z M30.422,4.942H15.987l-2.305,2.15l9.522,9.522l9.522-9.522L30.422,4.942z M23.204,43.343l9.522-9.522    l-9.522-9.371l-9.522,9.371L23.204,43.343z M13.681,60.701l9.522,9.371l9.522-9.371l-9.522-9.522L13.681,60.701z M17.216,81.13    h9.213L15.066,69.763L17.216,81.13z M46.093,20.455l-9.523-9.368l-9.374,9.368l9.374,9.525L46.093,20.455z M27.196,47.184    l9.374,9.522l9.523-9.522l-9.523-9.371L27.196,47.184z M27.196,74.063l7.069,7.069h4.61l7.218-7.069l-9.523-9.521L27.196,74.063z     M57.153,4.942H42.712l-2.15,2.15l9.368,9.522l9.522-9.522L57.153,4.942z M49.929,43.343l9.528-9.522l-9.528-9.371l-9.368,9.371    L49.929,43.343z M59.458,60.701l-9.528-9.522l-9.368,9.522l9.368,9.371L59.458,60.701z M46.704,81.13h10.449l2.607-12.902    L46.704,81.13z M69.747,17.384l-6.451-6.296l-9.368,9.368l9.368,9.525l4.918-4.761L69.747,17.384z M65.292,39.812l-1.996-1.996    l-9.368,9.368l8.293,8.45L65.292,39.812z M72.206,4.942h-7.218l5.988,5.836L72.206,4.942z'></path>
+  </g>
+</svg>
+          </div>
+          <div class='clipboard' data-bind='attr: {"data-clipboard-text": fullScriptPath}'></div>
+          <svg class='clipboard_svg' enable-background='new 0 0 24 24' height='24px' id='Layer_1' version='1.1' viewbox='0 0 71 100' width='24px' x='0px' xml:space='preserve' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns='http://www.w3.org/2000/svg' y='0px'>
+  <path d='M70,7.583H56.625V5.961c0-0.55-0.45-1-1-1H43.443V2c0-1.1-0.9-2-2-2H29.557c-1.1,0-2,0.9-2,2v2.961H15.375  c-0.55,0-1,0.45-1,1v1.623H1c-0.55,0-1,0.45-1,1V99c0,0.55,0.45,1,1,1h69c0.55,0,1-0.45,1-1V8.583C71,8.034,70.55,7.583,70,7.583z   M35.5,2.319c1.094,0,1.981,0.887,1.981,1.98c0,1.094-0.888,1.981-1.981,1.981c-1.094,0-1.981-0.887-1.981-1.981  C33.519,3.206,34.406,2.319,35.5,2.319z M63.495,92.395c0,0.55-0.45,1-1,1H8.505c-0.55,0-1-0.45-1-1V15.188c0-0.55,0.45-1,1-1h5.87  v1.669c0,0.55,0.45,1,1,1h40.25c0.55,0,1-0.45,1-1v-1.669h5.87c0.55,0,1,0.45,1,1V92.395z'></path>
+  <rect height='2.375' width='38.125' x='14.375' y='25.5'></rect>
+  <rect height='2.375' width='38.125' x='14.375' y='31.625'></rect>
+  <rect height='2.375' width='29.125' x='14.375' y='37.75'></rect>
+  <rect height='2.375' width='38.125' x='14.375' y='50'></rect>
+  <rect height='2.375' width='38.125' x='14.375' y='56.125'></rect>
+  <rect height='2.375' width='29.125' x='14.375' y='62.25'></rect>
+</svg>
+          <div class='full_url'>
+            <h4 class='run_description'>Run your script</h4>
+            <div class='location' data-bind='text: fullScriptPath'></div>
+          </div>
+        </div>
+        <div data-bind="ace: scriptSource(), aceOptions: { mode: 'lua', theme: 'github' }" id='editor'></div>
+        <textarea class='hidden' data-bind='value: scriptSource()'></textarea>
       </div>
     </div>
   </div>

@@ -14,24 +14,8 @@ section.content,
 body {
   background-image: url("/img/lightpaperfibers.png");
 }
-.clipboard {
-  cursor: pointer;
-  width: 25px;
-  height: 26px;
-  float: left;
-  position: absolute;
-  left: -30px;
-  top: -1px;
-}
-.full_url {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  z-index: 11;
-  background-color: rgba(0,0,0,0.05);
-  border: 1px solid rgba(0,0,0,0.1);
-  border-radius: 3px;
-  padding: 2px 8px;
+.location {
+  display: inline-block;
 }
 .right {
   float: right;
@@ -82,7 +66,7 @@ h6 {
   padding: 0;
   text-align: center;
   margin: 0;
-  font: 60px 'DynalightRegular', Arial, sans-serif;
+  font: 40px 'DynalightRegular', Arial, sans-serif;
 }
 .hero-unit {
   padding-top: 0;
@@ -96,27 +80,34 @@ h6 {
 }
 body {
   background-color: #efefef;
+  padding: 0;
 }
 .row-fluid {
   height: 100%;
+}
+.gist-description {
+  color: #d1e2f0;
+  font-style: italic;
+  padding: 1em;
+  padding-top: 0;
+}
+.new_file {
+  padding: 1em;
 }
 .scripts {
   height: 100%;
   position: relative;
 }
-.scripts input,
-.scripts textarea {
+.scripts input {
   width: 90%;
+  max-width: 90%;
 }
 .scripts ul {
   list-style: none;
-  margin-left: 15px;
+  margin-left: 0;
 }
 .scripts a {
   color: #efefef;
-}
-.scripts .active {
-  font-weight: bold;
 }
 .console {
   position: absolute;
@@ -141,15 +132,90 @@ body {
   bottom: 0;
   left: 30%;
   margin: auto;
-  opacity: 0.4;
+  opacity: 0.1;
+}
+.run_description {
+  margin: 0;
+  font-size: 1em;
+}
+.full_url {
+  position: absolute;
+  top: 7px;
+  right: 10px;
+  width: 400px;
+}
+.full_url svg {
+  vertical-align: middle;
+}
+.editor_container .header {
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 50px;
+  width: 100%;
+  padding-left: 1em;
+  background-color: #e1dbd1;
+  color: #fff;
+  background: #b8c6df;
+  background: -moz-linear-gradient(top, #b8c6df 0%, #6d88b7 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #b8c6df), color-stop(100%, #6d88b7));
+  background: -webkit-linear-gradient(top, #b8c6df 0%, #6d88b7 100%);
+  background: -o-linear-gradient(top, #b8c6df 0%, #6d88b7 100%);
+  background: -ms-linear-gradient(top, #b8c6df 0%, #6d88b7 100%);
+  background: linear-gradient(to bottom, #b8c6df 0%, #6d88b7 100%);
+}
+.editor_container .header filter progid:DXImageTransform.Microsoft.gradient( startColorstr='#b8c6df',
+.editor_container .header endColorstr='#6d88b7',
+.editor_container .header GradientType=0),
+.editor_container .header h3 {
+  margin-bottom: 0.25em;
+  margin-top: 0.25em;
+}
+.edit_script {
+  margin-bottom: 1em;
+}
+.clipboard {
+  cursor: pointer;
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  z-index: 1;
+}
+.clipboard,
+.clipboard_svg {
+  right: 420px;
+  top: 15px;
+  position: absolute;
+}
+.clipboard_svg {
+  fill: #fff;
+}
+.ace_gutter-layer {
+  background-color: #fff;
+}
+.files li {
+  padding: 0.5em;
+}
+.files .script {
+  color: #fff;
+  cursor: pointer;
+}
+.files .script.active {
+  background-color: #fff;
+  color: #0a4575;
+}
+.edit_script_input {
+  margin-bottom: 0;
+}
+.modify_script {
+  color: #fff;
+  float: right;
 }
 .scripts {
   box-sizing: border-box;
-  background-image: -webkit-linear-gradient(top, #2c96ed, #0a4575);
-  background-color: #0e61a4;
-  background-color: #0e62a5;
-  border-right: 1px solid rgba(0,0,0,0.1);
-  padding: 1em;
+  background-color: #333;
+  padding: 0;
   width: 20%;
 }
 .scripts h4 {
@@ -187,7 +253,7 @@ body {
 }
 #editor {
   position: absolute;
-  top: 0;
+  top: 50px;
   left: 0;
   right: 0;
   bottom: 0;
@@ -198,4 +264,20 @@ body {
 }
 .inline {
   display: inline-block;
+}
+.file h3 {
+  vertical-align: top;
+  display: inline-block;
+  margin-top: 0.25em;
+}
+.trash_svg {
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+}
+.edit_svg,
+.trash_svg {
+  fill: #fff;
+  margin-top: 16px;
+  margin-left: 5px;
 }
