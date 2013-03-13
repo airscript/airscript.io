@@ -20,6 +20,7 @@
         scripts.add(fileName, fileObj.content);
       }
       return self = {
+        id: id,
         description: description,
         scripts: scripts
       };

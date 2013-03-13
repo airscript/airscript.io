@@ -9,6 +9,7 @@ Airscript.namespace "Airscript.Models", (Models) ->
       scripts.add(fileName, fileObj.content)
 
     self =
+      id: id
       description: description
       scripts: scripts
 
