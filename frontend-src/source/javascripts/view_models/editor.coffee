@@ -3,6 +3,11 @@ Airscript.namespace "Airscript.ViewModels", (ViewModels) ->
     aceEditor = ace.edit("editor")
     aceEditor.setShowPrintMargin(false)
 
+    aceEditor.on 'change', (e) ->
+      value = aceEditor.getSession().getValue()
+
+      scriptsPanel.activeScript().source(value)
+
     scriptsPanel = ViewModels.ScriptsPanel()
 
     projectName = ko.observable('http://condor.herokuapp.com/')
@@ -13,7 +18,7 @@ Airscript.namespace "Airscript.ViewModels", (ViewModels) ->
 
     self =
       fullScriptPath: ko.computed ->
-        "#{projectName()}#{scriptsPanel.activeScript().name()}"
+        "#{projectName()}#{escape(scriptsPanel.activeScript().name())}"
 
       scriptsPanel: scriptsPanel
 
