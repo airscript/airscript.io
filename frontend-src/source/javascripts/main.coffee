@@ -14,5 +14,5 @@ Airscript.init = ->
   $('.gist_modal').modal('show')
 
 $ ->
-  new ZeroClipboard document.querySelector('.clipboard'),
+  new ZeroClipboard document.querySelector('.script_path'),
     moviePath:'/flash/ZeroClipboard.swf'

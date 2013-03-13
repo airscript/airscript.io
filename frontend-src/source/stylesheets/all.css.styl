@@ -14,6 +14,19 @@ html, body, section.content, .main
 body
   background-image url('/img/lightpaperfibers.png')
 
+.new_file
+  color white
+  margin-top 1em
+  margin-left 1em
+
+  &:hover
+    color white
+
+.script_actions
+  position absolute
+  top 10px
+  left 10px
+
 .location
   display inline-block
 
@@ -67,6 +80,10 @@ h5, h6
   text-align: center
   margin: 0
   font: 40px 'DynalightRegular', Arial, sans-serif
+
+.icon-globe
+  display inline-block
+  float right
 
 .hero-unit
   padding-top: 0
@@ -263,10 +280,31 @@ body
   display: inline-block
 
 .file
-  h3
-    vertical-align top
+  text-align center
+
+  .dropdown
+    padding-top 12px
     display inline-block
-    margin-top 0.25em
+    float right
+    padding-right 12px
+
+  .dropdown-menu
+    left auto
+    right 10px
+    cursor pointer
+
+    a:hover
+      background-color white
+
+  input
+    margin-top: 0.3em
+    font-size: 24px
+
+  h3
+    display inline-block
+    text-shadow rgba(0, 0, 0, 0.3) 1px 1px 0
+    margin auto
+    margin-top 4px
 
 .trash_svg
   cursor pointer

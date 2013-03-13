@@ -14,6 +14,19 @@ section.content,
 body {
   background-image: url("/img/lightpaperfibers.png");
 }
+.new_file {
+  color: #fff;
+  margin-top: 1em;
+  margin-left: 1em;
+}
+.new_file:hover {
+  color: #fff;
+}
+.script_actions {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
 .location {
   display: inline-block;
 }
@@ -67,6 +80,10 @@ h6 {
   text-align: center;
   margin: 0;
   font: 40px 'DynalightRegular', Arial, sans-serif;
+}
+.icon-globe {
+  display: inline-block;
+  float: right;
 }
 .hero-unit {
   padding-top: 0;
@@ -264,10 +281,32 @@ body {
 .inline {
   display: inline-block;
 }
-.file h3 {
-  vertical-align: top;
+.file {
+  text-align: center;
+}
+.file .dropdown {
+  padding-top: 12px;
   display: inline-block;
-  margin-top: 0.25em;
+  float: right;
+  padding-right: 12px;
+}
+.file .dropdown-menu {
+  left: auto;
+  right: 10px;
+  cursor: pointer;
+}
+.file .dropdown-menu a:hover {
+  background-color: #fff;
+}
+.file input {
+  margin-top: 0.3em;
+  font-size: 24px;
+}
+.file h3 {
+  display: inline-block;
+  text-shadow: rgba(0,0,0,0.3) 1px 1px 0;
+  margin: auto;
+  margin-top: 4px;
 }
 .trash_svg {
   cursor: pointer;

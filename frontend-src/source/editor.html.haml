@@ -9,8 +9,8 @@
       %ul.files(data-bind='foreach: scriptsPanel.files()')
         %li.script(data-bind='css: activeClass, click: $parent.scriptsPanel.selectScript')
           %span.script_name(data-bind='text: name')
-      %a.new_file.btn(href='#' data-bind='click: scriptsPanel.createNewFile') Create New File
-      %a.save_all.btn(href='#' data-bind='click: scriptsPanel.updateGist') Save All
+
+      %a.new_file(href='#' data-bind='click: scriptsPanel.createNewFile') Create New File
 
       .btn-group.script_controls
         .btn-toolbar
@@ -21,15 +21,23 @@
       .editor_container
         .header
           .file
+            .dropdown
+              %a.btn.link.dropdown-toggle(data-toggle='dropdown' href='#')
+                %i.icon-globe
+              %ul.dropdown-menu(role='menu')
+                %li.script_path(data-bind="attr: {'data-clipboard-text': fullScriptPath}")
+                  %a(data-bind='text: fullScriptPath' href='#')
             %input.edit_script(data-bind='visible: scriptEditing(), selected: true, value: scriptName(), event: { keypress: scriptsPanel.stopEditing }')
             %h3(data-bind='text: scriptName(), visible: !scriptEditing()')
-            = partial :edit_svg
-            = partial :trash_svg
-          .clipboard(data-bind='attr: {"data-clipboard-text": fullScriptPath}')
-          = partial :clipboard_svg
-          .full_url
-            %h4.run_description Run your script
-            .location(data-bind='text: fullScriptPath')
+
+          .btn-group.script_actions
+            %button.btn(data-bind='click: scriptsPanel.editScript, visible: scriptsPanel.hasScripts()' title='Edit script name')
+              %i.icon-pencil
+            %button.btn.save_all(data-bind='click: scriptsPanel.updateGist, visible: scriptsPanel.hasScripts()' title='Save script')
+              %i.icon-hdd
+            %button.btn(data-bind= 'click: scriptsPanel.deleteScript, visible: scriptsPanel.hasScripts()' title='Delete script')
+              %i.icon-trash
+
         #editor(data-bind="ace: scriptSource(), aceOptions: { mode: 'lua', theme: 'github' }")
 
         %textarea.hidden(data-bind="value: scriptSource()")

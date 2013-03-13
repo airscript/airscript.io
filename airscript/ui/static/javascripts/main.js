@@ -19,7 +19,7 @@
   };
 
   $(function() {
-    return new ZeroClipboard(document.querySelector('.clipboard'), {
+    return new ZeroClipboard(document.querySelector('.script_path'), {
       moviePath: '/flash/ZeroClipboard.swf'
     });
   });
