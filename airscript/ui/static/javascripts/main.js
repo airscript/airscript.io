@@ -19,8 +19,16 @@
   };
 
   $(function() {
-    return new ZeroClipboard(document.querySelector('.script_path'), {
-      moviePath: '/flash/ZeroClipboard.swf'
+    $('input.full_script_path').on('keydown', function(e) {
+      if (!(e.metaKey || e.ctrlKey)) {
+        if (!(e.keyCode === 67 || e.keyCode === 65)) {
+          return e.preventDefault();
+        }
+      }
+    });
+    return $('li.script_path, li.script_path input').on('click', function(e) {
+      e.preventDefault();
+      return e.stopPropagation();
     });
   });
 

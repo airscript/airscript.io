@@ -31295,12 +31295,56 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
         value = aceEditor.getSession().getValue();
         return scriptsPanel.activeScript().source(value);
       });
+      aceEditor.commands.addCommand({
+        name: 'newScript',
+        bindKey: {
+          win: 'Ctrl-n',
+          mac: 'Ctrl-n'
+        },
+        exec: function(editor) {
+          return scriptsPanel.createNewFile();
+        },
+        readOnly: false
+      });
+      aceEditor.commands.addCommand({
+        name: 'saveScript',
+        bindKey: {
+          win: 'Ctrl-s',
+          mac: 'Ctrl-s'
+        },
+        exec: function(editor) {
+          return scriptsPanel.updateGist();
+        },
+        readOnly: false
+      });
+      aceEditor.commands.addCommand({
+        name: 'linkToScript',
+        bindKey: {
+          win: 'Ctrl-l',
+          mac: 'Ctrl-l'
+        },
+        exec: function(editor, b, c) {
+          debugger;          return $('.link').click();
+        },
+        readOnly: false
+      });
+      aceEditor.commands.addCommand({
+        name: 'editScript',
+        bindKey: {
+          win: 'Ctrl-e',
+          mac: 'Ctrl-e'
+        },
+        exec: function(editor) {
+          return scriptsPanel.editScript();
+        },
+        readOnly: false
+      });
       scriptsPanel = ViewModels.ScriptsPanel();
       projectName = ko.observable('http://condor.herokuapp.com/');
       Airscript.eventBus.subscribe(function(name) {
         return projectName(name);
       }, null, "editor:updateProjectName");
-      return self = {
+      self = {
         fullScriptPath: ko.computed(function() {
           return "" + (projectName()) + (escape(scriptsPanel.activeScript().name()));
         }),
@@ -31313,8 +31357,30 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
         },
         scriptEditing: function() {
           return scriptsPanel.activeScript().editing();
+        },
+        toggleFullscreen: function() {
+          $('.edit, .scripts').toggleClass('fullscreen');
+          $('.btn.fullscreen').toggleClass('active');
+          return aceEditor.resize();
+        },
+        selectFullPath: function() {
+          return setTimeout(function() {
+            return $('input.full_script_path').select();
+          }, 1);
         }
       };
+      aceEditor.commands.addCommand({
+        name: 'toggleFullscreen',
+        bindKey: {
+          win: 'Ctrl-f',
+          mac: 'Ctrl-f'
+        },
+        exec: function(editor) {
+          return self.toggleFullscreen();
+        },
+        readOnly: false
+      });
+      return self;
     };
   });
 
@@ -31681,8 +31747,16 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
   };
 
   $(function() {
-    return new ZeroClipboard(document.querySelector('.script_path'), {
-      moviePath: '/flash/ZeroClipboard.swf'
+    $('input.full_script_path').on('keydown', function(e) {
+      if (!(e.metaKey || e.ctrlKey)) {
+        if (!(e.keyCode === 67 || e.keyCode === 65)) {
+          return e.preventDefault();
+        }
+      }
+    });
+    return $('li.script_path, li.script_path input').on('click', function(e) {
+      e.preventDefault();
+      return e.stopPropagation();
     });
   });
 

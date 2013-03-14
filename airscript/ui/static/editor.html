@@ -42,13 +42,16 @@
       <div class='editor_container'>
         <div class='header'>
           <div class='file'>
+            <a class='fullscreen btn' data-bind='click: toggleFullscreen'>
+              <i class='icon-resize-full'></i>
+            </a>
             <div class='dropdown'>
-              <a class='btn link dropdown-toggle' data-toggle='dropdown' href='#'>
+              <a class='btn link dropdown-toggle' data-bind='click: selectFullPath' data-toggle='dropdown' href='#'>
                 <i class='icon-globe'></i>
               </a>
               <ul class='dropdown-menu' role='menu'>
                 <li class='script_path' data-bind="attr: {'data-clipboard-text': fullScriptPath}">
-                  <a data-bind='text: fullScriptPath' href='#'></a>
+                  <input class='full_script_path' data-bind='value: fullScriptPath' />
                 </li>
               </ul>
             </div>
@@ -56,11 +59,11 @@
             <h3 data-bind='text: scriptName(), visible: !scriptEditing()'></h3>
           </div>
           <div class='btn-group script_actions'>
-            <button class='btn' data-bind='click: scriptsPanel.editScript, visible: scriptsPanel.hasScripts()' title='Edit script name'>
-              <i class='icon-pencil'></i>
-            </button>
             <button class='btn save_all' data-bind='click: scriptsPanel.updateGist, visible: scriptsPanel.hasScripts()' title='Save script'>
               <i class='icon-hdd'></i>
+            </button>
+            <button class='btn' data-bind='click: scriptsPanel.editScript, visible: scriptsPanel.hasScripts()' title='Edit script name'>
+              <i class='icon-pencil'></i>
             </button>
             <button class='btn' data-bind='click: scriptsPanel.deleteScript, visible: scriptsPanel.hasScripts()' title='Delete script'>
               <i class='icon-trash'></i>
