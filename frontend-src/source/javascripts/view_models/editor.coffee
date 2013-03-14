@@ -30,3 +30,9 @@ Airscript.namespace "Airscript.ViewModels", (ViewModels) ->
 
       scriptEditing: ->
         scriptsPanel.activeScript().editing()
+
+      toggleFullscreen: ->
+        $('.edit, .scripts').toggleClass 'fullscreen'
+        $('.btn.fullscreen').toggleClass 'active'
+
+        aceEditor.resize()

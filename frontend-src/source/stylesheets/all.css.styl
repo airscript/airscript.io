@@ -229,10 +229,15 @@ body
 
 .scripts
   box-sizing border-box
-  background-color: #333
-
+  background-color #333
+  display block
   padding 0
+  position absolute
+  right 0
   width 20%
+
+  &.fullscreen
+    display none
 
   h4
     color: #efefef
@@ -256,11 +261,19 @@ body
 .login, .logout
   padding-top 10px
 
+.btn.fullscreen
+  margin-top 12px
+  float right
+  margin-right 6px
+  line-height 14px
+
 .edit
   position absolute
   top 0
-  left 20%
   width 80%
+
+  &.fullscreen
+    width 100%
 
   .inline
     margin-top: 0
