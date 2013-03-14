@@ -21,22 +21,22 @@
       .editor_container
         .header
           .file
+            %a.fullscreen.btn(data-bind="click: toggleFullscreen")
+              %i.icon-resize-full
             .dropdown
-              %a.btn.dropdown-toggle(data-bind="click: selectFullPath" data-toggle='dropdown' href='#')
+              %a.btn.link.dropdown-toggle(data-bind="click: selectFullPath" data-toggle='dropdown' href='#')
                 %i.icon-globe
               %ul.dropdown-menu(role='menu')
                 %li.script_path(data-bind="attr: {'data-clipboard-text': fullScriptPath}")
                   %input.full_script_path(data-bind='value: fullScriptPath')
-            %a.fullscreen.btn(data-bind="click: toggleFullscreen")
-              %i.icon-resize-full
             %input.edit_script(data-bind='visible: scriptEditing(), selected: true, value: scriptName(), event: { keypress: scriptsPanel.stopEditing }')
             %h3(data-bind='text: scriptName(), visible: !scriptEditing()')
 
           .btn-group.script_actions
-            %button.btn(data-bind='click: scriptsPanel.editScript, visible: scriptsPanel.hasScripts()' title='Edit script name')
-              %i.icon-pencil
             %button.btn.save_all(data-bind='click: scriptsPanel.updateGist, visible: scriptsPanel.hasScripts()' title='Save script')
               %i.icon-hdd
+            %button.btn(data-bind='click: scriptsPanel.editScript, visible: scriptsPanel.hasScripts()' title='Edit script name')
+              %i.icon-pencil
             %button.btn(data-bind= 'click: scriptsPanel.deleteScript, visible: scriptsPanel.hasScripts()' title='Delete script')
               %i.icon-trash
 
