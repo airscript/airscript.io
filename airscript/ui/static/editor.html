@@ -14,8 +14,11 @@
     <button class='close' data-dismiss='modal' type='button'></button>
     <h3>Select Gist</h3>
   </div>
-  <div class='modal-body' data-bind='foreach: scriptsPanel.gistsList()'>
-    <a class='btn gist' data-bind='text: description, click: $parent.scriptsPanel.selectGist' data-dismiss='modal' href='#'></a>
+  <div class='modal-body'>
+    <p>Choose a gist to be the target for your Airscript engine.</p>
+    <div class='gists' data-bind='foreach: scriptsPanel.gistsList()'>
+      <a class='btn gist' data-bind='text: description, click: $parent.scriptsPanel.selectGist' data-dismiss='modal' href='#'></a>
+    </div>
   </div>
 </div>
 <section class='content'>
@@ -38,7 +41,7 @@
       <a class='new_file' data-bind='click: scriptsPanel.createNewFile' href='#'>Create New File</a>
       <div class='btn-group script_controls'>
         <div class='btn-toolbar'>
-          <div class='btn' data-target='.gist_modal' data-toggle='modal'>Set Target</div>
+          <div class='btn' data-target='.gist_modal' data-toggle='modal'>Open Project</div>
         </div>
       </div>
     </div>
