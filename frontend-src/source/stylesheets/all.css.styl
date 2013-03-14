@@ -19,9 +19,6 @@ body
   margin-top 1em
   margin-left 1em
 
-  &:hover
-    color white
-
 .script_actions
   position absolute
   top 10px
@@ -75,7 +72,6 @@ h5, h6
 
 .brand
   text-shadow: rgba(0,0,0,0.3) 0 5px 5px
-  color: #efefef
   padding: 0
   text-align: center
   margin: 0
@@ -103,14 +99,17 @@ body
   height 100%
 
 .gist-description
-  color hsl(207, 50%, 88%)
   font-style italic
   padding 1em
   padding-top 0
 
 .scripts
+  color hsl(206, 60%, 90%)
   height 100%
   position relative
+
+  a
+    color hsl(206, 60%, 90%)
 
   .btn
     margin-top 1em
@@ -175,14 +174,19 @@ body
     background-color #E1DBD1
     color white
 
-    background #b8c6df
-    background -moz-linear-gradient(top,  #b8c6df 0%, #6d88b7 100%)
-    background -webkit-gradient(linear, left top, left bottom, color-stop(0%,#b8c6df), color-stop(100%,#6d88b7))
-    background -webkit-linear-gradient(top,  #b8c6df 0%,#6d88b7 100%)
-    background -o-linear-gradient(top,  #b8c6df 0%,#6d88b7 100%)
-    background -ms-linear-gradient(top,  #b8c6df 0%,#6d88b7 100%)
-    background linear-gradient(to bottom,  #b8c6df 0%,#6d88b7 100%)
-    filter progid:DXImageTransform.Microsoft.gradient( startColorstr='#b8c6df', endColorstr='#6d88b7',GradientType=0 )
+    background-image: linear-gradient(bottom, rgb(47,126,186) 48%, rgb(65,141,196) 74%)
+    background-image: -o-linear-gradient(bottom, rgb(47,126,186) 48%, rgb(65,141,196) 74%)
+    background-image: -moz-linear-gradient(bottom, rgb(47,126,186) 48%, rgb(65,141,196) 74%)
+    background-image: -webkit-linear-gradient(bottom, rgb(47,126,186) 48%, rgb(65,141,196) 74%)
+    background-image: -ms-linear-gradient(bottom, rgb(47,126,186) 48%, rgb(65,141,196) 74%)
+
+    background-image: -webkit-gradient(
+      linear,
+      left bottom,
+      left top,
+      color-stop(0.48, rgb(47,126,186)),
+      color-stop(0.74, rgb(65,141,196))
+    )
 
     h3
       margin-bottom 0.25em
@@ -210,10 +214,10 @@ body
   background-color white
 
 .files li
-  padding: 0.5em
+  padding 0.5em
+  padding-left 1em
 
 .files .script
-  color white
   cursor pointer
 
   &.active
@@ -311,9 +315,6 @@ body
     left auto
     right 54px
     cursor pointer
-
-    a:hover
-      background-color white
 
   input
     margin-top: 0.3em

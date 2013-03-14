@@ -4,6 +4,10 @@
   .row-fluid
     .scripts
       %h2.brand Airscript
+      %label
+        %span.login-info Logged in as mdiebolt
+        = "| "
+        %a.logout-link Logout
       %label(data-bind='visible: scriptsPanel.hasGists')
         %p.gist-description(type='text' data-bind='text: scriptsPanel.activeGistDescription()')
       %ul.files(data-bind='foreach: scriptsPanel.files()')
