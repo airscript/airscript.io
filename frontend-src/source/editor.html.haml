@@ -6,7 +6,7 @@
       %h2.brand Airscript
       %label.login-container
         %span.login-info Logged in as
-        %span.username(data-bind='text: userName')
+        %span.username(data-bind='text: userName()')
         = "| "
         %a.logout-link(href='/auth/logout') Logout
       %label(data-bind='visible: scriptsPanel.hasGists')
