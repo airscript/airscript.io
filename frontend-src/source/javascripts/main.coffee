@@ -14,5 +14,12 @@ Airscript.init = ->
   $('.gist_modal').modal('show')
 
 $ ->
-  new ZeroClipboard document.querySelector('.script_path'),
-    moviePath:'/flash/ZeroClipboard.swf'
+  $('input.full_script_path').on 'keydown', (e) ->
+    # prevent default unless they are pressing ctrl+c
+    unless (e.metaKey || e.ctrlKey)
+      unless (e.keyCode is 67 || e.keyCode is 65)
+        e.preventDefault()
+
+  $('li.script_path, li.script_path input').on 'click', (e) ->
+    e.preventDefault()
+    e.stopPropagation()

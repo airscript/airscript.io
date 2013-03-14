@@ -36,3 +36,8 @@ Airscript.namespace "Airscript.ViewModels", (ViewModels) ->
         $('.btn.fullscreen').toggleClass 'active'
 
         aceEditor.resize()
+
+      selectFullPath: ->
+        setTimeout ->
+          $('input.full_script_path').select()
+        , 1
