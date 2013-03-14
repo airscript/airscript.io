@@ -26,9 +26,10 @@
     <div class='scripts'>
       <h2 class='brand'>Airscript</h2>
       <label class='login-container'>
-        <span class='login-info'>Logged in as mdiebolt</span>
+        <span class='login-info'>Logged in as</span>
+        <span class='username' data-bind='text: userName'></span>
         |
-        <a class='logout-link'>Logout</a>
+        <a class='logout-link' href='/auth/logout'>Logout</a>
       </label>
       <label data-bind='visible: scriptsPanel.hasGists'>
         <p class='gist-description' data-bind='text: scriptsPanel.activeGistDescription()' type='text'></p>
@@ -46,7 +47,6 @@
       </div>
     </div>
     <div class='edit main'>
-      <div class='airscript_background'></div>
       <div class='editor_container'>
         <div class='header'>
           <div class='file'>

@@ -5,9 +5,10 @@
     .scripts
       %h2.brand Airscript
       %label.login-container
-        %span.login-info Logged in as mdiebolt
+        %span.login-info Logged in as
+        %span.username(data-bind='text: userName')
         = "| "
-        %a.logout-link Logout
+        %a.logout-link(href='/auth/logout') Logout
       %label(data-bind='visible: scriptsPanel.hasGists')
         %p.gist-description(type='text' data-bind='text: scriptsPanel.activeGistDescription()')
       %ul.files(data-bind='foreach: scriptsPanel.files()')
@@ -21,7 +22,6 @@
           .btn(data-toggle="modal" data-target=".gist_modal") Open Project
 
     .edit.main
-      .airscript_background
       .editor_container
         .header
           .file

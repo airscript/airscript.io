@@ -73,6 +73,17 @@
         scriptEditing: function() {
           return scriptsPanel.activeScript().editing();
         },
+        userName: function() {
+          var cookies, key, str, value, _i, _len, _ref, _ref1;
+          cookies = {};
+          _ref = document.cookie.split(';');
+          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+            str = _ref[_i];
+            _ref1 = str.split('='), key = _ref1[0], value = _ref1[1];
+            cookies[key] = value;
+          }
+          return cookies.user;
+        },
         toggleFullscreen: function() {
           $('.edit, .scripts').toggleClass('fullscreen');
           $('.btn.fullscreen').toggleClass('active');

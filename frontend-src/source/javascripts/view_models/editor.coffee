@@ -68,6 +68,16 @@ Airscript.namespace "Airscript.ViewModels", (ViewModels) ->
       scriptEditing: ->
         scriptsPanel.activeScript().editing()
 
+      userName: ->
+        cookies = {}
+
+        for str in document.cookie.split(';')
+          [key, value] = str.split('=')
+
+          cookies[key] = value
+
+        cookies.user
+
       toggleFullscreen: ->
         $('.edit, .scripts').toggleClass 'fullscreen'
         $('.btn.fullscreen').toggleClass 'active'

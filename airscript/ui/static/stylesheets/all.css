@@ -11,9 +11,6 @@ section.content,
   font-weight: normal;
   font-style: normal;
 }
-body {
-  background-image: url("/img/lightpaperfibers.png");
-}
 .new_file {
   color: #fff;
   margin-top: 1em;
@@ -24,23 +21,8 @@ body {
   top: 10px;
   left: 10px;
 }
-.location {
-  display: inline-block;
-}
 .right {
   float: right;
-}
-.save-script {
-  top: 40px;
-  right: 10px;
-  position: absolute;
-  width: 100px;
-  z-index: 10;
-}
-h5,
-h6 {
-  color: #efefef;
-  margin: 0;
 }
 .gist_modal .gist {
   display: block;
@@ -50,8 +32,14 @@ h6 {
   text-align: center;
 }
 .get_started {
+  color: #fff;
   font-size: 35px;
   padding: 0.5em 1em;
+  padding-left: 0.3em;
+  vertical-align: middle;
+}
+.get_started:hover {
+  color: #fff;
 }
 .callout {
   position: relative;
@@ -93,6 +81,7 @@ h6 {
 }
 body {
   background-color: #efefef;
+  background-image: url("/img/lightpaperfibers.png");
   padding: 0;
 }
 .row-fluid {
@@ -124,44 +113,6 @@ body {
   list-style: none;
   margin-left: 0;
 }
-.console {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-}
-.console .nav {
-  margin-bottom: 0;
-}
-.console .output {
-  background-color: #333;
-  color: #fff;
-  height: 120px;
-}
-.airscript_background {
-  background-image: url("/img/airscript.png");
-  width: 325px;
-  height: 181px;
-  z-index: 100;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 30%;
-  margin: auto;
-  opacity: 0.1;
-}
-.run_description {
-  margin: 0;
-  font-size: 1em;
-}
-.full_url {
-  position: absolute;
-  top: 7px;
-  right: 10px;
-  width: 400px;
-}
-.full_url svg {
-  vertical-align: middle;
-}
 .editor_container .header {
   box-sizing: border-box;
   position: absolute;
@@ -186,22 +137,6 @@ body {
 .edit_script {
   margin-bottom: 1em;
 }
-.clipboard {
-  cursor: pointer;
-  position: absolute;
-  width: 24px;
-  height: 24px;
-  z-index: 1;
-}
-.clipboard,
-.clipboard_svg {
-  right: 420px;
-  top: 15px;
-  position: absolute;
-}
-.clipboard_svg {
-  fill: #fff;
-}
 .ace_gutter-layer {
   background-color: #fff;
 }
@@ -218,10 +153,6 @@ body {
 }
 .edit_script_input {
   margin-bottom: 0;
-}
-.modify_script {
-  color: #fff;
-  float: right;
 }
 .scripts {
   box-sizing: border-box;
@@ -324,15 +255,4 @@ body {
   text-shadow: rgba(0,0,0,0.3) 1px 1px 0;
   margin: auto;
   margin-top: 4px;
-}
-.trash_svg {
-  cursor: pointer;
-  width: 24px;
-  height: 24px;
-}
-.edit_svg,
-.trash_svg {
-  fill: #fff;
-  margin-top: 16px;
-  margin-left: 5px;
 }
