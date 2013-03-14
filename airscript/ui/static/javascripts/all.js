@@ -30417,15 +30417,19 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
           return scriptsPanel.activeScript().editing();
         },
         userName: function() {
-          var cookies, key, str, value, _i, _len, _ref, _ref1;
+          var cookies, key, str, value, _i, _len, _ref;
           cookies = {};
-          _ref = document.cookie.split(';');
-          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-            str = _ref[_i];
-            _ref1 = str.split('='), key = _ref1[0], value = _ref1[1];
-            cookies[key] = value;
+          if (!(cookies = document.cookie.split(';')).length) {
+            return;
           }
-          return cookies.user;
+          for (_i = 0, _len = cookies.length; _i < _len; _i++) {
+            str = cookies[_i];
+            _ref = str.split('='), key = _ref[0], value = _ref[1];
+            if (key && value) {
+              cookies[key.trim()] = value.trim();
+            }
+          }
+          return cookies.user || "";
         },
         toggleFullscreen: function() {
           $('.edit, .scripts').toggleClass('fullscreen');

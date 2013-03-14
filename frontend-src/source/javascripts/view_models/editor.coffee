@@ -71,12 +71,15 @@ Airscript.namespace "Airscript.ViewModels", (ViewModels) ->
       userName: ->
         cookies = {}
 
-        for str in document.cookie.split(';')
+        return unless (cookies = document.cookie.split(';')).length
+
+        for str in cookies
           [key, value] = str.split('=')
 
-          cookies[key] = value
+          if key && value
+            cookies[key.trim()] = value.trim()
 
-        cookies.user
+        cookies.user || ""
 
       toggleFullscreen: ->
         $('.edit, .scripts').toggleClass 'fullscreen'
