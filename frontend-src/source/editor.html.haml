@@ -29,7 +29,7 @@
               %i.icon-resize-full
             .dropdown
               %a.btn.link.dropdown-toggle(data-bind="click: selectFullPath" data-toggle='dropdown' href='#')
-                %i.icon-globe
+                %i.icon-link
               %ul.dropdown-menu(role='menu')
                 %li.script_path(data-bind="attr: {'data-clipboard-text': fullScriptPath}")
                   %input.full_script_path(data-bind='value: fullScriptPath')
@@ -38,9 +38,9 @@
 
           .btn-group.script_actions
             %button.btn.save_all(data-bind='click: scriptsPanel.updateGist, visible: scriptsPanel.hasScripts()' title='Save script')
-              %i.icon-hdd
+              %i.icon-save
             %button.btn(data-bind='click: scriptsPanel.editScript, visible: scriptsPanel.hasScripts()' title='Edit script name')
-              %i.icon-pencil
+              %i.icon-edit
             %button.btn(data-bind= 'click: scriptsPanel.deleteScript, visible: scriptsPanel.hasScripts()' title='Delete script')
               %i.icon-trash
 

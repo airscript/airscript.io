@@ -5,6 +5,7 @@
   <title>Airscript.io</title>
   <link type="text/css" rel="stylesheet" media="screen" href="/stylesheets/bootstrap.css" />
   <link type="text/css" rel="stylesheet" media="screen" href="/stylesheets/bootstrap-responsive.css" />
+  <link type="text/css" rel="stylesheet" media="screen" href="/stylesheets/font-awesome.css" />
   <link type="text/css" rel="stylesheet" media="screen" href="/stylesheets/normalize.css" />
   <link type="text/css" rel="stylesheet" media="screen" href="/stylesheets/all.css" />
   <script type="text/javascript" src="/javascripts/all.js"></script>
@@ -55,7 +56,7 @@
             </a>
             <div class='dropdown'>
               <a class='btn link dropdown-toggle' data-bind='click: selectFullPath' data-toggle='dropdown' href='#'>
-                <i class='icon-globe'></i>
+                <i class='icon-link'></i>
               </a>
               <ul class='dropdown-menu' role='menu'>
                 <li class='script_path' data-bind="attr: {'data-clipboard-text': fullScriptPath}">
@@ -68,10 +69,10 @@
           </div>
           <div class='btn-group script_actions'>
             <button class='btn save_all' data-bind='click: scriptsPanel.updateGist, visible: scriptsPanel.hasScripts()' title='Save script'>
-              <i class='icon-hdd'></i>
+              <i class='icon-save'></i>
             </button>
             <button class='btn' data-bind='click: scriptsPanel.editScript, visible: scriptsPanel.hasScripts()' title='Edit script name'>
-              <i class='icon-pencil'></i>
+              <i class='icon-edit'></i>
             </button>
             <button class='btn' data-bind='click: scriptsPanel.deleteScript, visible: scriptsPanel.hasScripts()' title='Delete script'>
               <i class='icon-trash'></i>
