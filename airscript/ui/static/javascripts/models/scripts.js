@@ -46,12 +46,10 @@
         collection: collection,
         "delete": function(script) {
           var lastScript;
-          if (confirm("Are you sure you want to delete this script?")) {
-            collection.remove(script);
-            if (lastScript = collection()[collection().length - 1]) {
-              lastScript.selected(true);
-              return index(collection.indexOf(lastScript));
-            }
+          collection.remove(script);
+          if (lastScript = collection()[collection().length - 1]) {
+            lastScript.selected(true);
+            return index(collection.indexOf(lastScript));
           }
         },
         empty: function() {

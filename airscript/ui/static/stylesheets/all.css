@@ -65,10 +65,6 @@ section.content,
   margin: 0;
   font: 40px 'DynalightRegular', Arial, sans-serif;
 }
-.icon-globe {
-  display: inline-block;
-  float: right;
-}
 .hero-unit {
   padding-top: 0;
   padding-bottom: 0;
@@ -95,7 +91,20 @@ body {
 .scripts {
   color: #d6e8f5;
   height: 100%;
-  position: relative;
+  box-sizing: border-box;
+  background-color: #333;
+  display: block;
+  padding: 0;
+  position: absolute;
+  right: 0;
+  width: 20%;
+}
+.scripts.fullscreen {
+  display: none;
+}
+.scripts h4 {
+  color: #efefef;
+  margin-top: 0;
 }
 .scripts a {
   color: #d6e8f5;
@@ -150,25 +159,6 @@ body {
 .files .script.active {
   background-color: #fff;
   color: #0a4575;
-}
-.edit_script_input {
-  margin-bottom: 0;
-}
-.scripts {
-  box-sizing: border-box;
-  background-color: #333;
-  display: block;
-  padding: 0;
-  position: absolute;
-  right: 0;
-  width: 20%;
-}
-.scripts.fullscreen {
-  display: none;
-}
-.scripts h4 {
-  color: #efefef;
-  margin-top: 0;
 }
 .script_controls {
   position: absolute;

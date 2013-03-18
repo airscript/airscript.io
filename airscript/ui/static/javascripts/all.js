@@ -30506,12 +30506,10 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
         collection: collection,
         "delete": function(script) {
           var lastScript;
-          if (confirm("Are you sure you want to delete this script?")) {
-            collection.remove(script);
-            if (lastScript = collection()[collection().length - 1]) {
-              lastScript.selected(true);
-              return index(collection.indexOf(lastScript));
-            }
+          collection.remove(script);
+          if (lastScript = collection()[collection().length - 1]) {
+            lastScript.selected(true);
+            return index(collection.indexOf(lastScript));
           }
         },
         empty: function() {
@@ -30712,10 +30710,7 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
             contentType: 'application/json',
             dataType: 'json',
             type: 'PUT',
-            data: JSON.stringify(data),
-            success: function() {
-              return console.log('woo');
-            }
+            data: JSON.stringify(data)
           });
         },
         select: function(idx) {
@@ -30769,7 +30764,34 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
           return gists.active().scripts.edit(self.activeScript());
         },
         deleteScript: function(script, e) {
-          return gists.active().scripts["delete"](self.activeScript());
+          var data, file, gist, _i, _len, _ref;
+          if (confirm("Are you sure you want to delete this script?")) {
+            gist = gists.active();
+            data = {
+              description: gist.description(),
+              files: {}
+            };
+            _ref = gist.scripts.collection();
+            for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+              file = _ref[_i];
+              if (script.name() === file.name()) {
+                data.files[file.name()] = null;
+              } else {
+                data.files[file.name()] = {
+                  fileName: file.name(),
+                  content: file.source() || ""
+                };
+              }
+            }
+            $.ajax({
+              url: '/api/v1/project',
+              contentType: 'application/json',
+              dataType: 'json',
+              type: 'PUT',
+              data: JSON.stringify(data)
+            });
+            return gists.active().scripts["delete"](self.activeScript());
+          }
         },
         hasGists: function() {
           return gists.hasGists();
