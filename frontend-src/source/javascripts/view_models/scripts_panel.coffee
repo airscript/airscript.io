@@ -32,7 +32,7 @@ Airscript.namespace "Airscript.ViewModels", (ViewModels) ->
       editScript: (script, e) ->
         gists.active().scripts.edit(self.activeScript())
 
-      deleteScript: (script, e) ->
+      deleteScript: (editor, e) ->
         if confirm "Are you sure you want to delete this script?"
           # delete the file from GitHub
           gist = gists.active()
@@ -42,7 +42,7 @@ Airscript.namespace "Airscript.ViewModels", (ViewModels) ->
             files: {}
 
           for file in gist.scripts.collection()
-            if script.name() is file.name()
+            if editor.scriptName() is file.name()
               data.files[file.name()] = null
             else
               data.files[file.name()] = {
@@ -58,7 +58,7 @@ Airscript.namespace "Airscript.ViewModels", (ViewModels) ->
             data: JSON.stringify(data)
 
           # Remove the file locally
-          gists.active().scripts.delete(self.activeScript())
+          gist.scripts.delete(self.activeScript())
 
       hasGists: ->
         gists.hasGists()
