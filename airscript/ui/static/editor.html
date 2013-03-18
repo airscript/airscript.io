@@ -65,7 +65,7 @@
               </ul>
             </div>
             <input class='edit_script' data-bind='visible: scriptEditing(), selected: true, value: scriptName(), event: { keypress: scriptsPanel.stopEditing }' />
-            <h3 data-bind='text: scriptName(), visible: !scriptEditing()'></h3>
+            <h3 class='name' data-bind='text: scriptName(), visible: !scriptEditing(), click: scriptsPanel.editScript'></h3>
           </div>
           <div class='btn-group script_actions'>
             <button class='btn save_all' data-bind='click: scriptsPanel.updateGist, visible: scriptsPanel.hasScripts()' title='Save script'>

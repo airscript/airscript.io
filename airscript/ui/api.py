@@ -92,11 +92,11 @@ class EngineConfig(restful.Resource):
 class Project(restful.Resource):
     def get(self):
         if "target" not in session:
-            return {"message": "no target"}, 404 
+            return {"message": "no target"}, 404
         url = 'https://api.github.com/gists/{}'.format(
                 session['target']['id'])
         req = requests.get(url, params={
-            'access_token': request.cookies['auth']}) 
+            'access_token': request.cookies['auth']})
         files = req.json['files']
         for filename in files:
             url = files[filename]['raw_url']
@@ -120,7 +120,6 @@ class Project(restful.Resource):
             data=request.data)
         return req.json, req.status_code
 
-
 routes = {
     '/project/target': Target,
     '/project/target/gists': TargetGists,
@@ -132,4 +131,4 @@ routes = {
     '/project': Project,
 }
 for path in routes:
-    api.add_resource(routes[path], '{}{}'.format(base_path, path)) 
+    api.add_resource(routes[path], '{}{}'.format(base_path, path))

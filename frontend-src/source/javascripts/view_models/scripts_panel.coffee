@@ -30,6 +30,8 @@ Airscript.namespace "Airscript.ViewModels", (ViewModels) ->
         gists.active().scripts.select(script)
 
       editScript: (script, e) ->
+        $('.file .edit_script').width($('.file .name').width())
+
         gists.active().scripts.edit(self.activeScript())
 
       deleteScript: (editor, e) ->

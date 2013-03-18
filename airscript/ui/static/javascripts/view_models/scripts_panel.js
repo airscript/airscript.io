@@ -301,6 +301,7 @@
           return gists.active().scripts.select(script);
         },
         editScript: function(script, e) {
+          $('.file .edit_script').width($('.file .name').width());
           return gists.active().scripts.edit(self.activeScript());
         },
         deleteScript: function(editor, e) {
