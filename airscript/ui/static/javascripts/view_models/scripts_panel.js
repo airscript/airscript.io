@@ -303,7 +303,7 @@
         editScript: function(script, e) {
           return gists.active().scripts.edit(self.activeScript());
         },
-        deleteScript: function(script, e) {
+        deleteScript: function(editor, e) {
           var data, file, gist, _i, _len, _ref;
           if (confirm("Are you sure you want to delete this script?")) {
             gist = gists.active();
@@ -314,7 +314,7 @@
             _ref = gist.scripts.collection();
             for (_i = 0, _len = _ref.length; _i < _len; _i++) {
               file = _ref[_i];
-              if (script.name() === file.name()) {
+              if (editor.scriptName() === file.name()) {
                 data.files[file.name()] = null;
               } else {
                 data.files[file.name()] = {
@@ -330,7 +330,7 @@
               type: 'PUT',
               data: JSON.stringify(data)
             });
-            return gists.active().scripts["delete"](self.activeScript());
+            return gist.scripts["delete"](self.activeScript());
           }
         },
         hasGists: function() {
