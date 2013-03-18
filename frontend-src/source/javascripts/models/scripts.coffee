@@ -16,12 +16,11 @@ Airscript.namespace "Airscript.Models", (Models) ->
       collection: collection
 
       delete: (script) ->
-        if confirm "Are you sure you want to delete this script?"
-          collection.remove(script)
+        collection.remove(script)
 
-          if lastScript = collection()[collection().length - 1]
-            lastScript.selected(true)
-            index(collection.indexOf(lastScript))
+        if lastScript = collection()[collection().length - 1]
+          lastScript.selected(true)
+          index(collection.indexOf(lastScript))
 
       empty: ->
         collection([])

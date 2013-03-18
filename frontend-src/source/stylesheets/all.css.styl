@@ -66,10 +66,6 @@ html, body, section.content, .main
   margin: 0
   font: 40px 'DynalightRegular', Arial, sans-serif
 
-.icon-globe
-  display inline-block
-  float right
-
 .hero-unit
   padding-top: 0
   padding-bottom: 0
@@ -96,7 +92,20 @@ body
 .scripts
   color hsl(206, 60%, 90%)
   height 100%
-  position relative
+  box-sizing border-box
+  background-color #333
+  display block
+  padding 0
+  position absolute
+  right 0
+  width 20%
+
+  &.fullscreen
+    display none
+
+  h4
+    color: #efefef
+    margin-top 0
 
   a
     color hsl(206, 60%, 90%)
@@ -160,25 +169,6 @@ body
   &.active
     background-color white
     color #0A4575
-
-.edit_script_input
-  margin-bottom 0
-
-.scripts
-  box-sizing border-box
-  background-color #333
-  display block
-  padding 0
-  position absolute
-  right 0
-  width 20%
-
-  &.fullscreen
-    display none
-
-  h4
-    color: #efefef
-    margin-top 0
 
 .script_controls
   position absolute

@@ -33,7 +33,32 @@ Airscript.namespace "Airscript.ViewModels", (ViewModels) ->
         gists.active().scripts.edit(self.activeScript())
 
       deleteScript: (script, e) ->
-        gists.active().scripts.delete(self.activeScript())
+        if confirm "Are you sure you want to delete this script?"
+          # delete the file from GitHub
+          gist = gists.active()
+
+          data =
+            description: gist.description()
+            files: {}
+
+          for file in gist.scripts.collection()
+            if script.name() is file.name()
+              data.files[file.name()] = null
+            else
+              data.files[file.name()] = {
+                fileName: file.name()
+                content: file.source() || ""
+              }
+
+          $.ajax
+            url: '/api/v1/project'
+            contentType: 'application/json'
+            dataType: 'json'
+            type: 'PUT'
+            data: JSON.stringify(data)
+
+          # Remove the file locally
+          gists.active().scripts.delete(self.activeScript())
 
       hasGists: ->
         gists.hasGists()

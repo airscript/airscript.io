@@ -90,8 +90,6 @@ Airscript.namespace "Airscript.Models", (Models) ->
           dataType: 'json'
           type: 'PUT'
           data: JSON.stringify(data)
-          success: ->
-            console.log 'woo'
 
       select: (idx) ->
         index(idx)
