@@ -36,51 +36,53 @@ class Target(restful.Resource):
 
 class TargetGists(restful.Resource):
     def get(self):
-        url = 'https://api.github.com/users/{}/gists'.format(request.cookies['user'])
+        user = request.cookies['user']
         auth = request.cookies['auth']
+
+        url = 'https://api.github.com/users/{}/gists'.format(user)
 
         create_default = True
 
         req = requests.get(url, params={'access_token': auth})
 
-        for gist in req:
-            data = req[gist]
-
-            if data['description'] == 'airscript':
+        for gist in req.json():
+            if gist.get('description') == 'airscript':
                 create_default = False
 
         if create_default:
-            create_url = 'https://api.github.com/gists'
+            create_url = 'https://api.github.com/gists?access_token={}'.format(auth)
 
             placeholder_content = """-- make an HTTP request with query parameters
-                                  local response = http.request {
-                                      url = 'http://www.random.org/integers/',
-                                      params = {
-                                          num=1, min=0, max=1, format='plain',
-                                          rnd='new', col=1, base=10
-                                      }
-                                  }
-                                  if tonumber(response.content) == 0 then
-                                      return 'heads'
-                                  else
-                                      return 'tails'
-                                  end"""
+local response = http.request {
+  url = 'http://www.random.org/integers/',
+  params = {
+      num=1, min=0, max=1, format='plain',
+      rnd='new', col=1, base=10
+  }
+}
+if tonumber(response.content) == 0 then
+  return 'heads'
+else
+  return 'tails'
+end"""
 
-            requests.post(create_url, params={
-                'access_token': auth,
+            default_gist_params = {
                 'description': 'airscript',
                 'public': True,
                 'files': {
                     'coin_flip.lua': {
                         'content': placeholder_content
                     }
-                }})
+                }
+            }
+
+            requests.post(create_url, json.dumps(default_gist_params))
 
             updated_req = requests.get(url, params={'access_token': auth})
 
-            return updated_req.json
+            return updated_req.json()
         else:
-            return req.json
+            return req.json()
 
     def post(self):
         created_gist_mock = {
