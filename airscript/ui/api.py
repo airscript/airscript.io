@@ -36,11 +36,50 @@ class Target(restful.Resource):
 
 class TargetGists(restful.Resource):
     def get(self):
-        url = 'https://api.github.com/users/{}/gists'.format(
-                request.cookies['user'])
-        req = requests.get(url, params={
-            'access_token': request.cookies['auth']})
-        return req.json
+        url = 'https://api.github.com/users/{}/gists'.format(request.cookies['user'])
+
+        create_default = True
+
+        for gist, data in req.iteritems():
+            if data['description'] == 'airscript':
+                create_default = False
+
+        if create_default:
+            create_url = 'https://api.github.com/gists'
+
+            placeholder_content = """-- make an HTTP request with query parameters
+                                  local response = http.request {
+                                      url = 'http://www.random.org/integers/',
+                                      params = {
+                                          num=1, min=0, max=1, format='plain',
+                                          rnd='new', col=1, base=10
+                                      }
+                                  }
+                                  if tonumber(response.content) == 0 then
+                                      return 'heads'
+                                  else
+                                      return 'tails'
+                                  end"""
+
+            requests.post(create_url, params={
+                'access_token': request.cookies['auth'],
+                'description': 'airscript',
+                'public': True,
+                'files': {
+                    'coin_flip.lua': {
+                        'content': placeholder_content
+                    }
+                }})
+
+            req = requests.get(url, params={
+                'access_token': request.cookies['auth']})
+
+            return req.json
+        else:
+            req = requests.get(url, params={
+                'access_token': request.cookies['auth']})
+
+            return req.json
 
     def post(self):
         created_gist_mock = {
