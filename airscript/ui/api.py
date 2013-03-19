@@ -37,10 +37,15 @@ class Target(restful.Resource):
 class TargetGists(restful.Resource):
     def get(self):
         url = 'https://api.github.com/users/{}/gists'.format(request.cookies['user'])
+        auth = request.cookies['auth']
 
         create_default = True
 
-        for gist, data in req.iteritems():
+        req = requests.get(url, params={'access_token': auth})
+
+        for gist in req:
+            data = req[gist]
+
             if data['description'] == 'airscript':
                 create_default = False
 
@@ -62,7 +67,7 @@ class TargetGists(restful.Resource):
                                   end"""
 
             requests.post(create_url, params={
-                'access_token': request.cookies['auth'],
+                'access_token': auth,
                 'description': 'airscript',
                 'public': True,
                 'files': {
@@ -71,14 +76,10 @@ class TargetGists(restful.Resource):
                     }
                 }})
 
-            req = requests.get(url, params={
-                'access_token': request.cookies['auth']})
+            updated_req = requests.get(url, params={'access_token': auth})
 
-            return req.json
+            return updated_req.json
         else:
-            req = requests.get(url, params={
-                'access_token': request.cookies['auth']})
-
             return req.json
 
     def post(self):
