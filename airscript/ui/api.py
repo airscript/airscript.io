@@ -1,4 +1,5 @@
 import json
+import hashlib
 
 from flask import request
 from flask import session
@@ -18,6 +19,19 @@ def output_json(data, code, headers=None):
     resp.headers.extend(headers or {})
     resp.headers['Access-Control-Allow-Origin'] = '*'
     return resp
+
+def heroku_account(full_username=True):
+    login = session['user']
+    username = "{}@airscript-users.appspotmail.com".format(login)
+    password = hashlib.sha1(
+                "{}--{}".format(login, app.secret_key)).hexdigest()
+    if full_username:
+        return {'username': username, 'password': password}
+    else:
+        return {'username': login, 'password': password}
+
+def heroku_appname():
+    return "{}-airscript-engine".format(session['user'])
 
 class Target(restful.Resource):
     def get(self):
@@ -68,15 +82,105 @@ class TargetRepos(restful.Resource):
         return repos_mock
 
 class EngineAuth(restful.Resource):
-    def post(self):
-        pass
+    def get(self):
+        user = request.args.get('user')
+        if user:
+            session['user'] = user
+
+        def _login():
+            url = 'https://api.heroku.com/login'
+            resp = requests.post(url, data=heroku_account())
+            if resp.status_code == 200:
+                return resp.json['api_key']
+        def _register():
+            url = 'https://airscript-users.appspot.com/new'
+            resp = requests.post(url, data=heroku_account(False))
+            if resp.status_code == 201:
+                url = resp.headers['location']
+                resp = requests.get(url)
+                if resp.status_code == 200:
+                    return True, resp
+                else:
+                    return False, resp
+            else:
+                return False, resp
+
+        api_key = _login()
+        if api_key:
+            response = heroku_account()
+            response["engine_key"] = api_key 
+            return response
+        else:
+            success, resp = _register()
+            if not success:
+                return {"error": resp.text}, resp.status_code
+            api_key = _login()
+            if api_key:
+                response = heroku_account()
+                response["engine_key"] = api_key
+                return response
+            else:
+                return {"error": "try again"}, 400
 
 class Engine(restful.Resource):
     def get(self):
-        pass
+        user = request.args.get('user')
+        if user:
+            session['user'] = user
+
+        api_key = request.args.get("engine_key")
+        if not api_key:
+            return {"error": "engine_key parameter required"}, 400
+
+        url = 'https://api.heroku.com/apps/{}'.format(heroku_appname())
+        resp = requests.get(url, auth=('', api_key))
+        return resp.json, resp.status_code
+
 
     def post(self):
-        pass
+        user = request.args.get('user')
+        if user:
+            session['user'] = user
+
+        api_key = request.form.get("engine_key")
+        if not api_key:
+            return {"error": "engine_key parameter required"}, 400
+
+        url = 'https://api.heroku.com/apps/{}'.format(heroku_appname())
+        resp = requests.get(url, auth=('', api_key))
+        if resp.status_code == 404:
+            url = 'https://api.heroku.com/apps'
+            resp = requests.post(url, auth=('', api_key), data={
+                'app[name]': heroku_appname()})
+            if resp.status_code != 202:
+                return resp.json, resp.status_code
+
+        url = 'https://api.heroku.com/apps/{}/config_vars'.format(heroku_appname())
+        requests.put(url, auth=('', api_key), data=json.dumps({'BUILDPACK_URL': 'https://github.com/airscript/heroku-buildpack-airscript'}))
+
+        url = 'https://api.heroku.com/apps/{}/domains'.format(heroku_appname())
+        requests.post(url, auth=('', api_key), data={'domain_name[domain]': '{}.airscript.io'.format(session['user'])})
+
+        engine_repo = 'git://github.com/airscript/airscript-engine.git'
+        deployer = """
+  mkdir -p ~/.ssh
+  cat <<EOF > ~/.ssh/config
+Host heroku.com
+    UserKnownHostsFile=/dev/null
+    StrictHostKeyChecking=no
+EOF
+  ssh-keygen -t dsa -N "" -f /app/.ssh/id_dsa -C "robot@airscript.io"
+  curl -u ":{key}" -d @/app/.ssh/id_dsa.pub -X POST https://api.heroku.com/user/keys
+  git clone {repo} repo
+  cd repo
+  git remote add heroku "git@heroku.com:{app}.git"
+  git push heroku master
+  curl -u ":{key}" -X DELETE "https://api.heroku.com/user/keys/robot@airscript.io"
+""".format(key=api_key, app=heroku_appname(), repo=engine_repo)
+        url = 'https://api.heroku.com/apps/{}/ps'.format(heroku_appname())
+        resp = requests.post(url, auth=('', api_key), data={
+            'command': deployer})
+        return resp.json, resp.status_code
 
 class EngineLogs(restful.Resource):
     def get(self):
