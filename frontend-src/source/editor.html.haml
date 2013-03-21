@@ -1,5 +1,3 @@
-= partial :gist_selection
-
 %section.content
   .row-fluid
     .scripts
@@ -9,8 +7,6 @@
         %span.username(data-bind='text: userName()')
         = "| "
         %a.logout-link(href='/auth/logout') Logout
-      %label(data-bind='visible: scriptsPanel.hasGists')
-        %p.gist-description(type='text' data-bind='text: scriptsPanel.activeGistDescription()')
       %ul.files(data-bind='foreach: scriptsPanel.files()')
         %li.script(data-bind='css: activeClass, click: $parent.scriptsPanel.selectScript')
           %span.script_name(data-bind='text: name')

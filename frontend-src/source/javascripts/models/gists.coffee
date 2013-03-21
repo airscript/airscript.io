@@ -26,8 +26,11 @@ Airscript.namespace "Airscript.Models", (Models) ->
           for gist in data
             gist.description = gist.id unless gist.description.length
 
-            self.add(gist.id, gist.description, gist.files)
+            # hack
+            if gist.description is 'airscript'
+              self.add(gist.id, gist.description, gist.files)
 
+              self.target(gist)
 
         # mock data for dev
         gistsDeferred.error ->
@@ -59,7 +62,7 @@ Airscript.namespace "Airscript.Models", (Models) ->
           url: "/api/v1/project/target"
           data:
             type: 'gist'
-            id: gist.id()
+            id: gist.id
           type: 'PUT'
           success: ->
             $.getJSON "/api/v1/project", (data) ->

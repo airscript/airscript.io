@@ -52,7 +52,7 @@ class TargetGists(restful.Resource):
         if create_default:
             create_url = 'https://api.github.com/gists?access_token={}'.format(auth)
 
-            placeholder_content = """-- make an HTTP request with query parameters
+            placeholder_content = """-- Sample script to make an HTTP request with query parameters
 local response = http.request {
   url = 'http://www.random.org/integers/',
   params = {
@@ -133,13 +133,14 @@ class EngineConfig(restful.Resource):
 
 class Project(restful.Resource):
     def get(self):
+        auth = request.cookies['auth']
+
         if "target" not in session:
             return {"message": "no target"}, 404
-        url = 'https://api.github.com/gists/{}'.format(
-                session['target']['id'])
-        req = requests.get(url, params={
-            'access_token': request.cookies['auth']})
-        files = req.json['files']
+
+        url = 'https://api.github.com/gists/{}'.format(session['target']['id'])
+        req = requests.get(url, params={'access_token': auth})
+        files = req.json()['files']
         for filename in files:
             url = files[filename]['raw_url']
             files[filename]['content'] = requests.get(url).text
@@ -155,11 +156,10 @@ class Project(restful.Resource):
     def put(self):
         # see http://developer.github.com/v3/gists/#edit-a-gist
         # for arguments and semantics
-        url = 'https://api.github.com/gists/{}'.format(
-                session['target']['id'])
-        req = requests.patch(url,
-            params={'access_token': request.cookies['auth']},
-            data=request.data)
+        url = 'https://api.github.com/gists/{}'.format(session['target']['id'])
+        auth = request.cookies['auth']
+
+        req = requests.patch(url, params={'access_token': auth}, data=request.data)
         return req.json, req.status_code
 
 routes = {

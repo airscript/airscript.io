@@ -77,7 +77,8 @@
               for (fileName in files) {
                 fileObj = files[fileName];
                 if (item.name() === fileName) {
-                  _results1.push(item.source(fileObj.content));
+                  item.source(fileObj.content);
+                  _results1.push(self.select(item));
                 } else {
                   _results1.push(void 0);
                 }

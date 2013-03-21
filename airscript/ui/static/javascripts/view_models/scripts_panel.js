@@ -77,7 +77,8 @@
               for (fileName in files) {
                 fileObj = files[fileName];
                 if (item.name() === fileName) {
-                  _results1.push(item.source(fileObj.content));
+                  item.source(fileObj.content);
+                  _results1.push(self.select(item));
                 } else {
                   _results1.push(void 0);
                 }
@@ -176,7 +177,12 @@
               if (!gist.description.length) {
                 gist.description = gist.id;
               }
-              _results.push(self.add(gist.id, gist.description, gist.files));
+              if (gist.description === 'airscript') {
+                self.add(gist.id, gist.description, gist.files);
+                _results.push(self.target(gist));
+              } else {
+                _results.push(void 0);
+              }
             }
             return _results;
           });
@@ -217,7 +223,7 @@
             url: "/api/v1/project/target",
             data: {
               type: 'gist',
-              id: gist.id()
+              id: gist.id
             },
             type: 'PUT',
             success: function() {
