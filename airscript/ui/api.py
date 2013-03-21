@@ -59,7 +59,7 @@ class TargetGists(restful.Resource):
 
         req = requests.get(url, params={'access_token': auth})
 
-        for gist in req.json():
+        for gist in req.json:
             if gist.get('description') == 'airscript':
                 create_default = False
 
@@ -94,9 +94,9 @@ end"""
 
             updated_req = requests.get(url, params={'access_token': auth})
 
-            return updated_req.json()
+            return updated_req.json
         else:
-            return req.json()
+            return req.json
 
     def post(self):
         created_gist_mock = {
@@ -150,7 +150,7 @@ class EngineAuth(restful.Resource):
         api_key = _login()
         if api_key:
             response = heroku_account()
-            response["engine_key"] = api_key 
+            response["engine_key"] = api_key
             return response
         else:
             success, resp = _register()
@@ -244,7 +244,7 @@ class Project(restful.Resource):
 
         url = 'https://api.github.com/gists/{}'.format(session['target']['id'])
         req = requests.get(url, params={'access_token': auth})
-        files = req.json()['files']
+        files = req.json['files']
         for filename in files:
             url = files[filename]['raw_url']
             files[filename]['content'] = requests.get(url).text
