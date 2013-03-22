@@ -30398,7 +30398,7 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
         readOnly: false
       });
       scriptsPanel = ViewModels.ScriptsPanel();
-      projectName = ko.observable('http://condor.herokuapp.com/');
+      projectName = ko.observable('');
       Airscript.eventBus.subscribe(function(name) {
         return projectName(name);
       }, null, "editor:updateProjectName");
@@ -30684,10 +30684,30 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
             },
             type: 'PUT',
             success: function() {
-              return $.getJSON("/api/v1/project", function(data) {
+              return $.getJSON("/api/v1/project?user=mdiebolt", function(data) {
                 Airscript.eventBus.notifySubscribers(data.config.engine_url, 'editor:updateProjectName');
                 gist.files = data.files;
-                return self.active().scripts.update(gist.files);
+                self.active().scripts.update(gist.files);
+                $('.engine_deploy_spinner, .engine_deploy_curtain').removeClass('hidden');
+                return $.ajax({
+                  url: '/api/v1/project/engine/auth',
+                  type: 'GET',
+                  success: function(data) {
+                    var engineKey, login;
+                    engineKey = data.engineKey, login = data.login;
+                    return $.ajax({
+                      url: '/api/v1/project/engine',
+                      type: 'POST',
+                      data: {
+                        user: login,
+                        engine_key: engineKey
+                      },
+                      success: function(a, b, c) {
+                        return $('.engine_deploy_spinner, .engine_deploy_curtain').addClass('hidden');
+                      }
+                    });
+                  }
+                });
               });
             }
           });
@@ -30833,28 +30853,9 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
         }
       }
     });
-    $('li.script_path, li.script_path input').on('click', function(e) {
+    return $('li.script_path, li.script_path input').on('click', function(e) {
       e.preventDefault();
       return e.stopPropagation();
-    });
-    $('.engine_deploy_spinner, .engine_deploy_curtain').removeClass('hidden');
-    return $.ajax({
-      url: '/api/v1/project/engine/auth',
-      type: 'GET',
-      success: function(data) {
-        var engineKey;
-        engineKey = data.engineKey;
-        return $.ajax({
-          url: '/api/v1/project/engine',
-          type: 'POST',
-          data: {
-            engine_key: engineKey
-          },
-          success: function(a, b, c) {
-            return $('.engine_deploy_spinner, .engine_deploy_curtain').addClass('hidden');
-          }
-        });
-      }
     });
   });
 

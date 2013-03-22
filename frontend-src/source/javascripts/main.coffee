@@ -21,20 +21,3 @@ $ ->
   $('li.script_path, li.script_path input').on 'click', (e) ->
     e.preventDefault()
     e.stopPropagation()
-
-  # Deploy their engine!
-  $('.engine_deploy_spinner, .engine_deploy_curtain').removeClass 'hidden'
-
-  $.ajax
-    url: '/api/v1/project/engine/auth'
-    type: 'GET'
-    success: (data) ->
-      {engineKey} = data
-
-      $.ajax
-        url: '/api/v1/project/engine'
-        type: 'POST'
-        data:
-          engine_key: engineKey
-        success: (a,b,c) ->
-          $('.engine_deploy_spinner, .engine_deploy_curtain').addClass 'hidden'

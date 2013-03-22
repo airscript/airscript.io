@@ -55,7 +55,7 @@
         readOnly: false
       });
       scriptsPanel = ViewModels.ScriptsPanel();
-      projectName = ko.observable('http://condor.herokuapp.com/');
+      projectName = ko.observable('');
       Airscript.eventBus.subscribe(function(name) {
         return projectName(name);
       }, null, "editor:updateProjectName");

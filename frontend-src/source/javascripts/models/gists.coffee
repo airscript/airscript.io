@@ -62,12 +62,31 @@ Airscript.namespace "Airscript.Models", (Models) ->
             id: gist.id
           type: 'PUT'
           success: ->
-            $.getJSON "/api/v1/project", (data) ->
+            # Get ready to go blind
+            $.getJSON "/api/v1/project?user=mdiebolt", (data) ->
               Airscript.eventBus.notifySubscribers data.config.engine_url, 'editor:updateProjectName'
 
               gist.files = data.files
 
               self.active().scripts.update(gist.files)
+
+              # Deploy their engine!
+              $('.engine_deploy_spinner, .engine_deploy_curtain').removeClass 'hidden'
+
+              $.ajax
+                url: '/api/v1/project/engine/auth'
+                type: 'GET'
+                success: (data) ->
+                  {engineKey, login} = data
+
+                  $.ajax
+                    url: '/api/v1/project/engine'
+                    type: 'POST'
+                    data:
+                      user: login
+                      engine_key: engineKey
+                    success: (a,b,c) ->
+                      $('.engine_deploy_spinner, .engine_deploy_curtain').addClass 'hidden'
 
       update: ->
         gist = self.active()

@@ -25,28 +25,9 @@
         }
       }
     });
-    $('li.script_path, li.script_path input').on('click', function(e) {
+    return $('li.script_path, li.script_path input').on('click', function(e) {
       e.preventDefault();
       return e.stopPropagation();
-    });
-    $('.engine_deploy_spinner, .engine_deploy_curtain').removeClass('hidden');
-    return $.ajax({
-      url: '/api/v1/project/engine/auth',
-      type: 'GET',
-      success: function(data) {
-        var engineKey;
-        engineKey = data.engineKey;
-        return $.ajax({
-          url: '/api/v1/project/engine',
-          type: 'POST',
-          data: {
-            engine_key: engineKey
-          },
-          success: function(a, b, c) {
-            return $('.engine_deploy_spinner, .engine_deploy_curtain').addClass('hidden');
-          }
-        });
-      }
     });
   });
 

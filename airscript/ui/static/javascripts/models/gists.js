@@ -224,10 +224,30 @@
             },
             type: 'PUT',
             success: function() {
-              return $.getJSON("/api/v1/project", function(data) {
+              return $.getJSON("/api/v1/project?user=mdiebolt", function(data) {
                 Airscript.eventBus.notifySubscribers(data.config.engine_url, 'editor:updateProjectName');
                 gist.files = data.files;
-                return self.active().scripts.update(gist.files);
+                self.active().scripts.update(gist.files);
+                $('.engine_deploy_spinner, .engine_deploy_curtain').removeClass('hidden');
+                return $.ajax({
+                  url: '/api/v1/project/engine/auth',
+                  type: 'GET',
+                  success: function(data) {
+                    var engineKey, login;
+                    engineKey = data.engineKey, login = data.login;
+                    return $.ajax({
+                      url: '/api/v1/project/engine',
+                      type: 'POST',
+                      data: {
+                        user: login,
+                        engine_key: engineKey
+                      },
+                      success: function(a, b, c) {
+                        return $('.engine_deploy_spinner, .engine_deploy_curtain').addClass('hidden');
+                      }
+                    });
+                  }
+                });
               });
             }
           });
