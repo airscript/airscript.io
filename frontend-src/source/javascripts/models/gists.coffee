@@ -80,7 +80,7 @@ Airscript.namespace "Airscript.Models", (Models) ->
                   {engine_key, username} = data
 
                   $.ajax
-                    url: "/api/v1/project/engine?user=#{username}"
+                    url: "/api/v1/project/engine?user=mdiebolt"
                     type: 'POST'
                     data:
                       engine_key: engine_key
