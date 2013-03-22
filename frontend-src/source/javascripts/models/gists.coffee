@@ -64,8 +64,6 @@ Airscript.namespace "Airscript.Models", (Models) ->
           success: ->
             # Get ready to go blind
             $.getJSON "/api/v1/project", (data) ->
-              Airscript.eventBus.notifySubscribers data.config.engine_url, 'editor:updateProjectName'
-
               gist.files = data.files
 
               self.active().scripts.update(gist.files)
@@ -88,7 +86,10 @@ Airscript.namespace "Airscript.Models", (Models) ->
                       user: username
                       engine_key: engineKey
                     success: (a,b,c) ->
+                      Airscript.eventBus.notifySubscribers 'my_engine_name', 'editor:updateProjectName'
+
                       $('.engine_deploy_spinner, .engine_deploy_curtain').addClass 'hidden'
+
 
       update: ->
         gist = self.active()

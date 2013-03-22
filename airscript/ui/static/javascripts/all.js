@@ -30685,7 +30685,6 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
             type: 'PUT',
             success: function() {
               return $.getJSON("/api/v1/project", function(data) {
-                Airscript.eventBus.notifySubscribers(data.config.engine_url, 'editor:updateProjectName');
                 gist.files = data.files;
                 self.active().scripts.update(gist.files);
                 $('.engine_deploy_spinner, .engine_deploy_curtain').removeClass('hidden');
@@ -30706,6 +30705,7 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
                         engine_key: engineKey
                       },
                       success: function(a, b, c) {
+                        Airscript.eventBus.notifySubscribers('my_engine_name', 'editor:updateProjectName');
                         return $('.engine_deploy_spinner, .engine_deploy_curtain').addClass('hidden');
                       }
                     });
