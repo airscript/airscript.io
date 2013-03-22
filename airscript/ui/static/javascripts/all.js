@@ -30698,7 +30698,7 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
                     var engineKey, username;
                     engineKey = data.engineKey, username = data.username;
                     return $.ajax({
-                      url: '/api/v1/project/engine?user={}'.format(username),
+                      url: "/api/v1/project/engine?user=" + username,
                       type: 'POST',
                       data: {
                         engine_key: engineKey
