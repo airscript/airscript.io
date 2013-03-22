@@ -17,9 +17,6 @@ Airscript.namespace "Airscript.Models", (Models) ->
 
       collection: collection
 
-      hasGists: ->
-        collection().length > 0
-
       fetch: ->
         gistsDeferred = $.getJSON '/api/v1/project/target/gists', (data) ->
         gistsDeferred.success (data) ->
@@ -71,8 +68,6 @@ Airscript.namespace "Airscript.Models", (Models) ->
               gist.files = data.files
 
               self.active().scripts.update(gist.files)
-
-        $('.modal').modal('hide')
 
       update: ->
         gist = self.active()

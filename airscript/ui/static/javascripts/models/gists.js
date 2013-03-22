@@ -163,9 +163,6 @@
           return index(collection().length - 1);
         },
         collection: collection,
-        hasGists: function() {
-          return collection().length > 0;
-        },
         fetch: function() {
           var gistsDeferred;
           gistsDeferred = $.getJSON('/api/v1/project/target/gists', function(data) {});
@@ -219,7 +216,7 @@
           });
         },
         target: function(gist, e) {
-          $.ajax({
+          return $.ajax({
             url: "/api/v1/project/target",
             data: {
               type: 'gist',
@@ -234,7 +231,6 @@
               });
             }
           });
-          return $('.modal').modal('hide');
         },
         update: function() {
           var data, file, gist, _i, _len, _ref;

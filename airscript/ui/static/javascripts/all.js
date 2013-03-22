@@ -30623,9 +30623,6 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
           return index(collection().length - 1);
         },
         collection: collection,
-        hasGists: function() {
-          return collection().length > 0;
-        },
         fetch: function() {
           var gistsDeferred;
           gistsDeferred = $.getJSON('/api/v1/project/target/gists', function(data) {});
@@ -30679,7 +30676,7 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
           });
         },
         target: function(gist, e) {
-          $.ajax({
+          return $.ajax({
             url: "/api/v1/project/target",
             data: {
               type: 'gist',
@@ -30694,7 +30691,6 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
               });
             }
           });
-          return $('.modal').modal('hide');
         },
         update: function() {
           var data, file, gist, _i, _len, _ref;
@@ -30743,10 +30739,6 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
         return gists.active().scripts.collection()[0];
       };
       return self = {
-        activeGistDescription: function() {
-          var _ref;
-          return ((_ref = gists.active()) != null ? _ref.description() : void 0) || '';
-        },
         activeScript: function() {
           var _ref;
           return (_ref = gists.active()) != null ? _ref.scripts.active() : void 0;
@@ -30800,9 +30792,6 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
             return gist.scripts["delete"](self.activeScript());
           }
         },
-        hasGists: function() {
-          return gists.hasGists();
-        },
         hasScripts: function() {
           return gists.active().scripts.collection().length > 0;
         },
@@ -30811,17 +30800,6 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
         },
         updateGist: function() {
           return gists.update();
-        },
-        gistsList: function() {
-          return gists.collection;
-        },
-        selectGist: function(gist, e) {
-          var activeGist, index;
-          index = $(e.currentTarget).index();
-          gists.select(index);
-          activeGist = gists.active();
-          gists.target(activeGist);
-          return self.selectScript(firstScript());
         }
       };
     };
@@ -30844,8 +30822,7 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
     var ViewModels, editor;
     ViewModels = Airscript.ViewModels;
     editor = new ViewModels.Editor();
-    ko.applyBindings(editor, document.querySelector('body'));
-    return $('.gist_modal').modal('show');
+    return ko.applyBindings(editor, document.querySelector('body'));
   };
 
   $(function() {
@@ -30856,9 +30833,28 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
         }
       }
     });
-    return $('li.script_path, li.script_path input').on('click', function(e) {
+    $('li.script_path, li.script_path input').on('click', function(e) {
       e.preventDefault();
       return e.stopPropagation();
+    });
+    $('.engine_deploy_spinner, .engine_deploy_curtain').removeClass('hidden');
+    return $.ajax({
+      url: '/api/v1/project/engine/auth',
+      type: 'GET',
+      success: function(data) {
+        var engineKey;
+        engineKey = data.engineKey;
+        return $.ajax({
+          url: '/api/v1/project/engine',
+          type: 'POST',
+          data: {
+            engine_key: engineKey
+          },
+          success: function(a, b, c) {
+            return $('.engine_deploy_spinner, .engine_deploy_curtain').addClass('hidden');
+          }
+        });
+      }
     });
   });
 

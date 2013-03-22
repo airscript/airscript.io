@@ -9,9 +9,6 @@ Airscript.namespace "Airscript.ViewModels", (ViewModels) ->
       gists.active().scripts.collection()[0]
 
     self =
-      activeGistDescription: ->
-        gists.active()?.description() || ''
-
       activeScript: ->
         gists.active()?.scripts.active()
 
@@ -62,9 +59,6 @@ Airscript.namespace "Airscript.ViewModels", (ViewModels) ->
           # Remove the file locally
           gist.scripts.delete(self.activeScript())
 
-      hasGists: ->
-        gists.hasGists()
-
       hasScripts: ->
         gists.active().scripts.collection().length > 0
 
@@ -73,17 +67,3 @@ Airscript.namespace "Airscript.ViewModels", (ViewModels) ->
 
       updateGist: ->
         gists.update()
-
-      gistsList: ->
-        gists.collection
-
-      selectGist: (gist, e) ->
-        index = $(e.currentTarget).index()
-
-        gists.select(index)
-
-        activeGist = gists.active()
-
-        gists.target(activeGist)
-
-        self.selectScript(firstScript())

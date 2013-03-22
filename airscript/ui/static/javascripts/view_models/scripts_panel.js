@@ -163,9 +163,6 @@
           return index(collection().length - 1);
         },
         collection: collection,
-        hasGists: function() {
-          return collection().length > 0;
-        },
         fetch: function() {
           var gistsDeferred;
           gistsDeferred = $.getJSON('/api/v1/project/target/gists', function(data) {});
@@ -219,7 +216,7 @@
           });
         },
         target: function(gist, e) {
-          $.ajax({
+          return $.ajax({
             url: "/api/v1/project/target",
             data: {
               type: 'gist',
@@ -234,7 +231,6 @@
               });
             }
           });
-          return $('.modal').modal('hide');
         },
         update: function() {
           var data, file, gist, _i, _len, _ref;
@@ -283,10 +279,6 @@
         return gists.active().scripts.collection()[0];
       };
       return self = {
-        activeGistDescription: function() {
-          var _ref;
-          return ((_ref = gists.active()) != null ? _ref.description() : void 0) || '';
-        },
         activeScript: function() {
           var _ref;
           return (_ref = gists.active()) != null ? _ref.scripts.active() : void 0;
@@ -340,9 +332,6 @@
             return gist.scripts["delete"](self.activeScript());
           }
         },
-        hasGists: function() {
-          return gists.hasGists();
-        },
         hasScripts: function() {
           return gists.active().scripts.collection().length > 0;
         },
@@ -351,17 +340,6 @@
         },
         updateGist: function() {
           return gists.update();
-        },
-        gistsList: function() {
-          return gists.collection;
-        },
-        selectGist: function(gist, e) {
-          var activeGist, index;
-          index = $(e.currentTarget).index();
-          gists.select(index);
-          activeGist = gists.active();
-          gists.target(activeGist);
-          return self.selectScript(firstScript());
         }
       };
     };

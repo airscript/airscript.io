@@ -13,10 +13,6 @@
 
       %a.new_file(href='#' data-bind='click: scriptsPanel.createNewFile') Create New File
 
-      .btn-group.script_controls
-        .btn-toolbar
-          .btn(data-toggle="modal" data-target=".gist_modal") Open Project
-
     .edit.main
       .editor_container
         .header
@@ -43,6 +39,8 @@
         #editor(data-bind="ace: scriptSource(), aceOptions: { mode: 'lua', theme: 'github' }")
 
         %textarea.hidden(data-bind="value: scriptSource()")
+.engine_deploy_curtain.hidden
+.engine_deploy_spinner.hidden We're working on creating your Airscript Engine. It won't be long now.
 
 :coffeescript
   Airscript.init()

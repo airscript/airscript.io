@@ -26,11 +26,6 @@
         </li>
       </ul>
       <a class='new_file' data-bind='click: scriptsPanel.createNewFile' href='#'>Create New File</a>
-      <div class='btn-group script_controls'>
-        <div class='btn-toolbar'>
-          <div class='btn' data-target='.gist_modal' data-toggle='modal'>Open Project</div>
-        </div>
-      </div>
     </div>
     <div class='edit main'>
       <div class='editor_container'>
@@ -70,6 +65,8 @@
     </div>
   </div>
 </section>
+<div class='engine_deploy_curtain hidden'></div>
+<div class='engine_deploy_spinner hidden'>We're working on creating your Airscript Engine. It won't be long now.</div>
 <script type='text/javascript'>
   //<![CDATA[
     (function() {

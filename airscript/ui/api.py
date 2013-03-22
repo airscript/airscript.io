@@ -23,8 +23,7 @@ def output_json(data, code, headers=None):
 def heroku_account(full_username=True):
     login = session['user']
     username = "{}@airscript-users.appspotmail.com".format(login)
-    password = hashlib.sha1(
-                "{}--{}".format(login, app.secret_key)).hexdigest()
+    password = hashlib.sha1("{}--{}".format(login, app.secret_key)).hexdigest()
     if full_username:
         return {'username': username, 'password': password}
     else:
@@ -53,6 +52,8 @@ class TargetGists(restful.Resource):
         user = request.cookies['user']
         auth = request.cookies['auth']
 
+        default_script_name = '# airscript'
+
         url = 'https://api.github.com/users/{}/gists'.format(user)
 
         create_default = True
@@ -60,7 +61,7 @@ class TargetGists(restful.Resource):
         req = requests.get(url, params={'access_token': auth})
 
         for gist in req.json:
-            if gist.get('description') == 'airscript':
+            if gist.get('description') == default_script_name:
                 create_default = False
 
         if create_default:
@@ -81,7 +82,7 @@ else
 end"""
 
             default_gist_params = {
-                'description': 'airscript',
+                'description': default_script_name,
                 'public': True,
                 'files': {
                     'coin_flip.lua': {
