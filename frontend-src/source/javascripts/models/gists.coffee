@@ -77,18 +77,17 @@ Airscript.namespace "Airscript.Models", (Models) ->
                 data:
                   user: 'mdiebolt'
                 success: (data) ->
-                  {engineKey, username} = data
+                  {engine_key, username} = data
 
                   $.ajax
                     url: "/api/v1/project/engine?user=#{username}"
                     type: 'POST'
                     data:
-                      engine_key: engineKey
+                      engine_key: engine_key
                     success: (a,b,c) ->
                       Airscript.eventBus.notifySubscribers 'my_engine_name', 'editor:updateProjectName'
 
                       $('.engine_deploy_spinner, .engine_deploy_curtain').addClass 'hidden'
-
 
       update: ->
         gist = self.active()

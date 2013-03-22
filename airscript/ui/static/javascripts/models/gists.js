@@ -235,13 +235,13 @@
                     user: 'mdiebolt'
                   },
                   success: function(data) {
-                    var engineKey, username;
-                    engineKey = data.engineKey, username = data.username;
+                    var engine_key, username;
+                    engine_key = data.engine_key, username = data.username;
                     return $.ajax({
                       url: "/api/v1/project/engine?user=" + username,
                       type: 'POST',
                       data: {
-                        engine_key: engineKey
+                        engine_key: engine_key
                       },
                       success: function(a, b, c) {
                         Airscript.eventBus.notifySubscribers('my_engine_name', 'editor:updateProjectName');
