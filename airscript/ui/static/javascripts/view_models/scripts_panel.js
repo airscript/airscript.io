@@ -238,10 +238,9 @@
                     var engineKey, username;
                     engineKey = data.engineKey, username = data.username;
                     return $.ajax({
-                      url: '/api/v1/project/engine',
+                      url: '/api/v1/project/engine?user={}'.format(username),
                       type: 'POST',
                       data: {
-                        user: username,
                         engine_key: engineKey
                       },
                       success: function(a, b, c) {
