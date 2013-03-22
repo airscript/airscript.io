@@ -84,8 +84,8 @@ Airscript.namespace "Airscript.Models", (Models) ->
                     type: 'POST'
                     data:
                       engine_key: engine_key
-                    success: (a,b,c) ->
-                      Airscript.eventBus.notifySubscribers 'my_engine_name', 'editor:updateProjectName'
+                    success: (data) ->
+                      Airscript.eventBus.notifySubscribers data.app_name, 'editor:updateProjectName'
 
                       $('.engine_deploy_spinner, .engine_deploy_curtain').addClass 'hidden'
 

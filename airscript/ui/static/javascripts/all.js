@@ -30703,8 +30703,8 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
                       data: {
                         engine_key: engine_key
                       },
-                      success: function(a, b, c) {
-                        Airscript.eventBus.notifySubscribers('my_engine_name', 'editor:updateProjectName');
+                      success: function(data) {
+                        Airscript.eventBus.notifySubscribers(data.app_name, 'editor:updateProjectName');
                         return $('.engine_deploy_spinner, .engine_deploy_curtain').addClass('hidden');
                       }
                     });
