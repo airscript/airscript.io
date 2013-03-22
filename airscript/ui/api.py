@@ -251,10 +251,6 @@ class Project(restful.Resource):
             files[filename]['content'] = requests.get(url).text
         session['project'] = {
             "files": files,
-            "config": {
-                "engine_name": "pure-reaches-3506",
-                "engine_url": "http://pure-reaches-3506.herokuapp.com/"
-            },
         }
         return session['project']
 

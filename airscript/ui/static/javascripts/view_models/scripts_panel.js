@@ -236,13 +236,13 @@
                     user: 'mdiebolt'
                   },
                   success: function(data) {
-                    var engineKey, login;
-                    engineKey = data.engineKey, login = data.login;
+                    var engineKey, username;
+                    engineKey = data.engineKey, username = data.username;
                     return $.ajax({
                       url: '/api/v1/project/engine',
                       type: 'POST',
                       data: {
-                        user: login,
+                        user: username,
                         engine_key: engineKey
                       },
                       success: function(a, b, c) {

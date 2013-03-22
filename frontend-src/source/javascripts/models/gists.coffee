@@ -79,13 +79,13 @@ Airscript.namespace "Airscript.Models", (Models) ->
                 data:
                   user: 'mdiebolt'
                 success: (data) ->
-                  {engineKey, login} = data
+                  {engineKey, username} = data
 
                   $.ajax
                     url: '/api/v1/project/engine'
                     type: 'POST'
                     data:
-                      user: login
+                      user: username
                       engine_key: engineKey
                     success: (a,b,c) ->
                       $('.engine_deploy_spinner, .engine_deploy_curtain').addClass 'hidden'
