@@ -85,7 +85,7 @@ Airscript.namespace "Airscript.Models", (Models) ->
                     data:
                       engine_key: engine_key
                     success: (data) ->
-                      Airscript.eventBus.notifySubscribers "#{data.app_name}.io/", 'editor:updateProjectName'
+                      Airscript.eventBus.notifySubscribers "#{data.app_name.replace(/-/g, '.')}.io/", 'editor:updateProjectName'
 
                       $('.engine_deploy_spinner, .engine_deploy_curtain').addClass 'hidden'
 

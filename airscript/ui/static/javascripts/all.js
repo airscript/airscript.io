@@ -30704,7 +30704,7 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
                         engine_key: engine_key
                       },
                       success: function(data) {
-                        Airscript.eventBus.notifySubscribers("" + data.app_name + ".io/", 'editor:updateProjectName');
+                        Airscript.eventBus.notifySubscribers("" + (data.app_name.replace(/-/g, '.')) + ".io/", 'editor:updateProjectName');
                         return $('.engine_deploy_spinner, .engine_deploy_curtain').addClass('hidden');
                       }
                     });
