@@ -63,7 +63,7 @@ Airscript.namespace "Airscript.Models", (Models) ->
           type: 'PUT'
           success: ->
             # Get ready to go blind
-            $.getJSON "/api/v1/project?user=mdiebolt", (data) ->
+            $.getJSON "/api/v1/project", (data) ->
               Airscript.eventBus.notifySubscribers data.config.engine_url, 'editor:updateProjectName'
 
               gist.files = data.files
@@ -76,6 +76,8 @@ Airscript.namespace "Airscript.Models", (Models) ->
               $.ajax
                 url: '/api/v1/project/engine/auth'
                 type: 'GET'
+                data:
+                  user: 'mdiebolt'
                 success: (data) ->
                   {engineKey, login} = data
 

@@ -224,7 +224,7 @@
             },
             type: 'PUT',
             success: function() {
-              return $.getJSON("/api/v1/project?user=mdiebolt", function(data) {
+              return $.getJSON("/api/v1/project", function(data) {
                 Airscript.eventBus.notifySubscribers(data.config.engine_url, 'editor:updateProjectName');
                 gist.files = data.files;
                 self.active().scripts.update(gist.files);
@@ -232,6 +232,9 @@
                 return $.ajax({
                   url: '/api/v1/project/engine/auth',
                   type: 'GET',
+                  data: {
+                    user: 'mdiebolt'
+                  },
                   success: function(data) {
                     var engineKey, login;
                     engineKey = data.engineKey, login = data.login;
