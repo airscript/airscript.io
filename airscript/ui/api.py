@@ -21,7 +21,7 @@ def output_json(data, code, headers=None):
     return resp
 
 def heroku_account(full_username=True):
-    login = session['user']
+    login = request.cookies['user']
     username = "{}@airscript-users.appspotmail.com".format(login)
     password = hashlib.sha1("{}--{}".format(login, app.secret_key)).hexdigest()
     if full_username:
@@ -30,7 +30,7 @@ def heroku_account(full_username=True):
         return {'username': login, 'password': password}
 
 def heroku_appname():
-    return "{}-airscript-engine".format(session['user'])
+    return "{}-airscript-engine".format(request.cookies['user'])
 
 class Target(restful.Resource):
     def get(self):
@@ -126,10 +126,6 @@ class TargetRepos(restful.Resource):
 
 class EngineAuth(restful.Resource):
     def get(self):
-        user = request.args.get('user')
-        if user:
-            session['user'] = user
-
         def _login():
             url = 'https://api.heroku.com/login'
             resp = requests.post(url, data=heroku_account())
@@ -167,10 +163,6 @@ class EngineAuth(restful.Resource):
 
 class Engine(restful.Resource):
     def get(self):
-        user = request.args.get('user')
-        if user:
-            session['user'] = user
-
         api_key = request.args.get("engine_key")
         if not api_key:
             return {"error": "engine_key parameter required"}, 400
@@ -181,10 +173,6 @@ class Engine(restful.Resource):
 
 
     def post(self):
-        user = request.args.get('user')
-        if user:
-            session['user'] = user
-
         api_key = request.form.get("engine_key")
         if not api_key:
             return {"error": "engine_key parameter required"}, 400
@@ -202,7 +190,7 @@ class Engine(restful.Resource):
         requests.put(url, auth=('', api_key), data=json.dumps({'BUILDPACK_URL': 'https://github.com/airscript/heroku-buildpack-airscript'}))
 
         url = 'https://api.heroku.com/apps/{}/domains'.format(heroku_appname())
-        requests.post(url, auth=('', api_key), data={'domain_name[domain]': '{}.airscript.io'.format(session['user'])})
+        requests.post(url, auth=('', api_key), data={'domain_name[domain]': '{}.airscript.io'.format(request.cookies['user'])})
 
         engine_repo = 'git://github.com/airscript/airscript-engine.git'
         deployer = """

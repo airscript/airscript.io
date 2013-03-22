@@ -74,13 +74,11 @@ Airscript.namespace "Airscript.Models", (Models) ->
               $.ajax
                 url: '/api/v1/project/engine/auth'
                 type: 'GET'
-                data:
-                  user: 'mdiebolt'
                 success: (data) ->
                   {engine_key, username} = data
 
                   $.ajax
-                    url: "/api/v1/project/engine?user=mdiebolt"
+                    url: "/api/v1/project/engine"
                     type: 'POST'
                     data:
                       engine_key: engine_key

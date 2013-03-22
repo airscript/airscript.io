@@ -30691,14 +30691,11 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
                 return $.ajax({
                   url: '/api/v1/project/engine/auth',
                   type: 'GET',
-                  data: {
-                    user: 'mdiebolt'
-                  },
                   success: function(data) {
                     var engine_key, username;
                     engine_key = data.engine_key, username = data.username;
                     return $.ajax({
-                      url: "/api/v1/project/engine?user=mdiebolt",
+                      url: "/api/v1/project/engine",
                       type: 'POST',
                       data: {
                         engine_key: engine_key
