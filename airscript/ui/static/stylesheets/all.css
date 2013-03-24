@@ -11,6 +11,13 @@ section.content,
   font-weight: normal;
   font-style: normal;
 }
+ol {
+  list-style: none;
+}
+.carousel {
+  width: 640px;
+  margin: auto;
+}
 .new_file {
   color: #fff;
   margin-top: 1em;
