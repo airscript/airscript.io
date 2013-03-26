@@ -174,7 +174,7 @@
               if (!gist.description.length) {
                 gist.description = gist.id;
               }
-              if (gist.description === 'airscript') {
+              if (gist.description === '# airscript') {
                 self.add(gist.id, gist.description, gist.files);
                 _results.push(self.target(gist));
               } else {

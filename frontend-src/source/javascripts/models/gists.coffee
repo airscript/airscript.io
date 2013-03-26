@@ -24,7 +24,7 @@ Airscript.namespace "Airscript.Models", (Models) ->
             gist.description = gist.id unless gist.description.length
 
             # hack
-            if gist.description is 'airscript'
+            if gist.description is '# airscript'
               self.add(gist.id, gist.description, gist.files)
 
               self.target(gist)
