@@ -2,6 +2,18 @@
   .row-fluid
     .scripts
       %h2.brand Airscript
+      .settings.dropdown.pull-right
+        %a.dropdown-toggle(href='#' data-toggle='dropdown')
+          %i.icon-cog
+        %ul.dropdown-menu
+          %li
+            %a.menuitem(href='#')
+              %img(data-bind='attr:{src: avatarSrc()}')
+              %span mdiebolt
+          %li.divider
+          %li
+            %a.menuitem(href='#') Sign out
+
       %label.login-container
         %span.login-info Logged in as
         %span.username(data-bind='text: userName()')

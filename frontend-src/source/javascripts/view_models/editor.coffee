@@ -68,6 +68,19 @@ Airscript.namespace "Airscript.ViewModels", (ViewModels) ->
       scriptEditing: ->
         scriptsPanel.activeScript().editing()
 
+      avatarSrc: ->
+        cookies = {}
+
+        return unless (cookies = document.cookie.split(';')).length
+
+        for str in cookies
+          [key, value] = str.split('=')
+
+          if key && value
+            cookies[key.trim()] = value.trim()
+
+        cookies.avatar || ""
+
       userName: ->
         cookies = {}
 

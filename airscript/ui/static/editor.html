@@ -14,6 +14,23 @@
   <div class='row-fluid'>
     <div class='scripts'>
       <h2 class='brand'>Airscript</h2>
+      <div class='settings dropdown pull-right'>
+        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>
+          <i class='icon-cog'></i>
+        </a>
+        <ul class='dropdown-menu'>
+          <li>
+            <a class='menuitem' href='#'>
+              <img data-bind='attr:{src: avatarSrc()}' />
+              <span>mdiebolt</span>
+            </a>
+          </li>
+          <li class='divider'></li>
+          <li>
+            <a class='menuitem' href='#'>Sign out</a>
+          </li>
+        </ul>
+      </div>
       <label class='login-container'>
         <span class='login-info'>Logged in as</span>
         <span class='username' data-bind='text: userName()'></span>
