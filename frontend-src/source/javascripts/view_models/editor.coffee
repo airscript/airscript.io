@@ -74,12 +74,15 @@ Airscript.namespace "Airscript.ViewModels", (ViewModels) ->
         return unless (cookies = document.cookie.split(';')).length
 
         for str in cookies
-          [key, value] = str.split('=')
+          parts = str.split('=')
+
+          key = parts.shift()
+          value = parts.join('=')
 
           if key && value
             cookies[key.trim()] = value.trim()
 
-        cookies.avatar || ""
+        cookies.avatar.replace(/"/g, '') || ""
 
       userName: ->
         cookies = {}
