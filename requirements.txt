@@ -1,3 +1,4 @@
 Flask==0.8
 Flask-RESTful==0.1.5
 requests==0.14.1
+eventlet==0.9.17
