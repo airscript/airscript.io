@@ -30417,19 +30417,21 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
           return scriptsPanel.activeScript().editing();
         },
         avatarSrc: function() {
-          var cookies, key, str, value, _i, _len, _ref;
+          var cookies, key, parts, str, value, _i, _len;
           cookies = {};
           if (!(cookies = document.cookie.split(';')).length) {
             return;
           }
           for (_i = 0, _len = cookies.length; _i < _len; _i++) {
             str = cookies[_i];
-            _ref = str.split('='), key = _ref[0], value = _ref[1];
+            parts = str.split('=');
+            key = parts.shift();
+            value = parts.join('=');
             if (key && value) {
               cookies[key.trim()] = value.trim();
             }
           }
-          return cookies.avatar || "";
+          return cookies.avatar.replace(/"/g, '') || "";
         },
         userName: function() {
           var cookies, key, str, value, _i, _len, _ref;
