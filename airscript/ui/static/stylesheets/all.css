@@ -14,6 +14,19 @@ section.content,
 ol {
   list-style: none;
 }
+.settings.dropdown {
+  cursor: pointer;
+  position: absolute;
+  top: 13px;
+  right: 15px;
+  font-size: 24px;
+}
+.settings.dropdown:active {
+  color: #fff;
+}
+.settings.dropdown a {
+  text-decoration: none;
+}
 .carousel {
   width: 640px;
   margin: auto;
