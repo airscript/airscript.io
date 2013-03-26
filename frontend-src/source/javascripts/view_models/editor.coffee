@@ -47,7 +47,7 @@ Airscript.namespace "Airscript.ViewModels", (ViewModels) ->
 
     scriptsPanel = ViewModels.ScriptsPanel()
 
-    projectName = ko.observable('http://condor.herokuapp.com/')
+    projectName = ko.observable('')
 
     Airscript.eventBus.subscribe (name) ->
       projectName(name)

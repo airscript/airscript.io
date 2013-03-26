@@ -38,6 +38,8 @@ Airscript.namespace "Airscript.Models", (Models) ->
             if item.name() is fileName
               item.source(fileObj.content)
 
+              self.select(item)
+
       stopEditing: (newName) ->
         for s in collection()
           if s.editing()

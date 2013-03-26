@@ -14,8 +14,7 @@
     var ViewModels, editor;
     ViewModels = Airscript.ViewModels;
     editor = new ViewModels.Editor();
-    ko.applyBindings(editor, document.querySelector('body'));
-    return $('.gist_modal').modal('show');
+    return ko.applyBindings(editor, document.querySelector('body'));
   };
 
   $(function() {

@@ -10,19 +10,7 @@
   <link type="text/css" rel="stylesheet" media="screen" href="/stylesheets/all.css" />
   <script type="text/javascript" src="/javascripts/all.js"></script>
   <body>
-    <div class='gist_modal modal hide fade' tabindex='-1'>
-  <div class='modal-header'>
-    <button class='close' data-dismiss='modal' type='button'></button>
-    <h3>Select Gist</h3>
-  </div>
-  <div class='modal-body'>
-    <p>Choose a gist to be the target for your Airscript engine.</p>
-    <div class='gists' data-bind='foreach: scriptsPanel.gistsList()'>
-      <a class='btn gist' data-bind='text: description, click: $parent.scriptsPanel.selectGist' data-dismiss='modal' href='#'></a>
-    </div>
-  </div>
-</div>
-<section class='content'>
+    <section class='content'>
   <div class='row-fluid'>
     <div class='scripts'>
       <h2 class='brand'>Airscript</h2>
@@ -32,20 +20,12 @@
         |
         <a class='logout-link' href='/auth/logout'>Logout</a>
       </label>
-      <label data-bind='visible: scriptsPanel.hasGists'>
-        <p class='gist-description' data-bind='text: scriptsPanel.activeGistDescription()' type='text'></p>
-      </label>
       <ul class='files' data-bind='foreach: scriptsPanel.files()'>
         <li class='script' data-bind='css: activeClass, click: $parent.scriptsPanel.selectScript'>
           <span class='script_name' data-bind='text: name'></span>
         </li>
       </ul>
       <a class='new_file' data-bind='click: scriptsPanel.createNewFile' href='#'>Create New File</a>
-      <div class='btn-group script_controls'>
-        <div class='btn-toolbar'>
-          <div class='btn' data-target='.gist_modal' data-toggle='modal'>Open Project</div>
-        </div>
-      </div>
     </div>
     <div class='edit main'>
       <div class='editor_container'>
@@ -85,6 +65,8 @@
     </div>
   </div>
 </section>
+<div class='engine_deploy_curtain hidden'></div>
+<div class='engine_deploy_spinner hidden'>We're working on creating your Airscript Engine. It won't be long now.</div>
 <script type='text/javascript'>
   //<![CDATA[
     (function() {

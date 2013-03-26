@@ -17,17 +17,17 @@ Airscript.namespace "Airscript.Models", (Models) ->
 
       collection: collection
 
-      hasGists: ->
-        collection().length > 0
-
       fetch: ->
         gistsDeferred = $.getJSON '/api/v1/project/target/gists', (data) ->
         gistsDeferred.success (data) ->
           for gist in data
             gist.description = gist.id unless gist.description.length
 
-            self.add(gist.id, gist.description, gist.files)
+            # hack
+            if gist.description is 'airscript'
+              self.add(gist.id, gist.description, gist.files)
 
+              self.target(gist)
 
         # mock data for dev
         gistsDeferred.error ->
@@ -59,17 +59,33 @@ Airscript.namespace "Airscript.Models", (Models) ->
           url: "/api/v1/project/target"
           data:
             type: 'gist'
-            id: gist.id()
+            id: gist.id
           type: 'PUT'
           success: ->
+            # Get ready to go blind
             $.getJSON "/api/v1/project", (data) ->
-              Airscript.eventBus.notifySubscribers data.config.engine_url, 'editor:updateProjectName'
-
               gist.files = data.files
 
               self.active().scripts.update(gist.files)
 
-        $('.modal').modal('hide')
+              # Deploy their engine!
+              $('.engine_deploy_spinner, .engine_deploy_curtain').removeClass 'hidden'
+
+              $.ajax
+                url: '/api/v1/project/engine/auth'
+                type: 'GET'
+                success: (data) ->
+                  {engine_key, username} = data
+
+                  $.ajax
+                    url: "/api/v1/project/engine"
+                    type: 'POST'
+                    data:
+                      engine_key: engine_key
+                    success: (data) ->
+                      Airscript.eventBus.notifySubscribers "#{data.app_name.split('-')[0]}.airscript.io/", 'editor:updateProjectName'
+
+                      $('.engine_deploy_spinner, .engine_deploy_curtain').addClass 'hidden'
 
       update: ->
         gist = self.active()

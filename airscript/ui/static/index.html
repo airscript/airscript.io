@@ -15,7 +15,37 @@
     <div class='span12 main'>
       <div class='hero-unit'>
         <h1 class='callout'>Airscript</h1>
-        <p>Lorem ipsum anim quis reprehenderit officia dolore Excepteur velit eu qui sit qui in do et laborum aliqua ad ullamco ex irure sint nostrud consequat eu amet quis sed fugiat laborum elit veniam dolor pariatur commodo Excepteur sunt officia officia occaecat ea exercitation nulla culpa Excepteur quis eu minim aliqua labore dolor irure ex esse cillum ex non voluptate ullamco laboris voluptate sed ad dolore occaecat dolore tempor mollit in ea minim eiusmod laborum exercitation adipisicing velit commodo sit proident irure tempor do pariatur qui do voluptate eiusmod sint sunt reprehenderit occaecat pariatur consequat aliqua culpa sunt ut fugiat anim labore in voluptate sunt eu ut in reprehenderit id magna occaecat nisi commodo magna ea in magna sunt officia nostrud Duis sed eiusmod cillum ex qui laborum culpa in non ullamco elit exercitation Ut incididunt aliqua consequat pariatur sint fugiat est dolor do eu ad est ad nisi minim consectetur tempor in et pariatur sit anim sed aute nostrud nisi tempor ea enim proident ea ut Ut sint fugiat consectetur veniam Duis aute ut sint Excepteur minim irure elit laboris dolore in officia anim sed dolor amet et mollit ut sint veniam aute elit dolore officia aliqua ullamco labore minim commodo sunt et est qui sit est occaecat occaecat amet ad sint occaecat labore fugiat id laborum dolore non fugiat sed labore aliquip sed incididunt esse enim ex minim nostrud in sint in quis Excepteur nulla adipisicing magna ut proident dolore esse deserunt sed quis dolor eiusmod minim eu.</p>
+        <div class='carousel slide' id='myCarousel'>
+          <ol class='carousel-indicators'>
+            <li data-slide-to='0' data-target='#myCarousel'></li>
+            <li class='active' data-slide-to='1' data-target='#myCarousel'></li>
+          </ol>
+          <div class='carousel-inner'>
+            <div class='item active'>
+              <iframe allowfullscreen='allowfullscreen' frameborder='0' height='480' src='http://www.youtube.com/embed/XQu8TTBmGhA' width='640'></iframe>
+              <div class='carousel-caption'>
+                <h4>What is Airscript?</h4>
+                <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+              </div>
+            </div>
+            <div class='item'>
+              <img alt='' src='http://placehold.it/640x480' />
+              <div class='carousel-caption'>
+                <h4>Make your first script</h4>
+                <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+              </div>
+            </div>
+            <div class='item'>
+              <img alt='' src='http://placehold.it/640x480' />
+              <div class='carousel-caption'>
+                <h4>Learn about more advanced features</h4>
+                <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+              </div>
+            </div>
+          </div>
+          <a class='left carousel-control' data-slide='prev' href='#myCarousel'>‹</a>
+          <a class='right carousel-control' data-slide='next' href='#myCarousel'>›</a>
+        </div>
         <div class='centered callout'>
           <div class='logo'></div>
           <div class='button_container'>
@@ -26,5 +56,21 @@
     </div>
   </div>
 </section>
+<script type='text/javascript'>
+  //<![CDATA[
+    (function() {
+
+  $(function() {
+    return $('.carousel').each(function() {
+      return $(this).carousel({
+        interval: false
+      });
+    });
+  });
+
+}).call(this);
+
+  //]]>
+</script>
   </body>
 </html>

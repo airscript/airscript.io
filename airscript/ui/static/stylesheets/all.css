@@ -11,6 +11,13 @@ section.content,
   font-weight: normal;
   font-style: normal;
 }
+ol {
+  list-style: none;
+}
+.carousel {
+  width: 640px;
+  margin: auto;
+}
 .new_file {
   color: #fff;
   margin-top: 1em;
@@ -23,10 +30,6 @@ section.content,
 }
 .right {
   float: right;
-}
-.gist_modal .gist {
-  display: block;
-  margin: 1em 0;
 }
 .centered {
   text-align: center;
@@ -206,6 +209,35 @@ body {
 }
 .inline {
   display: inline-block;
+}
+.engine_deploy_curtain {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.3);
+  top: 0;
+  left: 0;
+  z-index: 5000;
+  display: block;
+}
+.engine_deploy_spinner {
+  border-radius: 3px;
+  width: 270px;
+  background-color: #2f7fbc;
+  height: 40px;
+  color: #ebf3fa;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  padding: 1em;
+  box-shadow: rgba(0,0,0,0.3) 1px 2px 5px;
+  border: 1px solid rgba(0,0,0,0.1);
+  line-height: 1.4;
+  font-size: 16px;
+  z-index: 5001;
 }
 .file {
   text-align: center;

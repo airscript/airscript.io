@@ -21,17 +21,16 @@ def output_json(data, code, headers=None):
     return resp
 
 def heroku_account(full_username=True):
-    login = session['user']
+    login = request.cookies['user']
     username = "{}@airscript-users.appspotmail.com".format(login)
-    password = hashlib.sha1(
-                "{}--{}".format(login, app.secret_key)).hexdigest()
+    password = hashlib.sha1("{}--{}".format(login, app.secret_key)).hexdigest()
     if full_username:
         return {'username': username, 'password': password}
     else:
         return {'username': login, 'password': password}
 
 def heroku_appname():
-    return "{}-airscript-engine".format(session['user'])
+    return "{}-airscript-engine".format(request.cookies['user'])
 
 class Target(restful.Resource):
     def get(self):
@@ -53,20 +52,22 @@ class TargetGists(restful.Resource):
         user = request.cookies['user']
         auth = request.cookies['auth']
 
+        default_script_name = '# airscript'
+
         url = 'https://api.github.com/users/{}/gists'.format(user)
 
         create_default = True
 
         req = requests.get(url, params={'access_token': auth})
 
-        for gist in req.json():
-            if gist.get('description') == 'airscript':
+        for gist in req.json:
+            if gist.get('description') == default_script_name:
                 create_default = False
 
         if create_default:
             create_url = 'https://api.github.com/gists?access_token={}'.format(auth)
 
-            placeholder_content = """-- make an HTTP request with query parameters
+            placeholder_content = """-- Sample script to make an HTTP request with query parameters
 local response = http.request {
   url = 'http://www.random.org/integers/',
   params = {
@@ -81,7 +82,7 @@ else
 end"""
 
             default_gist_params = {
-                'description': 'airscript',
+                'description': default_script_name,
                 'public': True,
                 'files': {
                     'coin_flip.lua': {
@@ -94,9 +95,9 @@ end"""
 
             updated_req = requests.get(url, params={'access_token': auth})
 
-            return updated_req.json()
+            return updated_req.json
         else:
-            return req.json()
+            return req.json
 
     def post(self):
         created_gist_mock = {
@@ -125,10 +126,6 @@ class TargetRepos(restful.Resource):
 
 class EngineAuth(restful.Resource):
     def get(self):
-        user = request.args.get('user')
-        if user:
-            session['user'] = user
-
         def _login():
             url = 'https://api.heroku.com/login'
             resp = requests.post(url, data=heroku_account())
@@ -150,7 +147,7 @@ class EngineAuth(restful.Resource):
         api_key = _login()
         if api_key:
             response = heroku_account()
-            response["engine_key"] = api_key 
+            response["engine_key"] = api_key
             return response
         else:
             success, resp = _register()
@@ -205,7 +202,7 @@ class Engine(restful.Resource):
             }))
 
         url = 'https://api.heroku.com/apps/{}/domains'.format(heroku_appname())
-        requests.post(url, auth=('', api_key), data={'domain_name[domain]': '{}.airscript.io'.format(session['user'])})
+        requests.post(url, auth=('', api_key), data={'domain_name[domain]': '{}.airscript.io'.format(request.cookies['user'])})
 
         engine_repo = 'git://github.com/airscript/airscript-engine.git'
         deployer = """
@@ -241,33 +238,29 @@ class EngineConfig(restful.Resource):
 
 class Project(restful.Resource):
     def get(self):
+        auth = request.cookies['auth']
+
         if "target" not in session:
             return {"message": "no target"}, 404
-        url = 'https://api.github.com/gists/{}'.format(
-                session['target']['id'])
-        req = requests.get(url, params={
-            'access_token': request.cookies['auth']})
+
+        url = 'https://api.github.com/gists/{}'.format(session['target']['id'])
+        req = requests.get(url, params={'access_token': auth})
         files = req.json['files']
         for filename in files:
             url = files[filename]['raw_url']
             files[filename]['content'] = requests.get(url).text
         session['project'] = {
             "files": files,
-            "config": {
-                "engine_name": "pure-reaches-3506",
-                "engine_url": "http://pure-reaches-3506.herokuapp.com/"
-            },
         }
         return session['project']
 
     def put(self):
         # see http://developer.github.com/v3/gists/#edit-a-gist
         # for arguments and semantics
-        url = 'https://api.github.com/gists/{}'.format(
-                session['target']['id'])
-        req = requests.patch(url,
-            params={'access_token': request.cookies['auth']},
-            data=request.data)
+        url = 'https://api.github.com/gists/{}'.format(session['target']['id'])
+        auth = request.cookies['auth']
+
+        req = requests.patch(url, params={'access_token': auth}, data=request.data)
         return req.json, req.status_code
 
 routes = {

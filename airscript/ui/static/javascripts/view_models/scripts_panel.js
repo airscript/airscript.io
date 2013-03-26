@@ -77,7 +77,8 @@
               for (fileName in files) {
                 fileObj = files[fileName];
                 if (item.name() === fileName) {
-                  _results1.push(item.source(fileObj.content));
+                  item.source(fileObj.content);
+                  _results1.push(self.select(item));
                 } else {
                   _results1.push(void 0);
                 }
@@ -162,9 +163,6 @@
           return index(collection().length - 1);
         },
         collection: collection,
-        hasGists: function() {
-          return collection().length > 0;
-        },
         fetch: function() {
           var gistsDeferred;
           gistsDeferred = $.getJSON('/api/v1/project/target/gists', function(data) {});
@@ -176,7 +174,12 @@
               if (!gist.description.length) {
                 gist.description = gist.id;
               }
-              _results.push(self.add(gist.id, gist.description, gist.files));
+              if (gist.description === 'airscript') {
+                self.add(gist.id, gist.description, gist.files);
+                _results.push(self.target(gist));
+              } else {
+                _results.push(void 0);
+              }
             }
             return _results;
           });
@@ -213,22 +216,40 @@
           });
         },
         target: function(gist, e) {
-          $.ajax({
+          return $.ajax({
             url: "/api/v1/project/target",
             data: {
               type: 'gist',
-              id: gist.id()
+              id: gist.id
             },
             type: 'PUT',
             success: function() {
               return $.getJSON("/api/v1/project", function(data) {
-                Airscript.eventBus.notifySubscribers(data.config.engine_url, 'editor:updateProjectName');
                 gist.files = data.files;
-                return self.active().scripts.update(gist.files);
+                self.active().scripts.update(gist.files);
+                $('.engine_deploy_spinner, .engine_deploy_curtain').removeClass('hidden');
+                return $.ajax({
+                  url: '/api/v1/project/engine/auth',
+                  type: 'GET',
+                  success: function(data) {
+                    var engine_key, username;
+                    engine_key = data.engine_key, username = data.username;
+                    return $.ajax({
+                      url: "/api/v1/project/engine",
+                      type: 'POST',
+                      data: {
+                        engine_key: engine_key
+                      },
+                      success: function(data) {
+                        Airscript.eventBus.notifySubscribers("" + (data.app_name.split('-')[0]) + ".airscript.io/", 'editor:updateProjectName');
+                        return $('.engine_deploy_spinner, .engine_deploy_curtain').addClass('hidden');
+                      }
+                    });
+                  }
+                });
               });
             }
           });
-          return $('.modal').modal('hide');
         },
         update: function() {
           var data, file, gist, _i, _len, _ref;
@@ -277,10 +298,6 @@
         return gists.active().scripts.collection()[0];
       };
       return self = {
-        activeGistDescription: function() {
-          var _ref;
-          return ((_ref = gists.active()) != null ? _ref.description() : void 0) || '';
-        },
         activeScript: function() {
           var _ref;
           return (_ref = gists.active()) != null ? _ref.scripts.active() : void 0;
@@ -334,9 +351,6 @@
             return gist.scripts["delete"](self.activeScript());
           }
         },
-        hasGists: function() {
-          return gists.hasGists();
-        },
         hasScripts: function() {
           return gists.active().scripts.collection().length > 0;
         },
@@ -345,17 +359,6 @@
         },
         updateGist: function() {
           return gists.update();
-        },
-        gistsList: function() {
-          return gists.collection;
-        },
-        selectGist: function(gist, e) {
-          var activeGist, index;
-          index = $(e.currentTarget).index();
-          gists.select(index);
-          activeGist = gists.active();
-          gists.target(activeGist);
-          return self.selectScript(firstScript());
         }
       };
     };

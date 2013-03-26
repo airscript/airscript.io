@@ -50,6 +50,7 @@ def auth_callback():
         resp = make_response(redirect('/'))
         resp.set_cookie('auth', auth.json['access_token'])
         resp.set_cookie('user', user.json['login'])
+        resp.set_cookie('avatar', user.json['avatar_url'])
         return resp
     else:
         return "Request for access token failed", 403

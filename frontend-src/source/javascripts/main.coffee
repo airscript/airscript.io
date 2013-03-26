@@ -11,8 +11,6 @@ Airscript.init = ->
 
   ko.applyBindings editor, document.querySelector('body')
 
-  $('.gist_modal').modal('show')
-
 $ ->
   $('input.full_script_path').on 'keydown', (e) ->
     # prevent default unless they are pressing ctrl+c
