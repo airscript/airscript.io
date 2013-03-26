@@ -47,6 +47,7 @@ def auth_callback():
     if auth.status_code == 200:
         url = 'https://api.github.com/user'
         user = requests.get(url, params={'access_token': auth.json['access_token']})
+        print(user)
         resp = make_response(redirect('/'))
         resp.set_cookie('auth', auth.json['access_token'])
         resp.set_cookie('user', user.json['login'])
