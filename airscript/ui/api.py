@@ -198,7 +198,7 @@ class Engine(restful.Resource):
         url = 'https://api.heroku.com/apps/{}/config_vars'.format(heroku_appname())
         requests.put(url, auth=('', api_key), data=json.dumps({
             'BUILDPACK_URL': 'https://github.com/airscript/heroku-buildpack-airscript',
-            'ROOT_MOUNT': 'https://gist.github.com/{}/{}'.format(session['user'], gist_id),
+            'ROOT_MOUNT': 'https://gist.github.com/{}/{}'.format(request.cookies['user'], gist_id),
             }))
 
         url = 'https://api.heroku.com/apps/{}/domains'.format(heroku_appname())
