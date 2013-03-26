@@ -166,10 +166,6 @@ class EngineAuth(restful.Resource):
 
 class Engine(restful.Resource):
     def get(self):
-        user = request.args.get('user')
-        if user:
-            session['user'] = user
-
         api_key = request.args.get("engine_key")
         if not api_key:
             return {"error": "engine_key parameter required"}, 400
@@ -178,12 +174,16 @@ class Engine(restful.Resource):
         resp = requests.get(url, auth=('', api_key))
         return resp.json, resp.status_code
 
+    def delete(self):
+        api_key = request.args.get("engine_key")
+        if not api_key:
+            return {"error": "engine_key parameter required"}, 400
+
+        url = 'https://api.heroku.com/apps/{}'.format(heroku_appname())
+        resp = requests.delete(url, auth=('', api_key))
+        return resp.json, resp.status_code
 
     def post(self):
-        user = request.args.get('user')
-        if user:
-            session['user'] = user
-
         api_key = request.form.get("engine_key")
         if not api_key:
             return {"error": "engine_key parameter required"}, 400
@@ -197,8 +197,12 @@ class Engine(restful.Resource):
             if resp.status_code != 202:
                 return resp.json, resp.status_code
 
+        gist_id = session['target']['id']
         url = 'https://api.heroku.com/apps/{}/config_vars'.format(heroku_appname())
-        requests.put(url, auth=('', api_key), data=json.dumps({'BUILDPACK_URL': 'https://github.com/airscript/heroku-buildpack-airscript'}))
+        requests.put(url, auth=('', api_key), data=json.dumps({
+            'BUILDPACK_URL': 'https://github.com/airscript/heroku-buildpack-airscript',
+            'ROOT_MOUNT': 'https://gist.github.com/{}/{}'.format(session['user'], gist_id),
+            }))
 
         url = 'https://api.heroku.com/apps/{}/domains'.format(heroku_appname())
         requests.post(url, auth=('', api_key), data={'domain_name[domain]': '{}.airscript.io'.format(session['user'])})
