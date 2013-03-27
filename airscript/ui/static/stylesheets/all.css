@@ -11,6 +11,11 @@ section.content,
   font-weight: normal;
   font-style: normal;
 }
+.avatar {
+  border-radius: 4px;
+  height: 32px;
+  width: 32px;
+}
 ol {
   list-style: none;
 }
@@ -26,6 +31,13 @@ ol {
 }
 .settings.dropdown a {
   text-decoration: none;
+}
+.settings.dropdown a.menuitem {
+  font-size: 14px;
+  color: #555;
+}
+.settings.dropdown a.menuitem:hover {
+  color: #fff;
 }
 .carousel {
   width: 640px;

@@ -8,17 +8,12 @@
         %ul.dropdown-menu
           %li
             %a.menuitem(href='#')
-              %img(data-bind='attr:{src: avatarSrc()}')
-              %span mdiebolt
+              %img.avatar(data-bind='attr:{src: avatarSrc()}')
+              %span.user_name(data-bind='text: userName()')
           %li.divider
           %li
-            %a.menuitem(href='#') Sign out
+            %a.menuitem(href='/auth/logout') Sign out
 
-      %label.login-container
-        %span.login-info Logged in as
-        %span.username(data-bind='text: userName()')
-        = "| "
-        %a.logout-link(href='/auth/logout') Logout
       %ul.files(data-bind='foreach: scriptsPanel.files()')
         %li.script(data-bind='css: activeClass, click: $parent.scriptsPanel.selectScript')
           %span.script_name(data-bind='text: name')

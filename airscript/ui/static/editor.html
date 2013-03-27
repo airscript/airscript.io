@@ -21,22 +21,16 @@
         <ul class='dropdown-menu'>
           <li>
             <a class='menuitem' href='#'>
-              <img data-bind='attr:{src: avatarSrc()}' />
-              <span>mdiebolt</span>
+              <img class='avatar' data-bind='attr:{src: avatarSrc()}' />
+              <span class='user_name' data-bind='text: userName()'></span>
             </a>
           </li>
           <li class='divider'></li>
           <li>
-            <a class='menuitem' href='#'>Sign out</a>
+            <a class='menuitem' href='/auth/logout'>Sign out</a>
           </li>
         </ul>
       </div>
-      <label class='login-container'>
-        <span class='login-info'>Logged in as</span>
-        <span class='username' data-bind='text: userName()'></span>
-        |
-        <a class='logout-link' href='/auth/logout'>Logout</a>
-      </label>
       <ul class='files' data-bind='foreach: scriptsPanel.files()'>
         <li class='script' data-bind='css: activeClass, click: $parent.scriptsPanel.selectScript'>
           <span class='script_name' data-bind='text: name'></span>
