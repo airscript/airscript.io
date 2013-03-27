@@ -51,6 +51,11 @@ def auth_callback():
         resp.set_cookie('auth', auth.json['access_token'])
         resp.set_cookie('user', user.json['login'])
         resp.set_cookie('avatar', user.json['avatar_url'])
+
+        # ghetto admin permissions
+        if user.json['login'] == 'mdiebolt' || user.json['login'] == 'progrium':
+            resp.set_cookie('admin', True)
+
         return resp
     else:
         return "Request for access token failed", 403
