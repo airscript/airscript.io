@@ -53,7 +53,7 @@ def auth_callback():
         resp.set_cookie('avatar', user.json['avatar_url'])
 
         # ghetto admin permissions
-        if user.json['login'] == 'mdiebolt' || user.json['login'] == 'progrium':
+        if user.json['login'] == 'mdiebolt' or user.json['login'] == 'progrium':
             resp.set_cookie('admin', True)
 
         return resp
