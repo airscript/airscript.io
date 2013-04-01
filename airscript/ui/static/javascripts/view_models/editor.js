@@ -125,13 +125,13 @@
           return (cookies != null ? cookies.admin : void 0) === 'true';
         },
         deleteEngine: function() {
-          console.log(engineKey);
+          console.log(engineKey());
           if (confirm('Are you sure you want to delete your Airscript engine?')) {
             return $.ajax({
               url: "/api/v1/project/engine",
               type: 'DELETE',
               data: {
-                engine_key: engineKey
+                engine_key: engineKey()
               },
               success: function(data) {
                 return console.log('deleted!');
