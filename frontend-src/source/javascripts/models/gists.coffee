@@ -77,6 +77,8 @@ Airscript.namespace "Airscript.Models", (Models) ->
                 success: (data) ->
                   {engine_key, username} = data
 
+                  Airscript.eventBus.notifySubscribers engine_key, 'editor:updateEngineKey'
+
                   $.ajax
                     url: "/api/v1/project/engine"
                     type: 'POST'

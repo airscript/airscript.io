@@ -25,6 +25,9 @@
               <span class='user_name' data-bind='text: userName()'></span>
             </a>
           </li>
+          <li>
+            <a class='menuitem' data-bind='click: deleteEngine, visible: isAdmin' href='#'>Delete Engine</a>
+          </li>
           <li class='divider'></li>
           <li>
             <a class='menuitem' href='/auth/logout'>Sign out</a>

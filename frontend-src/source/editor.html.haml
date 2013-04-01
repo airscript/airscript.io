@@ -10,6 +10,8 @@
             %a.menuitem(href='#')
               %img.avatar(data-bind='attr:{src: avatarSrc()}')
               %span.user_name(data-bind='text: userName()')
+          %li
+            %a.menuitem(href='#' data-bind='click: deleteEngine, visible: isAdmin') Delete Engine
           %li.divider
           %li
             %a.menuitem(href='/auth/logout') Sign out

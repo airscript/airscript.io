@@ -32,7 +32,6 @@ Airscript.namespace "Airscript.ViewModels", (ViewModels) ->
         win: 'Ctrl-l'
         mac: 'Ctrl-l'
       exec: (editor,b,c) ->
-        debugger
         $('.link').click()
       readOnly: false
 
@@ -48,10 +47,15 @@ Airscript.namespace "Airscript.ViewModels", (ViewModels) ->
     scriptsPanel = ViewModels.ScriptsPanel()
 
     projectName = ko.observable('')
+    engineKey = ko.observable('')
 
     Airscript.eventBus.subscribe (name) ->
       projectName(name)
-    , null, "editor:updateProjectName"
+    , null, 'editor:updateProjectName'
+
+    Airscript.eventBus.subscribe (key) ->
+      engineKey(key)
+    , null, "editor:updateEngineKey"
 
     self =
       fullScriptPath: ko.computed ->
@@ -96,6 +100,29 @@ Airscript.namespace "Airscript.ViewModels", (ViewModels) ->
             cookies[key.trim()] = value.trim()
 
         cookies.user || ""
+
+      isAdmin: ->
+        cookies = {}
+
+        return unless (cookies = document.cookie.split(';')).length
+
+        for str in cookies
+          [key, value] = str.split('=')
+
+          if key && value
+            cookies[key.trim()] = value.trim()
+
+        cookies?.admin is 'True'
+
+      deleteEngine: ->
+        if confirm 'Are you sure you want to delete your Airscript engine?'
+          $.ajax
+            url: "/api/v1/project/engine"
+            type: 'DELETE'
+            data:
+              engine_key: engineKey
+            success: (data) ->
+              console.log 'deleted!'
 
       toggleFullscreen: ->
         $('.edit, .scripts').toggleClass 'fullscreen'

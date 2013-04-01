@@ -2,7 +2,7 @@
 
   Airscript.namespace("Airscript.ViewModels", function(ViewModels) {
     return ViewModels.Editor = function() {
-      var aceEditor, projectName, scriptsPanel, self;
+      var aceEditor, engineKey, projectName, scriptsPanel, self;
       aceEditor = ace.edit("editor");
       aceEditor.setShowPrintMargin(false);
       aceEditor.on('change', function(e) {
@@ -39,7 +39,7 @@
           mac: 'Ctrl-l'
         },
         exec: function(editor, b, c) {
-          debugger;          return $('.link').click();
+          return $('.link').click();
         },
         readOnly: false
       });
@@ -56,9 +56,13 @@
       });
       scriptsPanel = ViewModels.ScriptsPanel();
       projectName = ko.observable('');
+      engineKey = ko.observable('');
       Airscript.eventBus.subscribe(function(name) {
         return projectName(name);
-      }, null, "editor:updateProjectName");
+      }, null, 'editor:updateProjectName');
+      Airscript.eventBus.subscribe(function(key) {
+        return engineKey(key);
+      }, null, "editor:updateEngineKey");
       self = {
         fullScriptPath: ko.computed(function() {
           return "" + (projectName()) + (escape(scriptsPanel.activeScript().name()));
@@ -104,6 +108,35 @@
             }
           }
           return cookies.user || "";
+        },
+        isAdmin: function() {
+          var cookies, key, str, value, _i, _len, _ref;
+          cookies = {};
+          if (!(cookies = document.cookie.split(';')).length) {
+            return;
+          }
+          for (_i = 0, _len = cookies.length; _i < _len; _i++) {
+            str = cookies[_i];
+            _ref = str.split('='), key = _ref[0], value = _ref[1];
+            if (key && value) {
+              cookies[key.trim()] = value.trim();
+            }
+          }
+          return (cookies != null ? cookies.admin : void 0) === 'True';
+        },
+        deleteEngine: function() {
+          if (confirm('Are you sure you want to delete your Airscript engine?')) {
+            return $.ajax({
+              url: "/api/v1/project/engine",
+              type: 'DELETE',
+              data: {
+                engine_key: engineKey
+              },
+              success: function(data) {
+                return console.log('deleted!');
+              }
+            });
+          }
         },
         toggleFullscreen: function() {
           $('.edit, .scripts').toggleClass('fullscreen');

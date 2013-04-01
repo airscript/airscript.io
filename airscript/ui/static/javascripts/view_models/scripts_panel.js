@@ -234,6 +234,7 @@
                   success: function(data) {
                     var engine_key, username;
                     engine_key = data.engine_key, username = data.username;
+                    Airscript.eventBus.notifySubscribers(engine_key, 'editor:updateEngineKey');
                     return $.ajax({
                       url: "/api/v1/project/engine",
                       type: 'POST',

@@ -54,7 +54,7 @@ def auth_callback():
 
         # ghetto admin permissions
         if user.json['login'] == 'mdiebolt' or user.json['login'] == 'progrium':
-            resp.set_cookie('admin', True)
+            resp.set_cookie('admin', 'true')
 
         return resp
     else:
@@ -65,5 +65,7 @@ def auth_logout():
     resp = make_response(redirect('/'))
     resp.set_cookie('auth', '')
     resp.set_cookie('user', '')
+    resp.set_cookie('avatar', '')
+    resp.set_cookie('admin', '')
     return resp
 
