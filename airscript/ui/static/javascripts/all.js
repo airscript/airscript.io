@@ -30468,14 +30468,10 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
           return (cookies != null ? cookies.admin : void 0) === 'true';
         },
         deleteEngine: function() {
-          console.log(engineKey());
           if (confirm('Are you sure you want to delete your Airscript engine?')) {
             return $.ajax({
-              url: "/api/v1/project/engine",
+              url: "/api/v1/project/engine?engine_key=" + (engineKey()),
               type: 'DELETE',
-              data: {
-                engine_key: engineKey()
-              },
               success: function(data) {
                 return console.log('deleted!');
               }
