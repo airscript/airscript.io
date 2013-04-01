@@ -122,9 +122,10 @@
               cookies[key.trim()] = value.trim();
             }
           }
-          return (cookies != null ? cookies.admin : void 0) === 'True';
+          return (cookies != null ? cookies.admin : void 0) === 'true';
         },
         deleteEngine: function() {
+          console.log(engineKey);
           if (confirm('Are you sure you want to delete your Airscript engine?')) {
             return $.ajax({
               url: "/api/v1/project/engine",

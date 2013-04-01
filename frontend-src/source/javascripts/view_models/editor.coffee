@@ -112,9 +112,11 @@ Airscript.namespace "Airscript.ViewModels", (ViewModels) ->
           if key && value
             cookies[key.trim()] = value.trim()
 
-        cookies?.admin is 'True'
+        cookies?.admin is 'true'
 
       deleteEngine: ->
+        console.log engineKey
+
         if confirm 'Are you sure you want to delete your Airscript engine?'
           $.ajax
             url: "/api/v1/project/engine"
