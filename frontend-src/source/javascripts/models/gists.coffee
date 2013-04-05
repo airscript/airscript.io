@@ -71,6 +71,18 @@ Airscript.namespace "Airscript.Models", (Models) ->
               # Deploy their engine!
               $('.engine_deploy_spinner, .engine_deploy_curtain').removeClass 'hidden'
 
+              dt = +new Date
+
+              id = setInterval =>
+                elapsedTime = (+new Date) - dt
+
+                percentage = elapsedTime / 50000
+
+                $('.progress .bar').width("#{percentage * 100}%")
+
+                clearInterval(id) if percentage >= 100
+              , 300
+
               $.ajax
                 url: '/api/v1/project/engine/auth'
                 type: 'GET'
@@ -86,8 +98,6 @@ Airscript.namespace "Airscript.Models", (Models) ->
                       engine_key: engine_key
                     success: (data) ->
                       Airscript.eventBus.notifySubscribers "#{data.app_name.split('-')[0]}.airscript.io/", 'editor:updateProjectName'
-
-                      $('.engine_deploy_spinner, .engine_deploy_curtain').addClass 'hidden'
 
       update: ->
         gist = self.active()
