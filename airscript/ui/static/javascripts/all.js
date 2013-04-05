@@ -30744,7 +30744,8 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
                   percentage = elapsedTime / 50000;
                   $('.progress .bar').width("" + (percentage * 100) + "%");
                   if (percentage >= 100) {
-                    return clearInterval(id);
+                    clearInterval(id);
+                    return $('.engine_deploy_spinner, .engine_deploy_curtain').addClass('hidden');
                   }
                 }, 300);
                 return $.ajax({
