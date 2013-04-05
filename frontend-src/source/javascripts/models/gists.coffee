@@ -80,6 +80,8 @@ Airscript.namespace "Airscript.Models", (Models) ->
 
                 $('.progress .bar').width("#{percentage * 100}%")
 
+                debugger
+
                 if percentage >= 100
                   clearInterval(id)
                   $('.engine_deploy_spinner, .engine_deploy_curtain').addClass 'hidden'
