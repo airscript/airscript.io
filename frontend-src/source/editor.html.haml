@@ -49,7 +49,10 @@
 
         %textarea.hidden(data-bind="value: scriptSource()")
 .engine_deploy_curtain.hidden
-.engine_deploy_spinner.hidden We're working on creating your Airscript Engine. It won't be long now.
+.engine_deploy_spinner.hidden
+  We're working on creating your Airscript Engine. It won't be long now.
+  .progress.progress-striped.active
+    .bar(style="width: 40%")
 
 :coffeescript
   Airscript.init()
