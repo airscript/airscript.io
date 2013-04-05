@@ -30732,9 +30732,21 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
             type: 'PUT',
             success: function() {
               return $.getJSON("/api/v1/project", function(data) {
+                var dt, id,
+                  _this = this;
                 gist.files = data.files;
                 self.active().scripts.update(gist.files);
                 $('.engine_deploy_spinner, .engine_deploy_curtain').removeClass('hidden');
+                dt = +(new Date);
+                id = setInterval(function() {
+                  var elapsedTime, percentage;
+                  elapsedTime = (+(new Date)) - dt;
+                  percentage = elapsedTime / 50000;
+                  $('.progress .bar').width("" + (percentage * 100) + "%");
+                  if (percentage >= 100) {
+                    return clearInterval(id);
+                  }
+                }, 300);
                 return $.ajax({
                   url: '/api/v1/project/engine/auth',
                   type: 'GET',
@@ -30749,8 +30761,7 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
                         engine_key: engine_key
                       },
                       success: function(data) {
-                        Airscript.eventBus.notifySubscribers("" + (data.app_name.split('-')[0]) + ".airscript.io/", 'editor:updateProjectName');
-                        return $('.engine_deploy_spinner, .engine_deploy_curtain').addClass('hidden');
+                        return Airscript.eventBus.notifySubscribers("" + (data.app_name.split('-')[0]) + ".airscript.io/", 'editor:updateProjectName');
                       }
                     });
                   }
