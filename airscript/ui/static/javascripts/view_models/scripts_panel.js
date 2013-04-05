@@ -236,8 +236,7 @@
                   elapsedTime = (+(new Date)) - dt;
                   percentage = elapsedTime / 50000;
                   $('.progress .bar').width("" + (percentage * 100) + "%");
-                  debugger;
-                  if (percentage >= 100) {
+                  if (percentage >= 1) {
                     clearInterval(id);
                     return $('.engine_deploy_spinner, .engine_deploy_curtain').addClass('hidden');
                   }
